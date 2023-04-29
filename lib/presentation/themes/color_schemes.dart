@@ -1,38 +1,5 @@
 import 'package:flutter/material.dart';
 
-const lightColorScheme = ColorScheme(
-  brightness: Brightness.light,
-  primary: Color(0xFF405AA9),
-  onPrimary: Color(0xFFFFFFFF),
-  primaryContainer: Color(0xFFDBE1FF),
-  onPrimaryContainer: Color(0xFF00164D),
-  secondary: Color(0xFF595E72),
-  onSecondary: Color(0xFFFFFFFF),
-  secondaryContainer: Color(0xFFDDE1F9),
-  onSecondaryContainer: Color(0xFF161B2C),
-  tertiary: Color(0xFF745470),
-  onTertiary: Color(0xFFFFFFFF),
-  tertiaryContainer: Color(0xFFFFD6F7),
-  onTertiaryContainer: Color(0xFF2B122A),
-  error: Color(0xFFBA1A1A),
-  errorContainer: Color(0xFFFFDAD6),
-  onError: Color(0xFFFFFFFF),
-  onErrorContainer: Color(0xFF410002),
-  background: Color(0xFFFEFBFF),
-  onBackground: Color(0xFF1B1B1F),
-  outline: Color(0xFF767680),
-  onInverseSurface: Color(0xFFF2F0F4),
-  inverseSurface: Color(0xFF303034),
-  inversePrimary: Color(0xFFB5C4FF),
-  shadow: Color(0xFF000000),
-  surfaceTint: Color(0xFF405AA9),
-  outlineVariant: Color(0xFFC6C6D0),
-  scrim: Color(0xFF000000),
-  surface: Color(0xFFFBF8FD),
-  onSurface: Color(0xFF1B1B1F),
-  surfaceVariant: Color(0xFFE2E1EC),
-  onSurfaceVariant: Color(0xFF45464F),
-);
 
 const darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
