@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../domain/entities/error_response_entity.dart';
+import '../../domain/entities/error_response.dart';
 import '../enums/status_code.dart';
 import '../exceptions/bad_request_exception.dart';
 import '../exceptions/exception_impl.dart';

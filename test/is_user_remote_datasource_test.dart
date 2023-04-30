@@ -1,14 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:investment_keeper/core/exceptions/bad_request_exception.dart';
+import 'package:investment_keeper/core/settings/app_settings.dart';
 import 'package:investment_keeper/data/datasources/is_user_datasource/is_user_remote_datasource.dart';
 
 void main() {
-  final dio = Dio(
-    BaseOptions(
-      baseUrl: 'http://127.0.0.1:9999',
-    ),
-  );
+  final dio = Dio(AppSettings.dioBaseOprions);
   final isUserRemoteDatasource = IsUserRemoteDatasource(requestManager: dio);
 
   const testPhoneNumber = '+7(123)456-78-90';

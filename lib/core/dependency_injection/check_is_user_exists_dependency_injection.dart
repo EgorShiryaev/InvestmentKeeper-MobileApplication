@@ -6,8 +6,11 @@ import '../../presentation/cubits/check_is_user_exists_cubit/check_is_user_exist
 
 void checkIsUserExistsDependencyInjection() {
   Get
-    ..lazyPut<IsUserDatasource>(
+    ..create<IsUserDatasource>(
       () => IsUserRemoteDatasource(requestManager: Get.find()),
     )
-    ..lazyPut(() => CheckIsUserExistsCubit(datasource: Get.find()));
+    ..lazyPut(
+      () => CheckIsUserExistsCubit(datasource: Get.find()),
+      fenix: true,
+    );
 }
