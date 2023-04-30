@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 
-import '../../../core/exceptions/not_found_exception.dart';
 import '../../../core/utils/encode_password.dart';
 import '../../../core/utils/get_exception_from_dio_error.dart';
 import '../../../domain/entities/user.dart';

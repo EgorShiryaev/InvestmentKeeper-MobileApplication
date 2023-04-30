@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-import '../../../core/settings/password_format.dart';
+import '../../../core/utils/validators/password_validator.dart';
 import '../../cubits/login_cubit/login_cubit.dart';
 import '../../cubits/login_cubit/login_state.dart';
 import '../../pages/arguments/login_page_arguments.dart';
@@ -11,15 +12,6 @@ import '../../themes/app_theme.dart';
 
 class LoginForm extends HookWidget {
   const LoginForm({super.key});
-
-  String? passwordFieldValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Заполните поле';
-    } else if (value.length < PasswordFormat.minPasswordLength) {
-      return 'Пароль должен быть больше 7 символов';
-    }
-    return null;
-  }
 
   void changePasswordVisibility(ValueNotifier<bool> visibility) {
     visibility.value = !visibility.value;
@@ -48,7 +40,7 @@ class LoginForm extends HookWidget {
 
     final controller = useTextEditingController();
     final formKey = useRef(GlobalKey<FormState>()).value;
-    final passwordIsHiddedState = useState(true);
+    final passwordVisibilityState = useState(false);
 
     final submit = useCallback(() {
       submitForm(context, formKey: formKey, password: controller.text);
@@ -73,20 +65,25 @@ class LoginForm extends HookWidget {
               Form(
                 key: formKey,
                 child: TextFormField(
-                  obscureText: passwordIsHiddedState.value,
+                  autofocus: true,
+                  obscureText: !passwordVisibilityState.value,
                   controller: controller,
-                  validator: passwordFieldValidator,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp('\S+')),
+                  ],
+                  validator: passwordValidator,
                   onFieldSubmitted: (_) => submit(),
                   decoration: InputDecoration(
                     labelText: 'Пароль',
+                    errorMaxLines: 2,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        passwordIsHiddedState.value
-                            ? Icons.visibility
-                            : Icons.visibility_off,
+                        passwordVisibilityState.value
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                       ),
                       onPressed: () {
-                        changePasswordVisibility(passwordIsHiddedState);
+                        changePasswordVisibility(passwordVisibilityState);
                       },
                     ),
                   ),
