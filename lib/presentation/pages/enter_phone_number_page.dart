@@ -9,7 +9,7 @@ import '../widgets/enter_phone_number/enter_phone_number_form.dart';
 import '../widgets/loading_mask.dart';
 
 class EnterPhoneNumberPage extends StatelessWidget {
-  static String routeName = '/';
+  static String routeName = '/enterPhoneNumber';
 
   const EnterPhoneNumberPage({super.key});
 

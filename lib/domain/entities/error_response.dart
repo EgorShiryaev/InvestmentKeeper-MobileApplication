@@ -1,7 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
-part 'error_response_entity.g.dart';
+part 'error_response.g.dart';
 
 @JsonSerializable()
 class ErrorResponse {
