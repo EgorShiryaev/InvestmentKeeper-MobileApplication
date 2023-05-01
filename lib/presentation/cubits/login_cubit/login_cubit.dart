@@ -17,20 +17,18 @@ class LoginCubit extends Cubit<LoginState> {
     required String phoneNumber,
     required String password,
   }) async {
-    emit(LoadingLoginState());
-    await datasource
-        .login(phoneNumber: phoneNumber, password: password)
-        .then((user) {
-      Get.offAllNamed(HomePage.routeName);
+    try {
+      emit(LoadingLoginState());
+      await datasource.login(phoneNumber: phoneNumber, password: password);
+      await Get.offAllNamed(HomePage.routeName);
       emit(SuccessLoginState());
-    }).catchError((error) {
+    } catch (error) {
       if (error is FailedAuthException) {
-        emit(FailureLoginState(message: error.message));
-      } else {
-        final message =
-            error is ExceptionImpl ? error.message : error.toString();
-        emit(ErrorLoginState(message: message));
+        emit(FailureLoginState());
+        return;
       }
-    });
+      final message = error is ExceptionImpl ? error.message : error.toString();
+      emit(ErrorLoginState(message: message));
+    }
   }
 }

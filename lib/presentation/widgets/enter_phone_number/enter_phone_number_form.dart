@@ -4,19 +4,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../core/settings/phone_number_format.dart';
 import '../../../core/settings/phone_number_formatter.dart';
+import '../../../core/utils/validators/phone_number_validator.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_cubit.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_state.dart';
 import '../../themes/app_theme.dart';
 
 class EnterPhoneNumberForm extends HookWidget {
   const EnterPhoneNumberForm({super.key});
-
-  String? phoneNumberFieldValidator(String? value) {
-    if (value?.length != PhoneNumberFormat.mask.length) {
-      return 'Заполните поле';
-    }
-    return null;
-  }
 
   void clearPhoneNumberField({
     required TextEditingController controller,
@@ -56,8 +50,7 @@ class EnterPhoneNumberForm extends HookWidget {
     return BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
       listener: (context, state) {
         if (state is SuccessCheckIsUserExistsState ||
-            state is FailureCheckIsUserExistsState ||
-            state is ErrorCheckIsUserExistsState) {
+            state is FailureCheckIsUserExistsState) {
           clearPhoneNumberField(controller: controller);
         }
       },
@@ -73,7 +66,7 @@ class EnterPhoneNumberForm extends HookWidget {
               Form(
                 key: formKey,
                 child: TextFormField(
-                  maxLength: PhoneNumberFormat.mask.length,
+                  autofocus: true,
                   controller: controller,
                   keyboardType: TextInputType.number,
                   inputFormatters: [PhoneNumberFormatter()],
