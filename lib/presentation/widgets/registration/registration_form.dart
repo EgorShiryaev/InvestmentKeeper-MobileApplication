@@ -7,8 +7,9 @@ import 'package:get/get.dart';
 import '../../../core/utils/validators/confirm_password_validator.dart';
 import '../../../core/utils/validators/empty_value_validar.dart';
 import '../../../core/utils/validators/password_validator.dart';
-import '../../cubits/login_cubit/login_cubit.dart';
-import '../../pages/arguments/login_page_arguments.dart';
+import '../../cubits/registration_cubit/registration_cubit.dart';
+import '../../cubits/registration_cubit/registration_state.dart';
+import '../../pages/arguments/registration_page_arguments.dart';
 import '../../themes/app_theme.dart';
 
 class RegistrationForm extends HookWidget {
@@ -25,14 +26,16 @@ class RegistrationForm extends HookWidget {
   void submitForm(
     BuildContext context, {
     required GlobalKey<FormState> formKey,
+    required String name,
     required String password,
   }) {
     if (formKey.currentState?.validate() ?? false) {
-      final args = Get.arguments as LoginPageArguments;
+      final args = Get.arguments as RegistrationPageArguments;
       FocusScope.of(context).unfocus();
-      BlocProvider.of<LoginCubit>(context).login(
+      BlocProvider.of<RegistrationCubit>(context).registration(
         phoneNumber: args.phoneNumber,
         password: password,
+        name: name,
       );
     }
   }
@@ -57,109 +60,117 @@ class RegistrationForm extends HookWidget {
     final confirmPasswordVisibilityState = useState(false);
 
     final submit = useCallback(() {
-      submitForm(context, formKey: formKey, password: nameController.text);
+      submitForm(
+        context,
+        formKey: formKey,
+        name: nameController.text,
+        password: passwordController.text,
+      );
       // ignore: require_trailing_commas
     }, [nameController]);
 
-    return SliverSafeArea(
-      top: false,
-      bottom: false,
-      minimum: AppTheme.pagePadding,
-      sliver: SliverList(
-        delegate: SliverChildListDelegate(
-          [
-            Text('Чтобы зарегистрироваться', style: textStyle),
-            const SizedBox(height: 10),
-            Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: nameController,
-                    focusNode: nameFocusNode,
-                    textInputAction: TextInputAction.next,
-                    validator: emptyValueValidator,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    decoration: InputDecoration(
-                      labelText: 'Имя',
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.cancel_outlined),
-                        onPressed: () => clearController(nameController),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    obscureText: !passwordVisibilityState.value,
-                    controller: passwordController,
-                    focusNode: passwordFocusNode,
-                    textInputAction: TextInputAction.next,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('\S+')),
-                    ],
-                    validator: passwordValidator,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    decoration: InputDecoration(
-                      labelText: 'Пароль',
-                      errorMaxLines: 2,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          passwordVisibilityState.value
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+    return BlocListener<RegistrationCubit, RegistrationState>(
+      listener: (context, state) {
+        if (state is SuccessRegistrationState) {
+          clearController(nameController);
+          clearController(passwordController);
+          clearController(confirmPasswordController);
+        }
+      },
+      child: SliverSafeArea(
+        top: false,
+        bottom: false,
+        minimum: AppTheme.pagePadding,
+        sliver: SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              Text('Чтобы зарегистрироваться', style: textStyle),
+              const SizedBox(height: 10),
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: nameController,
+                      focusNode: nameFocusNode,
+                      textInputAction: TextInputAction.next,
+                      validator: emptyValueValidator,
+                      onFieldSubmitted: (_) =>
+                          FocusScope.of(context).nextFocus(),
+                      decoration: InputDecoration(
+                        labelText: 'Имя',
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.cancel_outlined),
+                          onPressed: () => clearController(nameController),
                         ),
-                        onPressed: () {
-                          changeVisibility(passwordVisibilityState);
-                        },
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  TextFormField(
-                    obscureText: !confirmPasswordVisibilityState.value,
-                    controller: confirmPasswordController,
-                    focusNode: confirmPasswordFocusNode,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('\S+')),
-                    ],
-                    validator: (value) => confirmPasswordValidator(
-                      password: passwordController.text,
-                      confirmPassword: value,
-                    ),
-                    onFieldSubmitted: (_) => submit(),
-                    decoration: InputDecoration(
-                      labelText: 'Подтвердить',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          confirmPasswordVisibilityState.value
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      obscureText: !passwordVisibilityState.value,
+                      controller: passwordController,
+                      focusNode: passwordFocusNode,
+                      textInputAction: TextInputAction.next,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'\S+')),
+                      ],
+                      validator: passwordValidator,
+                      onFieldSubmitted: (_) =>
+                          FocusScope.of(context).nextFocus(),
+                      decoration: InputDecoration(
+                        labelText: 'Пароль',
+                        errorMaxLines: 2,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            passwordVisibilityState.value
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            changeVisibility(passwordVisibilityState);
+                          },
                         ),
-                        onPressed: () {
-                          changeVisibility(confirmPasswordVisibilityState);
-                        },
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 10),
+                    TextFormField(
+                      obscureText: !confirmPasswordVisibilityState.value,
+                      controller: confirmPasswordController,
+                      focusNode: confirmPasswordFocusNode,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'\S+')),
+                      ],
+                      validator: (value) => confirmPasswordValidator(
+                        password: passwordController.text,
+                        confirmPassword: value,
+                      ),
+                      onFieldSubmitted: (_) => submit(),
+                      decoration: InputDecoration(
+                        labelText: 'Подтвердить',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            confirmPasswordVisibilityState.value
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            changeVisibility(confirmPasswordVisibilityState);
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            FilledButton(
-              onPressed: submit,
-              child: const Text('Продолжить'),
-            )
-          ],
+              const SizedBox(height: 20),
+              FilledButton(
+                onPressed: submit,
+                child: const Text('Продолжить'),
+              )
+            ],
+          ),
         ),
       ),
     );
-
-    // BlocListener<LoginCubit, LoginState>(
-    //   listener: (context, state) {
-    //     if (state is SuccessLoginState || state is FailureLoginState) {
-    //       controller.text = '';
-    //     }
-    //   },
-    //   child:  );
   }
 }

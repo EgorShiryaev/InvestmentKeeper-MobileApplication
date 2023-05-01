@@ -36,7 +36,10 @@ class LoginPage extends StatelessWidget {
                 if (state is ErrorLoginState) {
                   Get.snackbar('Произошла ошибка!', state.message);
                 } else if (state is FailureLoginState) {
-                  Get.snackbar('Не удалось авторизоваться!', state.message);
+                  Get.snackbar(
+                    'Не удалось авторизоваться!',
+                    'Повторите попытку',
+                  );
                 }
               },
             ),

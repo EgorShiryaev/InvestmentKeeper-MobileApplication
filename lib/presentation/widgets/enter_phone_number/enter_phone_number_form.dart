@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -52,11 +50,8 @@ class EnterPhoneNumberForm extends HookWidget {
     return BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
       listener: (context, state) {
         if (state is SuccessCheckIsUserExistsState ||
-            state is FailureCheckIsUserExistsState ||
-            state is ErrorCheckIsUserExistsState) {
-          Timer(const Duration(milliseconds: 500), () {
-            clearPhoneNumberField(controller: controller);
-          });
+            state is FailureCheckIsUserExistsState) {
+          clearPhoneNumberField(controller: controller);
         }
       },
       child: SliverSafeArea(

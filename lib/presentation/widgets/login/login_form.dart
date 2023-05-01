@@ -69,7 +69,7 @@ class LoginForm extends HookWidget {
                   obscureText: !passwordVisibilityState.value,
                   controller: controller,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp('\S+')),
+                    FilteringTextInputFormatter.allow(RegExp(r'\S+')),
                   ],
                   validator: passwordValidator,
                   onFieldSubmitted: (_) => submit(),

@@ -1,4 +1,3 @@
-import '../../settings/password_format.dart';
 import '../../settings/validator_data.dart';
 
 String? confirmPasswordValidator({
