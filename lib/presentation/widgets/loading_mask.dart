@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class LoadingMask extends StatelessWidget {
-  final bool showed;
-  const LoadingMask({super.key, required this.showed});
+  final bool isVisibility;
+  const LoadingMask({super.key, required this.isVisibility});
 
   @override
   Widget build(BuildContext context) {
-    if (!showed) {
+    if (!isVisibility) {
       return const SizedBox();
     }
     return Positioned.fill(

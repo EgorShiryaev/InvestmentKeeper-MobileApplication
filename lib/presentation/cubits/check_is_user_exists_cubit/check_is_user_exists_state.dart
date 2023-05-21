@@ -1,3 +1,5 @@
+import '../error_cubit_state.dart';
+
 abstract class CheckIsUserExistsState {}
 
 class InitialCheckIsUserExistsState extends CheckIsUserExistsState {}
@@ -8,8 +10,7 @@ class SuccessCheckIsUserExistsState extends CheckIsUserExistsState {}
 
 class FailureCheckIsUserExistsState extends CheckIsUserExistsState {}
 
-class ErrorCheckIsUserExistsState extends CheckIsUserExistsState {
-  final String message;
-
-  ErrorCheckIsUserExistsState({required this.message});
+class ErrorCheckIsUserExistsState extends ErrorCubitState
+    implements CheckIsUserExistsState {
+  ErrorCheckIsUserExistsState({required super.message});
 }

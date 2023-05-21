@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 
 import '../../../core/settings/phone_number_format.dart';
 import '../../../core/settings/phone_number_formatter.dart';
 import '../../../core/utils/validators/phone_number_validator.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_cubit.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_state.dart';
-import '../../themes/app_theme.dart';
 
 class EnterPhoneNumberForm extends HookWidget {
   const EnterPhoneNumberForm({super.key});
@@ -29,7 +29,7 @@ class EnterPhoneNumberForm extends HookWidget {
   }) {
     if (formKey.currentState?.validate() ?? false) {
       FocusScope.of(context).unfocus();
-      BlocProvider.of<CheckIsUserExistsCubit>(context).check(phoneNumber);
+      Get.find<CheckIsUserExistsCubit>().check(phoneNumber);
     }
   }
 
@@ -42,53 +42,47 @@ class EnterPhoneNumberForm extends HookWidget {
     final controller = useTextEditingController(text: PhoneNumberFormat.code);
     final formKey = useRef(GlobalKey<FormState>()).value;
 
+    final cubitState = Get.find<CheckIsUserExistsCubit>().state;
+    useEffect(() {
+      if (cubitState is FailureCheckIsUserExistsState) {
+        clearPhoneNumberField(controller: controller);
+      }
+    }, [cubitState]);
+
     final submit = useCallback(() {
       submitForm(context, formKey: formKey, phoneNumber: controller.text);
-      // ignore: require_trailing_commas
     }, [controller]);
 
-    return BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
-      listener: (context, state) {
-        if (state is FailureCheckIsUserExistsState) {
-          clearPhoneNumberField(controller: controller);
-        }
-      },
-      child: SliverSafeArea(
-        top: false,
-        bottom: false,
-        minimum: AppTheme.pagePadding,
-        sliver: SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Text('Чтобы войти или зарегистрироваться', style: textStyle),
-              const SizedBox(height: 10),
-              Form(
-                key: formKey,
-                child: TextFormField(
-                  autofocus: true,
-                  controller: controller,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [PhoneNumberFormatter()],
-                  validator: phoneNumberFieldValidator,
-                  decoration: InputDecoration(
-                    labelText: 'Номер телефона',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.cancel_outlined),
-                      onPressed: () {
-                        clearPhoneNumberField(controller: controller);
-                      },
-                    ),
-                  ),
-                ),
+    final clearPhoneNumber = useCallback(() {
+      clearPhoneNumberField(controller: controller);
+    }, [controller]);
+
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          Text('Чтобы войти или зарегистрироваться', style: textStyle),
+          const SizedBox(height: 10),
+          TextFormField(
+            autofocus: true,
+            controller: controller,
+            keyboardType: TextInputType.number,
+            inputFormatters: [PhoneNumberFormatter()],
+            validator: phoneNumberFieldValidator,
+            decoration: InputDecoration(
+              labelText: 'Номер телефона',
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.cancel_outlined),
+                onPressed: clearPhoneNumber,
               ),
-              const SizedBox(height: 20),
-              FilledButton(
-                onPressed: submit,
-                child: const Text('Продолжить'),
-              )
-            ],
+            ),
           ),
-        ),
+          const SizedBox(height: 20),
+          FilledButton(
+            onPressed: submit,
+            child: const Text('Продолжить'),
+          )
+        ],
       ),
     );
   }
