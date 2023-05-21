@@ -13,4 +13,6 @@ class AppSettings {
   static User? currentUser;
 
   static const apiVersionV1 = '/api/v1';
+
+  static bool splashScreenVisible = true;
 }

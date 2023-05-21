@@ -1,17 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 
 import '../../../core/exceptions/exception_impl.dart';
 import '../../../core/exceptions/failed_auth_exception.dart';
 import '../../../data/datasources/login_datasource/login_datasource.dart';
-import '../../pages/home_page.dart';
+import '../../../domain/entities/auth_data.dart';
 import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  final LoginDatasource datasource;
+  final LoginDatasource _datasource;
   LoginCubit({
-    required this.datasource,
-  }) : super(InitialLoginState());
+    required LoginDatasource datasource,
+  })  : _datasource = datasource,
+        super(InitialLoginState());
 
   Future<void> login({
     required String phoneNumber,
@@ -19,9 +19,9 @@ class LoginCubit extends Cubit<LoginState> {
   }) async {
     try {
       emit(LoadingLoginState());
-      await datasource.login(phoneNumber: phoneNumber, password: password);
-      await Get.offAllNamed(HomePage.routeName);
-      emit(SuccessLoginState());
+      await _datasource.login(phoneNumber: phoneNumber, password: password);
+      final authData = AuthData(phoneNumber: phoneNumber, password: password);
+      emit(SuccessLoginState(data: authData));
     } catch (error) {
       if (error is FailedAuthException) {
         emit(FailureLoginState());
