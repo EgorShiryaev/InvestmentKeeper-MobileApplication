@@ -1,16 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 
 import '../../../core/exceptions/exception_impl.dart';
 import '../../../data/datasources/registration_datasource/registration_datasource.dart';
-import '../../pages/home_page.dart';
+import '../../../domain/entities/auth_data.dart';
 import 'registration_state.dart';
 
 class RegistrationCubit extends Cubit<RegistrationState> {
-  final RegistrationDatasource datasource;
+  final RegistrationDatasource _datasource;
   RegistrationCubit({
-    required this.datasource,
-  }) : super(InitialRegistrationState());
+    required RegistrationDatasource datasource,
+  })  : _datasource = datasource,
+        super(InitialRegistrationState());
 
   Future<void> registration({
     required String phoneNumber,
@@ -19,13 +19,13 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   }) async {
     try {
       emit(LoadingRegistrationState());
-      await datasource.registration(
+      await _datasource.registration(
         phoneNumber: phoneNumber,
         password: password,
         name: name,
       );
-      await Get.offAllNamed(HomePage.routeName);
-      emit(SuccessRegistrationState());
+      final authData = AuthData(phoneNumber: phoneNumber, password: password);
+      emit(SuccessRegistrationState(data: authData));
     } catch (error) {
       final message = error is ExceptionImpl ? error.message : error.toString();
       if (message == 'User is already exists') {

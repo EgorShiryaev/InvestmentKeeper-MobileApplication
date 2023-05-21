@@ -10,15 +10,16 @@ import '../../pages/registration_page.dart';
 import 'check_is_user_exists_state.dart';
 
 class CheckIsUserExistsCubit extends Cubit<CheckIsUserExistsState> {
-  final IsUserDatasource datasource;
+  final IsUserDatasource _datasource;
   CheckIsUserExistsCubit({
-    required this.datasource,
-  }) : super(InitialCheckIsUserExistsState());
+    required IsUserDatasource datasource,
+  })  : _datasource = datasource,
+        super(InitialCheckIsUserExistsState());
 
   Future<void> check(String phoneNumber) async {
     try {
       emit(LoadingCheckIsUserExistsState());
-      final value = await datasource.get(phoneNumber);
+      final value = await _datasource.get(phoneNumber);
       if (value) {
         final args = LoginPageArguments(phoneNumber: phoneNumber);
         await Get.toNamed(LoginPage.routeName, arguments: args);

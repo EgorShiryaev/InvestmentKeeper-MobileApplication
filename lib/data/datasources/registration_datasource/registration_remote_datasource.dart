@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 
+import '../../../core/settings/app_settings.dart';
 import '../../../core/utils/encode_password.dart';
 import '../../../core/utils/get_exception_from_dio_error.dart';
 import '../../../domain/entities/user.dart';
@@ -25,7 +26,7 @@ class RegistrationRemoteDatasource extends RegistrationDatasource {
         'password': encodePassword(password),
       };
       final response = await _requestManager.post(
-        '/registration',
+        '${AppSettings.apiVersionV1}/registration',
         data: params,
       );
 

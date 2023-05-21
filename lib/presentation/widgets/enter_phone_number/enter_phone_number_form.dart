@@ -49,8 +49,7 @@ class EnterPhoneNumberForm extends HookWidget {
 
     return BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
       listener: (context, state) {
-        if (state is SuccessCheckIsUserExistsState ||
-            state is FailureCheckIsUserExistsState) {
+        if (state is FailureCheckIsUserExistsState) {
           clearPhoneNumberField(controller: controller);
         }
       },
