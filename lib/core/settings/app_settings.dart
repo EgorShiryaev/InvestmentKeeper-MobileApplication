@@ -10,5 +10,7 @@ class AppSettings {
     headers: {HttpHeaders.contentTypeHeader: 'application/json'},
   );
 
-  static late final User? user;
+  static User? currentUser;
+
+  static const apiVersionV1 = '/api/v1';
 }
