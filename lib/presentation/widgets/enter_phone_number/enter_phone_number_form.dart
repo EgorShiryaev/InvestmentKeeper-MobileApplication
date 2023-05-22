@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get/get.dart';
 
 import '../../../core/settings/phone_number_format.dart';
 import '../../../core/settings/phone_number_formatter.dart';
@@ -29,7 +28,7 @@ class EnterPhoneNumberForm extends HookWidget {
   }) {
     if (formKey.currentState?.validate() ?? false) {
       FocusScope.of(context).unfocus();
-      Get.find<CheckIsUserExistsCubit>().check(phoneNumber);
+      BlocProvider.of<CheckIsUserExistsCubit>(context).check(phoneNumber);
     }
   }
 
@@ -42,25 +41,27 @@ class EnterPhoneNumberForm extends HookWidget {
     final controller = useTextEditingController(text: PhoneNumberFormat.code);
     final formKey = useRef(GlobalKey<FormState>()).value;
 
-    final cubitState = Get.find<CheckIsUserExistsCubit>().state;
-    useEffect(() {
-      if (cubitState is FailureCheckIsUserExistsState) {
-        clearPhoneNumberField(controller: controller);
-      }
-    }, [cubitState]);
+    final submit = useCallback(
+      () => submitForm(context, formKey: formKey, phoneNumber: controller.text),
+      [controller],
+    );
 
-    final submit = useCallback(() {
-      submitForm(context, formKey: formKey, phoneNumber: controller.text);
-    }, [controller]);
-
-    final clearPhoneNumber = useCallback(() {
-      clearPhoneNumberField(controller: controller);
-    }, [controller]);
+    final clearPhoneNumber = useCallback(
+      () => clearPhoneNumberField(controller: controller),
+      [controller],
+    );
 
     return Form(
       key: formKey,
       child: Column(
         children: [
+          BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
+            listener: (context, state) {
+              if (state is FailureCheckIsUserExistsState) {
+                clearPhoneNumberField(controller: controller);
+              }
+            },
+          ),
           Text('Чтобы войти или зарегистрироваться', style: textStyle),
           const SizedBox(height: 10),
           TextFormField(

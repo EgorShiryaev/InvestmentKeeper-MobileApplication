@@ -16,22 +16,26 @@ class MainPageBody extends HookWidget {
     final refreshIndicatorKey =
         useRef(GlobalKey<RefreshIndicatorState>()).value;
 
-    final state = Get.find<AccountsCubit>().state;
-    useEffect(() {
-      if (state is LoadingAccountsState) {
-        refreshIndicatorKey.currentState?.show();
-      }
-    }, [state]);
-
-    return RefreshIndicator(
-      key: refreshIndicatorKey,
-      onRefresh: Get.find<AccountsCubit>().load,
-      child: const CustomScrollView(
-        slivers: [
-          CustomSliverSafeArea(
-            child: AccountsList(),
-          )
-        ],
+    return BlocListener<AccountsCubit, AccountsState>(
+      listener: (context, state) {
+        if (state is LoadingAccountsState) {
+          refreshIndicatorKey.currentState?.show();
+        }
+      },
+      child: RefreshIndicator(
+        key: refreshIndicatorKey,
+        onRefresh: Get.find<AccountsCubit>().load,
+        child: CustomScrollView(
+          slivers: [
+            CustomSliverSafeArea(
+              child: BlocBuilder<AccountsCubit, AccountsState>(
+                builder: (context, state) {
+                  return AccountsList(state: state);
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

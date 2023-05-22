@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/account.dart';
+import 'account_item_view.dart';
 import 'account_status.dart';
 
 class AccountCard extends StatelessWidget {
@@ -31,6 +32,13 @@ class AccountCard extends StatelessWidget {
                 ),
                 AccountStatus(account: account)
               ],
+            ),
+            Divider(),
+            Column(
+              children: List.generate(account.items.length, (index) {
+                final item = account.items[index];
+                return AccountItemView(item: item);
+              }),
             )
           ],
         ),

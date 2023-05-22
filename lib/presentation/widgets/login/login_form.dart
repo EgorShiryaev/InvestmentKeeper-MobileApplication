@@ -36,26 +36,30 @@ class LoginForm extends HookWidget {
     final controller = useTextEditingController();
     final formKey = useRef(GlobalKey<FormState>()).value;
     final passwordVisibilityState = useState(false);
+    
 
-    final cubitState = Get.find<LoginCubit>().state;
-    useEffect(() {
-      if (cubitState is SuccessLoginState || cubitState is FailureLoginState) {
-        controller.text = '';
-      }
-    }, [cubitState]);
+    final submit = useCallback(
+      () => submitForm(context, formKey: formKey, password: controller.text),
+      [controller],
+    );
 
-    final submit = useCallback(() {
-      submitForm(context, formKey: formKey, password: controller.text);
-    }, [controller]);
-
-    final changePasswordVisibility = useCallback(() {
-      passwordVisibilityState.value = !passwordVisibilityState.value;
-    }, [passwordVisibilityState]);
+    final changePasswordVisibility = useCallback(
+      () => passwordVisibilityState.value = !passwordVisibilityState.value,
+      [passwordVisibilityState],
+    );
 
     return Form(
       key: formKey,
       child: Column(
         children: [
+          BlocListener<LoginCubit, LoginState>(
+            listener: (context, state) {
+              if (state is SuccessLoginState ||
+                  state is FailureLoginState) {
+                controller.text = '';
+              }
+            },
+          ),
           Text('Чтобы войти', style: textStyle),
           const SizedBox(height: 10),
           TextFormField(

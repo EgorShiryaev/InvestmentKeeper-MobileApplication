@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../cubits/auth_cubit/auth_cubit.dart';
@@ -10,35 +10,33 @@ import '../widgets/enter_phone_number/enter_phone_number_form.dart';
 import '../widgets/enter_phone_number/enter_phone_number_loading_mask.dart';
 import 'main_page.dart';
 
-class EnterPhoneNumberPage extends HookWidget {
+class EnterPhoneNumberPage extends StatelessWidget {
   static String routeName = '/enterPhoneNumber';
 
   const EnterPhoneNumberPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-     final state = Get.find<AuthCubit>().state;
-    useEffect(() {
-     
-      if (state is ErrorAuthState) {
-        Get.snackbar('Произошла ошибка!', state.message);
-      } else if (state is UserIsAuthState) {
-        Get.offAllNamed(MainPage.routeName);
-      }
-      return null;
-    }, [state]);
-
-    return Scaffold(
-      body: Stack(
-        children: const [
-          CustomScrollView(
-            slivers: [
-              EnterPhoneNumberAppBar(),
-              CustomSliverSafeArea(child: EnterPhoneNumberForm()),
-            ],
-          ),
-          EnterPhoneNumberLoadingMask(),
-        ],
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is ErrorAuthState) {
+          Get.snackbar('Произошла ошибка!', state.message);
+        } else if (state is UserIsAuthState) {
+          Get.offAllNamed(MainPage.routeName);
+        }
+      },
+      child: Scaffold(
+        body: Stack(
+          children: const [
+            CustomScrollView(
+              slivers: [
+                EnterPhoneNumberAppBar(),
+                CustomSliverSafeArea(child: EnterPhoneNumberForm()),
+              ],
+            ),
+            EnterPhoneNumberLoadingMask(),
+          ],
+        ),
       ),
     );
   }

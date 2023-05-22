@@ -19,6 +19,7 @@ class AccountsRemoteDatasource extends AccountsDatasource {
       setAuthorizationHeader(_requestManager);
       final res =
           await _requestManager.get('${AppSettings.apiVersionV1}/accounts');
+      // ignore: avoid_dynamic_calls
       final data = res.data['accounts'] as List;
       return data
           .map((v) => Account.fromJson(v as Map<String, dynamic>))
