@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 
 import 'presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'presentation/pages/enter_phone_number_page.dart';
-import 'presentation/pages/home_page.dart';
 import 'presentation/pages/login_page.dart';
+import 'presentation/pages/main_page.dart';
 import 'presentation/pages/registration_page.dart';
 import 'presentation/themes/app_theme.dart';
 
@@ -16,16 +16,16 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthCubit>(
-      create: (_) => Get.find(),
+      create: (context) => Get.find(),
       child: GetMaterialApp(
         themeMode: ThemeMode.light,
         theme: AppTheme.light,
         initialRoute:
-            userIsAuth ? HomePage.routeName : EnterPhoneNumberPage.routeName,
+            userIsAuth ? MainPage.routeName : EnterPhoneNumberPage.routeName,
         getPages: [
           GetPage(
-            name: HomePage.routeName,
-            page: () => const HomePage(),
+            name: MainPage.routeName,
+            page: () => const MainPage(),
           ),
           GetPage(
             name: EnterPhoneNumberPage.routeName,

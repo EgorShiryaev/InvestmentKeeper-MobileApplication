@@ -8,14 +8,9 @@ import '../../../core/utils/validators/password_validator.dart';
 import '../../cubits/login_cubit/login_cubit.dart';
 import '../../cubits/login_cubit/login_state.dart';
 import '../../pages/arguments/login_page_arguments.dart';
-import '../../themes/app_theme.dart';
 
 class LoginForm extends HookWidget {
   const LoginForm({super.key});
-
-  void changePasswordVisibility(ValueNotifier<bool> visibility) {
-    visibility.value = !visibility.value;
-  }
 
   void submitForm(
     BuildContext context, {
@@ -42,10 +37,15 @@ class LoginForm extends HookWidget {
     final formKey = useRef(GlobalKey<FormState>()).value;
     final passwordVisibilityState = useState(false);
 
-    final submit = useCallback(() {
-      submitForm(context, formKey: formKey, password: controller.text);
-      // ignore: require_trailing_commas
-    }, [controller]);
+    final submit = useCallback(
+      () => submitForm(context, formKey: formKey, password: controller.text),
+      [controller],
+    );
+
+    final changePasswordVisibility = useCallback(
+      () => passwordVisibilityState.value = !passwordVisibilityState.value,
+      [passwordVisibilityState],
+    );
 
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
@@ -53,49 +53,41 @@ class LoginForm extends HookWidget {
           controller.text = '';
         }
       },
-      child: SliverSafeArea(
-        top: false,
-        bottom: false,
-        minimum: AppTheme.pagePadding,
-        sliver: SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Text('Чтобы войти', style: textStyle),
-              const SizedBox(height: 10),
-              Form(
-                key: formKey,
-                child: TextFormField(
-                  autofocus: true,
-                  obscureText: !passwordVisibilityState.value,
-                  controller: controller,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'\S+')),
-                  ],
-                  validator: passwordValidator,
-                  onFieldSubmitted: (_) => submit(),
-                  decoration: InputDecoration(
-                    labelText: 'Пароль',
-                    errorMaxLines: 2,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        passwordVisibilityState.value
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        changePasswordVisibility(passwordVisibilityState);
-                      },
-                    ),
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('Чтобы войти', style: textStyle),
+            const SizedBox(height: 10),
+            TextFormField(
+              autofocus: true,
+              obscureText: !passwordVisibilityState.value,
+              controller: controller,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'\S+')),
+              ],
+              validator: passwordValidator,
+              onFieldSubmitted: (_) => submit(),
+              decoration: InputDecoration(
+                labelText: 'Пароль',
+                errorMaxLines: 2,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    passwordVisibilityState.value
+                        ? Icons.visibility_off
+                        : Icons.visibility,
                   ),
+                  onPressed: changePasswordVisibility,
                 ),
               ),
-              const SizedBox(height: 20),
-              FilledButton(
-                onPressed: submit,
-                child: const Text('Продолжить'),
-              )
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+            FilledButton(
+              onPressed: submit,
+              child: const Text('Продолжить'),
+            )
+          ],
         ),
       ),
     );

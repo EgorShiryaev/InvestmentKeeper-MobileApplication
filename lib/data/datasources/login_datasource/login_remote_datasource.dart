@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../../../core/settings/app_settings.dart';
@@ -23,8 +25,10 @@ class LoginRemoteDatasource extends LoginDatasource {
         'phoneNumber': phoneNumber,
         'password': encodePassword(password),
       };
+      const url = '${AppSettings.apiVersionV1}/login';
+      log(url);
       final response = await _requestManager.post(
-        '${AppSettings.apiVersionV1}/login',
+        url,
         data: params,
       );
 

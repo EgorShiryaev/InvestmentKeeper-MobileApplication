@@ -1,4 +1,5 @@
 import '../../../domain/entities/auth_data.dart';
+import '../error_cubit_state.dart';
 
 abstract class LoginState {}
 
@@ -14,8 +15,6 @@ class SuccessLoginState extends LoginState {
 
 class FailureLoginState extends LoginState {}
 
-class ErrorLoginState extends LoginState {
-  final String message;
-
-  ErrorLoginState({required this.message});
+class ErrorLoginState extends ErrorCubitState implements LoginState {
+  ErrorLoginState({required super.message});
 }

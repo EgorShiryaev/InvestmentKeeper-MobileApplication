@@ -7,7 +7,6 @@ import '../../../core/settings/phone_number_formatter.dart';
 import '../../../core/utils/validators/phone_number_validator.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_cubit.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_state.dart';
-import '../../themes/app_theme.dart';
 
 class EnterPhoneNumberForm extends HookWidget {
   const EnterPhoneNumberForm({super.key});
@@ -42,10 +41,15 @@ class EnterPhoneNumberForm extends HookWidget {
     final controller = useTextEditingController(text: PhoneNumberFormat.code);
     final formKey = useRef(GlobalKey<FormState>()).value;
 
-    final submit = useCallback(() {
-      submitForm(context, formKey: formKey, phoneNumber: controller.text);
-      // ignore: require_trailing_commas
-    }, [controller]);
+    final submit = useCallback(
+      () => submitForm(context, formKey: formKey, phoneNumber: controller.text),
+      [controller],
+    );
+
+    final clearPhoneNumber = useCallback(
+      () => clearPhoneNumberField(controller: controller),
+      [controller],
+    );
 
     return BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
       listener: (context, state) {
@@ -53,41 +57,33 @@ class EnterPhoneNumberForm extends HookWidget {
           clearPhoneNumberField(controller: controller);
         }
       },
-      child: SliverSafeArea(
-        top: false,
-        bottom: false,
-        minimum: AppTheme.pagePadding,
-        sliver: SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Text('Чтобы войти или зарегистрироваться', style: textStyle),
-              const SizedBox(height: 10),
-              Form(
-                key: formKey,
-                child: TextFormField(
-                  autofocus: true,
-                  controller: controller,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [PhoneNumberFormatter()],
-                  validator: phoneNumberFieldValidator,
-                  decoration: InputDecoration(
-                    labelText: 'Номер телефона',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.cancel_outlined),
-                      onPressed: () {
-                        clearPhoneNumberField(controller: controller);
-                      },
-                    ),
-                  ),
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('Чтобы войти или зарегистрироваться', style: textStyle),
+            const SizedBox(height: 10),
+            TextFormField(
+              autofocus: true,
+              controller: controller,
+              keyboardType: TextInputType.number,
+              inputFormatters: [PhoneNumberFormatter()],
+              validator: phoneNumberFieldValidator,
+              decoration: InputDecoration(
+                labelText: 'Номер телефона',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.cancel_outlined),
+                  onPressed: clearPhoneNumber,
                 ),
               ),
-              const SizedBox(height: 20),
-              FilledButton(
-                onPressed: submit,
-                child: const Text('Продолжить'),
-              )
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+            FilledButton(
+              onPressed: submit,
+              child: const Text('Продолжить'),
+            )
+          ],
         ),
       ),
     );
