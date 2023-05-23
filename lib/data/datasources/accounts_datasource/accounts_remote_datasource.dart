@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../../../core/settings/app_settings.dart';
@@ -17,8 +19,9 @@ class AccountsRemoteDatasource extends AccountsDatasource {
   Future<List<Account>> getAll() async {
     try {
       setAuthorizationHeader(_requestManager);
-      final res =
-          await _requestManager.get('${AppSettings.apiVersionV1}/accounts');
+      const url = '${AppSettings.apiVersionV1}/accounts';
+      log(url);
+      final res = await _requestManager.get(url);
       // ignore: avoid_dynamic_calls
       final data = res.data['accounts'] as List;
       return data

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../../../core/settings/app_settings.dart';
@@ -25,8 +27,10 @@ class RegistrationRemoteDatasource extends RegistrationDatasource {
         'phoneNumber': phoneNumber,
         'password': encodePassword(password),
       };
+      const url = '${AppSettings.apiVersionV1}/registration';
+      log(url);
       final response = await _requestManager.post(
-        '${AppSettings.apiVersionV1}/registration',
+        url,
         data: params,
       );
 

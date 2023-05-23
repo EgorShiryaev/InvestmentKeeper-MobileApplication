@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../../../core/exceptions/not_found_exception.dart';
@@ -15,8 +17,10 @@ class IsUserRemoteDatasource extends IsUserDatasource {
   @override
   Future<bool> get(String phoneNumber) async {
     try {
+      const url = '${AppSettings.apiVersionV1}/isUser';
+      log(url);
       await _requestManager.get(
-        '${AppSettings.apiVersionV1}/isUser',
+        url,
         queryParameters: {'phoneNumber': phoneNumber},
       );
 
