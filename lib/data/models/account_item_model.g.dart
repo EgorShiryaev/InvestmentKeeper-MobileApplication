@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'account_item.dart';
+part of 'account_item_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AccountItem _$AccountItemFromJson(Map<String, dynamic> json) => AccountItem(
+AccountItemModel _$AccountItemModelFromJson(Map<String, dynamic> json) =>
+    AccountItemModel(
       id: json['id'] as int,
       lots: json['lots'] as int,
       averagePurchasePrice: (json['averagePurchasePrice'] as num).toDouble(),
@@ -15,7 +16,7 @@ AccountItem _$AccountItemFromJson(Map<String, dynamic> json) => AccountItem(
           Instrument.fromJson(json['instrument'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$AccountItemToJson(AccountItem instance) =>
+Map<String, dynamic> _$AccountItemModelToJson(AccountItemModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'lots': instance.lots,

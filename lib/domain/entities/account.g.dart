@@ -15,7 +15,7 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
       profit: (json['profit'] as num).toDouble(),
       profitPercent: (json['profitPercent'] as num).toDouble(),
       items: (json['items'] as List<dynamic>)
-          .map((e) => AccountItem.fromJson(e as Map<String, dynamic>))
+          .map((e) => AccountItemEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

@@ -1,7 +1,9 @@
 // ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
-import 'account_item.dart';
+import 'account_item_entity.dart';
+
+
 
 part 'account.g.dart';
 
@@ -14,7 +16,7 @@ class Account {
   final double currentPrice;
   final double profit;
   final double profitPercent;
-  final List<AccountItem> items;
+  final List<AccountItemEntity> items;
 
   Account({
     required this.id,

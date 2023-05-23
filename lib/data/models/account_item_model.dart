@@ -1,19 +1,19 @@
 // ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
-import 'instrument.dart';
+import '../../domain/entities/instrument.dart';
 
-part 'account_item.g.dart';
+part 'account_item_model.g.dart';
 
 @JsonSerializable()
-class AccountItem {
+class AccountItemModel {
   final int id;
   final int lots;
   final double averagePurchasePrice;
   final double currentPrice;
   final Instrument instrument;
 
-  AccountItem({
+  AccountItemModel({
     required this.id,
     required this.lots,
     required this.averagePurchasePrice,
@@ -21,8 +21,8 @@ class AccountItem {
     required this.instrument,
   });
 
-  factory AccountItem.fromJson(Map<String, dynamic> json) =>
-      _$AccountItemFromJson(json);
+  factory AccountItemModel.fromJson(Map<String, dynamic> json) =>
+      _$AccountItemModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AccountItemToJson(this);
+  Map<String, dynamic> toJson() => _$AccountItemModelToJson(this);
 }

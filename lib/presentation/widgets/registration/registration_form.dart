@@ -31,7 +31,7 @@ class RegistrationForm extends HookWidget {
     if (formKey.currentState?.validate() ?? false) {
       final args = Get.arguments as RegistrationPageArguments;
       FocusScope.of(context).unfocus();
-      Get.find<RegistrationCubit>().registration(
+      BlocProvider.of<RegistrationCubit>(context).registration(
         phoneNumber: args.phoneNumber,
         password: password,
         name: name,
@@ -68,94 +68,95 @@ class RegistrationForm extends HookWidget {
       // ignore: require_trailing_commas
     }, [nameController]);
 
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          BlocListener<RegistrationCubit, RegistrationState>(
-            listener: (context, state) {
-              if (state is SuccessRegistrationState) {
-                clearController(nameController);
-                clearController(passwordController);
-                clearController(confirmPasswordController);
-              }
-            },
-          ),
-          Text('Чтобы зарегистрироваться', style: textStyle),
-          const SizedBox(height: 10),
-          TextFormField(
-            controller: nameController,
-            focusNode: nameFocusNode,
-            textInputAction: TextInputAction.next,
-            validator: emptyValueValidator,
-            onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-            decoration: InputDecoration(
-              labelText: 'Имя',
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.cancel_outlined),
-                onPressed: () => clearController(nameController),
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          TextFormField(
-            obscureText: !passwordVisibilityState.value,
-            controller: passwordController,
-            focusNode: passwordFocusNode,
-            textInputAction: TextInputAction.next,
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'\S+')),
-            ],
-            validator: passwordValidator,
-            onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-            decoration: InputDecoration(
-              labelText: 'Пароль',
-              errorMaxLines: 2,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  passwordVisibilityState.value
-                      ? Icons.visibility_off
-                      : Icons.visibility,
+    return BlocListener<RegistrationCubit, RegistrationState>(
+      listener: (context, state) {
+        if (state is SuccessRegistrationState) {
+          clearController(nameController);
+          clearController(passwordController);
+          clearController(confirmPasswordController);
+        }
+      },
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('Чтобы зарегистрироваться', style: textStyle),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: nameController,
+              focusNode: nameFocusNode,
+              textInputAction: TextInputAction.next,
+              validator: emptyValueValidator,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              decoration: InputDecoration(
+                labelText: 'Имя',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.cancel_outlined),
+                  onPressed: () => clearController(nameController),
                 ),
-                onPressed: () {
-                  changeVisibility(passwordVisibilityState);
-                },
               ),
             ),
-          ),
-          const SizedBox(height: 10),
-          TextFormField(
-            obscureText: !confirmPasswordVisibilityState.value,
-            controller: confirmPasswordController,
-            focusNode: confirmPasswordFocusNode,
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'\S+')),
-            ],
-            validator: (value) => confirmPasswordValidator(
-              password: passwordController.text,
-              confirmPassword: value,
-            ),
-            onFieldSubmitted: (_) => submit(),
-            decoration: InputDecoration(
-              labelText: 'Подтвердить',
-              suffixIcon: IconButton(
-                icon: Icon(
-                  confirmPasswordVisibilityState.value
-                      ? Icons.visibility_off
-                      : Icons.visibility,
+            const SizedBox(height: 10),
+            TextFormField(
+              obscureText: !passwordVisibilityState.value,
+              controller: passwordController,
+              focusNode: passwordFocusNode,
+              textInputAction: TextInputAction.next,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'\S+')),
+              ],
+              validator: passwordValidator,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              decoration: InputDecoration(
+                labelText: 'Пароль',
+                errorMaxLines: 2,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    passwordVisibilityState.value
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    changeVisibility(passwordVisibilityState);
+                  },
                 ),
-                onPressed: () {
-                  changeVisibility(confirmPasswordVisibilityState);
-                },
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          FilledButton(
-            onPressed: submit,
-            child: const Text('Продолжить'),
-          ),
-        ],
+            const SizedBox(height: 10),
+            TextFormField(
+              obscureText: !confirmPasswordVisibilityState.value,
+              controller: confirmPasswordController,
+              focusNode: confirmPasswordFocusNode,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'\S+')),
+              ],
+              validator: (value) => confirmPasswordValidator(
+                password: passwordController.text,
+                confirmPassword: value,
+              ),
+              onFieldSubmitted: (_) => submit(),
+              decoration: InputDecoration(
+                labelText: 'Подтвердить',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    confirmPasswordVisibilityState.value
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                  onPressed: () {
+                    changeVisibility(confirmPasswordVisibilityState);
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            FilledButton(
+              onPressed: submit,
+              child: const Text('Продолжить'),
+            ),
+          ],
+        ),
       ),
     );
   }

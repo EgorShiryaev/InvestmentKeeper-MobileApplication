@@ -15,7 +15,7 @@ class LoginLoadingMask extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is SuccessLoginState) {
-          Get.find<AuthCubit>().login(state.data);
+          BlocProvider.of<AuthCubit>(context).login(state.data);
         } else if (state is ErrorLoginState) {
           Get.snackbar('Произошла ошибка!', state.message);
         } else if (state is FailureLoginState) {

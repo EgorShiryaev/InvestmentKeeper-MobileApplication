@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../cubits/auth_cubit/auth_cubit.dart';
 import '../cubits/auth_cubit/auth_state.dart';
+import '../cubits/check_is_user_exists_cubit/check_is_user_exists_cubit.dart';
 import '../widgets/custom_sliver_safe_area.dart';
 import '../widgets/enter_phone_number/enter_phone_number_app_bar.dart';
 import '../widgets/enter_phone_number/enter_phone_number_form.dart';
@@ -25,17 +26,20 @@ class EnterPhoneNumberPage extends StatelessWidget {
           Get.offAllNamed(MainPage.routeName);
         }
       },
-      child: Scaffold(
-        body: Stack(
-          children: const [
-            CustomScrollView(
-              slivers: [
-                EnterPhoneNumberAppBar(),
-                CustomSliverSafeArea(child: EnterPhoneNumberForm()),
-              ],
-            ),
-            EnterPhoneNumberLoadingMask(),
-          ],
+      child: BlocProvider<CheckIsUserExistsCubit>(
+        create: (context) => Get.find(),
+        child: Scaffold(
+          body: Stack(
+            children: const [
+              CustomScrollView(
+                slivers: [
+                  EnterPhoneNumberAppBar(),
+                  CustomSliverSafeArea(child: EnterPhoneNumberForm()),
+                ],
+              ),
+              EnterPhoneNumberLoadingMask(),
+            ],
+          ),
         ),
       ),
     );

@@ -51,39 +51,40 @@ class EnterPhoneNumberForm extends HookWidget {
       [controller],
     );
 
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
-            listener: (context, state) {
-              if (state is FailureCheckIsUserExistsState) {
-                clearPhoneNumberField(controller: controller);
-              }
-            },
-          ),
-          Text('Чтобы войти или зарегистрироваться', style: textStyle),
-          const SizedBox(height: 10),
-          TextFormField(
-            autofocus: true,
-            controller: controller,
-            keyboardType: TextInputType.number,
-            inputFormatters: [PhoneNumberFormatter()],
-            validator: phoneNumberFieldValidator,
-            decoration: InputDecoration(
-              labelText: 'Номер телефона',
-              suffixIcon: IconButton(
-                icon: const Icon(Icons.cancel_outlined),
-                onPressed: clearPhoneNumber,
+    return BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
+      listener: (context, state) {
+        if (state is FailureCheckIsUserExistsState) {
+          clearPhoneNumberField(controller: controller);
+        }
+      },
+      child: Form(
+        key: formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('Чтобы войти или зарегистрироваться', style: textStyle),
+            const SizedBox(height: 10),
+            TextFormField(
+              autofocus: true,
+              controller: controller,
+              keyboardType: TextInputType.number,
+              inputFormatters: [PhoneNumberFormatter()],
+              validator: phoneNumberFieldValidator,
+              decoration: InputDecoration(
+                labelText: 'Номер телефона',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.cancel_outlined),
+                  onPressed: clearPhoneNumber,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          FilledButton(
-            onPressed: submit,
-            child: const Text('Продолжить'),
-          )
-        ],
+            const SizedBox(height: 20),
+            FilledButton(
+              onPressed: submit,
+              child: const Text('Продолжить'),
+            )
+          ],
+        ),
       ),
     );
   }

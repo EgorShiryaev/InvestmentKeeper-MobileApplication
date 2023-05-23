@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../cubits/auth_cubit/auth_cubit.dart';
 import '../cubits/auth_cubit/auth_state.dart';
+import '../cubits/registration_cubit/registration_cubit.dart';
 import '../widgets/custom_sliver_safe_area.dart';
 import '../widgets/registration/registration_app_bar.dart';
 import '../widgets/registration/registration_form.dart';
@@ -24,16 +25,19 @@ class RegistrationPage extends StatelessWidget {
           Get.offAllNamed(MainPage.routeName);
         }
       },
-      child: Scaffold(
-        body: Stack(
-          children: const [
-            CustomScrollView(
-              slivers: [
-                RegistrationAppBar(),
-                CustomSliverSafeArea(child: RegistrationForm()),
-              ],
-            ),
-          ],
+      child: BlocProvider<RegistrationCubit>(
+        create: (context) => Get.find(),
+        child: Scaffold(
+          body: Stack(
+            children: const [
+              CustomScrollView(
+                slivers: [
+                  RegistrationAppBar(),
+                  CustomSliverSafeArea(child: RegistrationForm()),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

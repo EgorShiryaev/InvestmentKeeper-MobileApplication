@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/get_profit_color.dart';
-import '../../../domain/entities/account_item.dart';
+import '../../../domain/entities/account_item_entity.dart';
 
 class AccountItemView extends StatelessWidget {
-  final AccountItem item;
+  final AccountItemEntity item;
   const AccountItemView({super.key, required this.item});
 
   @override
@@ -14,19 +14,13 @@ class AccountItemView extends StatelessWidget {
     final lotsStyle =
         Theme.of(context).textTheme.bodySmall!.copyWith(color: lotsColor);
 
-    final totalLots = item.lots * item.instrument.lot;
-    final totalCurrentPrice = item.currentPrice * totalLots;
-    final totalAveragePrice = item.averagePurchasePrice * totalLots;
-    final profit = totalCurrentPrice - totalAveragePrice;
-    final profitPercent = (-1 + totalCurrentPrice / totalAveragePrice) * 100;
-
-    final color = getProfitTextColor(profit);
+    final color = getProfitTextColor(item.profit);
     final profitStyle = lotsStyle.copyWith(color: color);
 
     final averagePriceText = item.averagePurchasePrice.toStringAsFixed(2);
-    final totalCurrentPriceText = totalCurrentPrice.toStringAsFixed(2);
-    final profitText = profit.toStringAsFixed(2);
-    final profitPersentText = profitPercent.toStringAsFixed(2);
+    final totalCurrentPriceText = item.totalCurrentPrice.toStringAsFixed(2);
+    final profitText = item.profit.toStringAsFixed(2);
+    final profitPersentText = item.profitPercent.toStringAsFixed(2);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
@@ -38,7 +32,8 @@ class AccountItemView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(item.instrument.title, style: titleStyle),
-                Text('$totalLots шт. · $averagePriceText ₽', style: lotsStyle),
+                Text('${item.totalLots} шт. · $averagePriceText ₽',
+                    style: lotsStyle),
               ],
             ),
           ),
