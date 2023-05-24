@@ -9,6 +9,7 @@ class MainPageAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar.large(
+      scrolledUnderElevation: AppTheme.sliverAppBarScrolledUnderElevation,
       flexibleSpace: const SafeArea(
         top: false,
         bottom: false,
@@ -16,7 +17,6 @@ class MainPageAppBar extends StatelessWidget {
           collapsedTitle: Text('Главная'),
         ),
       ),
-      scrolledUnderElevation: AppTheme.sliverAppBarScrolledUnderElevation,
     );
   }
 }

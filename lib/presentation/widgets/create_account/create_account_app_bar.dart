@@ -9,6 +9,8 @@ class CreateAccountAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar.large(
+      scrolledUnderElevation: AppTheme.sliverAppBarScrolledUnderElevation,
+      expandedHeight: AppTheme.sliverAppBarTitleTwoLinesTextHeight,
       flexibleSpace: const SafeArea(
         top: false,
         bottom: false,
@@ -16,8 +18,6 @@ class CreateAccountAppBar extends StatelessWidget {
           collapsedTitle: Text('Создание брокерского счета'),
         ),
       ),
-      scrolledUnderElevation: AppTheme.sliverAppBarScrolledUnderElevation,
-      expandedHeight: AppTheme.sliverAppBarTitleTwoLinesTextHeight,
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import 'presentation/cubits/auth_cubit/auth_cubit.dart';
+import 'presentation/pages/account_page.dart';
 import 'presentation/pages/create_account_page.dart';
 import 'presentation/pages/enter_phone_number_page.dart';
 import 'presentation/pages/login_page.dart';
@@ -43,6 +44,10 @@ class App extends StatelessWidget {
           GetPage(
             name: CreateAccountPage.routeName,
             page: () => const CreateAccountPage(),
+          ),
+          GetPage(
+            name: AccountPage.routeName,
+            page: () => const AccountPage(),
           ),
         ],
       ),

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../../domain/entities/account.dart';
-import '../../cubits/accounts_cubit/accounts_state.dart';
+import '../../../domain/entities/account_entity.dart';
+import '../../cubits/accounts_cubit/user_accounts_state.dart';
 import 'account_card.dart';
 
 class AccountsList extends HookWidget {
-  final AccountsState state;
+  final UserAccountsState state;
   const AccountsList({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
-    final accountsState = useState(<Account>[]);
+    final accountsState = useState(<AccountEntity>[]);
 
     useEffect(
       () {
-        if (state is LoadedAccountsState) {
-          accountsState.value = (state as LoadedAccountsState).accounts;
+        if (state is LoadedUserAccountsState) {
+          accountsState.value = (state as LoadedUserAccountsState).accounts;
         }
         return null;
       },
@@ -26,7 +26,10 @@ class AccountsList extends HookWidget {
     return Column(
       children: List.generate(accountsState.value.length, (index) {
         final item = accountsState.value[index];
-        return AccountCard(account: item);
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: AccountCard(account: item),
+        );
       }),
     );
   }

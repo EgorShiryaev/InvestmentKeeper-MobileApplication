@@ -9,6 +9,8 @@ class EnterPhoneNumberAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar.large(
+      expandedHeight: AppTheme.sliverAppBarTitleTwoLinesTextHeight,
+      scrolledUnderElevation: AppTheme.sliverAppBarScrolledUnderElevation,
       flexibleSpace: const SafeArea(
         top: false,
         bottom: false,
@@ -17,8 +19,6 @@ class EnterPhoneNumberAppBar extends StatelessWidget {
           expandedTitle: Text('Введите\nномер телефона'),
         ),
       ),
-      expandedHeight: AppTheme.sliverAppBarTitleTwoLinesTextHeight,
-      scrolledUnderElevation: AppTheme.sliverAppBarScrolledUnderElevation,
     );
   }
 }

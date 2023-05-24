@@ -3,34 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-import '../../cubits/accounts_cubit/user_accounts_cubit.dart';
-import '../../cubits/accounts_cubit/user_accounts_state.dart';
+import '../../cubits/account_cubit/account_cubit.dart';
+import '../../cubits/account_cubit/account_state.dart';
 import '../custom_sliver_safe_area.dart';
-import 'accounts_list.dart';
+import 'account_structure_list.dart';
 
-class MainPageBody extends HookWidget {
-  const MainPageBody({super.key});
+class AccountPageBody extends HookWidget {
+  const AccountPageBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     final refreshIndicatorKey =
         useRef(GlobalKey<RefreshIndicatorState>()).value;
 
-    return BlocListener<UserAccountsCubit, UserAccountsState>(
+    return BlocListener<AccountCubit, AccountState>(
       listener: (context, state) {
-        if (state is LoadingUserAccountsState) {
+        if (state is LoadingAccountState) {
           refreshIndicatorKey.currentState?.show();
         }
       },
       child: RefreshIndicator(
         key: refreshIndicatorKey,
-        onRefresh: Get.find<UserAccountsCubit>().load,
+        onRefresh: Get.find<AccountCubit>().load,
         child: CustomScrollView(
           slivers: [
             CustomSliverSafeArea(
-              child: BlocBuilder<UserAccountsCubit, UserAccountsState>(
+              child: BlocBuilder<AccountCubit, AccountState>(
                 builder: (context, state) {
-                  return AccountsList(state: state);
+                  return AccountStructureList(state: state);
                 },
               ),
             ),

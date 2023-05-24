@@ -21,7 +21,7 @@ class LoginForm extends HookWidget {
     if (formKey.currentState?.validate() ?? false) {
       final args = Get.arguments as LoginPageArguments;
       FocusScope.of(context).unfocus();
-      BlocProvider.of<LoginCubit>(context).login(
+      Get.find<LoginCubit>().login(
         phoneNumber: args.phoneNumber,
         password: password,
       );
@@ -55,7 +55,7 @@ class LoginForm extends HookWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is SuccessLoginState) {
-          BlocProvider.of<AuthCubit>(context).login(state.data);
+          Get.find<AuthCubit>().login(state.data);
         } else if (state is ErrorLoginState) {
           Get.snackbar('Произошла ошибка!', state.message);
         } else if (state is FailureLoginState) {
