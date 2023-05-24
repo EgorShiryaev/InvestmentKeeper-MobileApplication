@@ -29,7 +29,7 @@ class EnterPhoneNumberForm extends HookWidget {
   }) {
     if (formKey.currentState?.validate() ?? false) {
       FocusScope.of(context).unfocus();
-      BlocProvider.of<CheckIsUserExistsCubit>(context).check(phoneNumber);
+      Get.find<CheckIsUserExistsCubit>().check(phoneNumber);
     }
   }
 

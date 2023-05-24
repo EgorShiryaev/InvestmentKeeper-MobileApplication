@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/entities/account_entity.dart';
+import '../../cubits/accounts_cubit/user_accounts_cubit.dart';
 import '../../pages/account_page.dart';
 import '../../pages/arguments/account_page_arguments.dart';
 import 'account_item_view.dart';
@@ -15,7 +16,10 @@ class AccountCard extends StatelessWidget {
     Get.toNamed(
       AccountPage.routeName,
       arguments: AccountPageArguments(id: account.id),
-    );
+    )!
+        .then((_) {
+      Get.find<UserAccountsCubit>().load();
+    });
   }
 
   @override

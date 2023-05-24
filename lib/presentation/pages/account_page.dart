@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../cubits/account_cubit/account_cubit.dart';
 import '../widgets/account/account_app_bar.dart';
 import '../widgets/account/account_page_body.dart';
-import '../widgets/account/create_operation_button.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -23,7 +22,6 @@ class AccountPage extends StatelessWidget {
           },
           body: const AccountPageBody(),
         ),
-        floatingActionButton: const CreateOperationButton(),
       ),
     );
   }

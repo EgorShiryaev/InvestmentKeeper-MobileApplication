@@ -22,7 +22,7 @@ class AccountItemView extends StatelessWidget {
     final profitText = item.profit.toStringAsFixed(2);
     final profitPersentText = item.profitPercent.toStringAsFixed(2);
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.end,

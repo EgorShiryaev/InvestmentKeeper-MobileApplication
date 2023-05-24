@@ -17,7 +17,7 @@ class CreateAccountForm extends HookWidget {
   }) {
     if (formKey.currentState?.validate() ?? false) {
       FocusScope.of(context).unfocus();
-      BlocProvider.of<CreateAccountCubit>(context).create(title);
+      Get.find<CreateAccountCubit>().create(title);
     }
   }
 

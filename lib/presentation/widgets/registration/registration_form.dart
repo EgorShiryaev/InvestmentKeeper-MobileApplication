@@ -28,7 +28,7 @@ class RegistrationForm extends HookWidget {
     if (formKey.currentState?.validate() ?? false) {
       final args = Get.arguments as RegistrationPageArguments;
       FocusScope.of(context).unfocus();
-      BlocProvider.of<RegistrationCubit>(context).registration(
+      Get.find<RegistrationCubit>().registration(
         phoneNumber: args.phoneNumber,
         password: password,
         name: name,
@@ -68,7 +68,7 @@ class RegistrationForm extends HookWidget {
     return BlocListener<RegistrationCubit, RegistrationState>(
       listener: (context, state) {
         if (state is SuccessRegistrationState) {
-          BlocProvider.of<AuthCubit>(context).login(state.data);
+          Get.find<AuthCubit>().login(state.data);
         } else if (state is ErrorRegistrationState) {
           Get.snackbar('Произошла ошибка!', state.message);
         } else if (state is UserIsAlreadyExistsRegistrationState) {

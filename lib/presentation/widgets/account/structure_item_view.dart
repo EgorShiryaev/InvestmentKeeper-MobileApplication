@@ -29,7 +29,7 @@ class StructureItemView extends StatelessWidget {
             children: List.generate(items.length, (index) {
               final item = items[index];
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 6),
                 child: AccountItemView(item: item),
               );
             }),
