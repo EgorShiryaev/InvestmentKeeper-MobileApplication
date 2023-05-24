@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
-import '../../cubits/accounts_cubit/user_accounts_cubit.dart';
+import '../../cubits/account_cubit/account_cubit.dart';
 import '../../pages/create_account_page.dart';
 
-class CreateAccountButton extends StatelessWidget {
-  const CreateAccountButton({super.key});
+class CreateOperationButton extends StatelessWidget {
+  const CreateOperationButton({super.key});
 
-  void navigateToCreateAccountPage(BuildContext context) {
+  void navigateToCreateOperationPage(BuildContext context) {
     Get.toNamed(CreateAccountPage.routeName)!.then((success) {
-      if (success == true) {
-        BlocProvider.of<UserAccountsCubit>(context).load();
+      if (success) {
+        BlocProvider.of<AccountCubit>(context).load();
       }
     });
   }
@@ -19,7 +19,7 @@ class CreateAccountButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => navigateToCreateAccountPage(context),
+      onPressed: () => navigateToCreateOperationPage(context),
       child: const Icon(Icons.add_rounded),
     );
   }

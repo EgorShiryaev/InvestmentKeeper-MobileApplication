@@ -9,6 +9,7 @@ class LoginAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar.large(
+      scrolledUnderElevation: AppTheme.sliverAppBarScrolledUnderElevation,
       flexibleSpace: const SafeArea(
         top: false,
         bottom: false,
@@ -16,7 +17,6 @@ class LoginAppBar extends StatelessWidget {
           collapsedTitle: Text('Введите пароль'),
         ),
       ),
-      scrolledUnderElevation: AppTheme.sliverAppBarScrolledUnderElevation,
     );
   }
 }

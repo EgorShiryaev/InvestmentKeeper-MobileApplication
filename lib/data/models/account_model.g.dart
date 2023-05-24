@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'account.dart';
+part of 'account_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Account _$AccountFromJson(Map<String, dynamic> json) => Account(
+AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       id: json['id'] as int,
       title: json['title'] as String,
       balance: (json['balance'] as num).toDouble(),
@@ -19,7 +19,8 @@ Account _$AccountFromJson(Map<String, dynamic> json) => Account(
           .toList(),
     );
 
-Map<String, dynamic> _$AccountToJson(Account instance) => <String, dynamic>{
+Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'balance': instance.balance,

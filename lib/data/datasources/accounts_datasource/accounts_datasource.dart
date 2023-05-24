@@ -1,5 +1,6 @@
-import '../../../domain/entities/account.dart';
+import '../../../domain/entities/account_entity.dart';
 
 abstract class AccountsDatasource {
-  Future<List<Account>> getAll();
+  Future<List<AccountEntity>> getAll();
+  Future<AccountEntity> get(int id);
 }

@@ -27,4 +27,7 @@ Map<String, dynamic> _$InstrumentToJson(Instrument instance) =>
 
 const _$InstrumentTypeEnumMap = {
   InstrumentType.stock: 'stock',
+  InstrumentType.bond: 'bond',
+  InstrumentType.etf: 'etf',
+  InstrumentType.future: 'future',
 };
