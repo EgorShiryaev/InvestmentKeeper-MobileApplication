@@ -33,7 +33,7 @@ class AccountCard extends StatelessWidget {
                 AccountStatus(account: account)
               ],
             ),
-            Divider(),
+            if (account.items.isNotEmpty) const Divider(),
             Column(
               children: List.generate(account.items.length, (index) {
                 final item = account.items[index];

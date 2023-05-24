@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../../themes/app_theme.dart';
 import '../scroll_under_flexible_space.dart';
 
-class EnterPhoneNumberAppBar extends StatelessWidget {
-  const EnterPhoneNumberAppBar({super.key});
+class CreateAccountAppBar extends StatelessWidget {
+  const CreateAccountAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +13,11 @@ class EnterPhoneNumberAppBar extends StatelessWidget {
         top: false,
         bottom: false,
         child: LargeSliverAppBarFlexibleSpace(
-          collapsedTitle: Text('Введите номер телефона'),
-          expandedTitle: Text('Введите\nномер телефона'),
+          collapsedTitle: Text('Создание брокерского счета'),
         ),
       ),
-      expandedHeight: AppTheme.sliverAppBarTitleTwoLinesTextHeight,
       scrolledUnderElevation: AppTheme.sliverAppBarScrolledUnderElevation,
+      expandedHeight: AppTheme.sliverAppBarTitleTwoLinesTextHeight,
     );
   }
 }

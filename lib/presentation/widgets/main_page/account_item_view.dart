@@ -32,8 +32,10 @@ class AccountItemView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(item.instrument.title, style: titleStyle),
-                Text('${item.totalLots} шт. · $averagePriceText ₽',
-                    style: lotsStyle),
+                Text(
+                  '${item.totalLots} шт. · $averagePriceText ₽',
+                  style: lotsStyle,
+                ),
               ],
             ),
           ),

@@ -18,7 +18,7 @@ class IsUserRemoteDatasource extends IsUserDatasource {
   Future<bool> get(String phoneNumber) async {
     try {
       const url = '${AppSettings.apiVersionV1}/isUser';
-      log(url);
+      log('GET $url');
       await _requestManager.get(
         url,
         queryParameters: {'phoneNumber': phoneNumber},

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../cubits/accounts_cubit/accounts_cubit.dart';
+import '../widgets/main_page/create_account_button.dart';
 import '../widgets/main_page/main_page_app_bar.dart';
 import '../widgets/main_page/main_page_body.dart';
 
@@ -22,6 +23,7 @@ class MainPage extends StatelessWidget {
           },
           body: const MainPageBody(),
         ),
+        floatingActionButton: const CreateAccountButton(),
       ),
     );
   }

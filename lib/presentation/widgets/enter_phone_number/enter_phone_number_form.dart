@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get/get.dart';
 
 import '../../../core/settings/phone_number_format.dart';
 import '../../../core/settings/phone_number_formatter.dart';
@@ -38,23 +39,23 @@ class EnterPhoneNumberForm extends HookWidget {
     final textStyle =
         Theme.of(context).textTheme.bodyLarge?.copyWith(color: textColor);
 
-    final controller = useTextEditingController(text: PhoneNumberFormat.code);
+    final phoneNumberController =
+        useTextEditingController(text: PhoneNumberFormat.code);
     final formKey = useRef(GlobalKey<FormState>()).value;
 
     final submit = useCallback(
-      () => submitForm(context, formKey: formKey, phoneNumber: controller.text),
-      [controller],
-    );
-
-    final clearPhoneNumber = useCallback(
-      () => clearPhoneNumberField(controller: controller),
-      [controller],
+      () => submitForm(
+        context,
+        formKey: formKey,
+        phoneNumber: phoneNumberController.text,
+      ),
+      [phoneNumberController],
     );
 
     return BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
       listener: (context, state) {
-        if (state is FailureCheckIsUserExistsState) {
-          clearPhoneNumberField(controller: controller);
+        if (state is ErrorCheckIsUserExistsState) {
+          Get.snackbar('Произошла ошибка!', state.message);
         }
       },
       child: Form(
@@ -66,7 +67,7 @@ class EnterPhoneNumberForm extends HookWidget {
             const SizedBox(height: 10),
             TextFormField(
               autofocus: true,
-              controller: controller,
+              controller: phoneNumberController,
               keyboardType: TextInputType.number,
               inputFormatters: [PhoneNumberFormatter()],
               validator: phoneNumberFieldValidator,
@@ -74,7 +75,8 @@ class EnterPhoneNumberForm extends HookWidget {
                 labelText: 'Номер телефона',
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.cancel_outlined),
-                  onPressed: clearPhoneNumber,
+                  onPressed: () =>
+                      clearPhoneNumberField(controller: phoneNumberController),
                 ),
               ),
             ),
