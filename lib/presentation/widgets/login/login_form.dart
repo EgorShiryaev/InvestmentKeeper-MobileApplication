@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/validators/password_validator.dart';
+import '../../cubits/auth_cubit/auth_cubit.dart';
 import '../../cubits/login_cubit/login_cubit.dart';
 import '../../cubits/login_cubit/login_state.dart';
 import '../../pages/arguments/login_page_arguments.dart';
@@ -33,13 +34,17 @@ class LoginForm extends HookWidget {
     final textStyle =
         Theme.of(context).textTheme.bodyLarge?.copyWith(color: textColor);
 
-    final controller = useTextEditingController();
+    final passwordController = useTextEditingController();
     final formKey = useRef(GlobalKey<FormState>()).value;
     final passwordVisibilityState = useState(false);
 
     final submit = useCallback(
-      () => submitForm(context, formKey: formKey, password: controller.text),
-      [controller],
+      () => submitForm(
+        context,
+        formKey: formKey,
+        password: passwordController.text,
+      ),
+      [passwordController],
     );
 
     final changePasswordVisibility = useCallback(
@@ -49,8 +54,16 @@ class LoginForm extends HookWidget {
 
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
-        if (state is SuccessLoginState || state is FailureLoginState) {
-          controller.text = '';
+        if (state is SuccessLoginState) {
+          BlocProvider.of<AuthCubit>(context).login(state.data);
+        } else if (state is ErrorLoginState) {
+          Get.snackbar('Произошла ошибка!', state.message);
+        } else if (state is FailureLoginState) {
+          passwordController.text = '';
+          Get.snackbar(
+            'Не удалось авторизоваться!',
+            'Повторите попытку',
+          );
         }
       },
       child: Form(
@@ -63,7 +76,7 @@ class LoginForm extends HookWidget {
             TextFormField(
               autofocus: true,
               obscureText: !passwordVisibilityState.value,
-              controller: controller,
+              controller: passwordController,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'\S+')),
               ],

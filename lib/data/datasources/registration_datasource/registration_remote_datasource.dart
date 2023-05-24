@@ -28,7 +28,7 @@ class RegistrationRemoteDatasource extends RegistrationDatasource {
         'password': encodePassword(password),
       };
       const url = '${AppSettings.apiVersionV1}/registration';
-      log(url);
+      log('POST $url');
       final response = await _requestManager.post(
         url,
         data: params,

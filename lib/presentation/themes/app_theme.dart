@@ -30,4 +30,6 @@ class AppTheme {
   }
 
   static double get sliverAppBarScrolledUnderElevation => 0;
+
+  static double get sliverAppBarTitleTwoLinesTextHeight => 164;
 }

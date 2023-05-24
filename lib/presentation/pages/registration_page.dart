@@ -8,6 +8,7 @@ import '../cubits/registration_cubit/registration_cubit.dart';
 import '../widgets/custom_sliver_safe_area.dart';
 import '../widgets/registration/registration_app_bar.dart';
 import '../widgets/registration/registration_form.dart';
+import '../widgets/registration/registration_loading_mask.dart';
 import 'main_page.dart';
 
 class RegistrationPage extends StatelessWidget {
@@ -36,6 +37,7 @@ class RegistrationPage extends StatelessWidget {
                   CustomSliverSafeArea(child: RegistrationForm()),
                 ],
               ),
+              RegistrationLoadingMask()
             ],
           ),
         ),

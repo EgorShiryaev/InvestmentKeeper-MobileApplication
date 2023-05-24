@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/login_cubit/login_cubit.dart';
+import '../../cubits/create_account_cubit/create_account_cubit.dart';
+import '../../cubits/create_account_cubit/create_account_state.dart';
 import '../../cubits/login_cubit/login_state.dart';
 import '../loading_mask.dart';
 
-class LoginLoadingMask extends StatelessWidget {
-  const LoginLoadingMask({super.key});
+class CreateAccountLoadingMask extends StatelessWidget {
+  const CreateAccountLoadingMask({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginCubit, LoginState>(
+    return BlocBuilder<CreateAccountCubit, CreateAccountState>(
       builder: (context, state) {
         final isVisibility = state is LoadingLoginState;
         return LoadingMask(isVisibility: isVisibility);

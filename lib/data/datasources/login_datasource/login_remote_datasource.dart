@@ -26,7 +26,7 @@ class LoginRemoteDatasource extends LoginDatasource {
         'password': encodePassword(password),
       };
       const url = '${AppSettings.apiVersionV1}/login';
-      log(url);
+      log('POST $url');
       final response = await _requestManager.post(
         url,
         data: params,

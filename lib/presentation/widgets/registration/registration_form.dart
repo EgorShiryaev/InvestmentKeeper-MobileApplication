@@ -7,16 +7,13 @@ import 'package:get/get.dart';
 import '../../../core/utils/validators/confirm_password_validator.dart';
 import '../../../core/utils/validators/empty_value_validar.dart';
 import '../../../core/utils/validators/password_validator.dart';
+import '../../cubits/auth_cubit/auth_cubit.dart';
 import '../../cubits/registration_cubit/registration_cubit.dart';
 import '../../cubits/registration_cubit/registration_state.dart';
 import '../../pages/arguments/registration_page_arguments.dart';
 
 class RegistrationForm extends HookWidget {
   const RegistrationForm({super.key});
-
-  void clearController(TextEditingController controller) {
-    controller.text = '';
-  }
 
   void changeVisibility(ValueNotifier<bool> visibility) {
     visibility.value = !visibility.value;
@@ -71,9 +68,14 @@ class RegistrationForm extends HookWidget {
     return BlocListener<RegistrationCubit, RegistrationState>(
       listener: (context, state) {
         if (state is SuccessRegistrationState) {
-          clearController(nameController);
-          clearController(passwordController);
-          clearController(confirmPasswordController);
+          BlocProvider.of<AuthCubit>(context).login(state.data);
+        } else if (state is ErrorRegistrationState) {
+          Get.snackbar('Произошла ошибка!', state.message);
+        } else if (state is UserIsAlreadyExistsRegistrationState) {
+          Get.snackbar(
+            'Проверьте введенные данные',
+            'Пользователь с таким номером телефона уже существует',
+          );
         }
       },
       child: Form(
@@ -93,7 +95,7 @@ class RegistrationForm extends HookWidget {
                 labelText: 'Имя',
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.cancel_outlined),
-                  onPressed: () => clearController(nameController),
+                  onPressed: () => nameController.text = '',
                 ),
               ),
             ),
