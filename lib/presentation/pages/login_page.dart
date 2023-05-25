@@ -12,9 +12,9 @@ import '../widgets/login/login_loading_mask.dart';
 import 'main_page.dart';
 
 class LoginPage extends StatelessWidget {
-  static const routeName = '/login';
-
   const LoginPage({super.key});
+
+  static const routeName = '/login';
 
   @override
   Widget build(BuildContext context) {

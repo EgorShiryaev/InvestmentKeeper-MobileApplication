@@ -10,10 +10,7 @@ class EnterPhoneNumberLoadingMask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CheckIsUserExistsCubit, CheckIsUserExistsState>(
-      listener: (context, state) {
-       
-      },
+    return BlocBuilder<CheckIsUserExistsCubit, CheckIsUserExistsState>(
       builder: (context, state) {
         final isVisibility = state is LoadingCheckIsUserExistsState;
         return LoadingMask(isVisibility: isVisibility);

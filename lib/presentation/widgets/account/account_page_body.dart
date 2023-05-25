@@ -24,7 +24,7 @@ class AccountPageBody extends HookWidget {
       },
       child: RefreshIndicator(
         key: refreshIndicatorKey,
-        onRefresh: Get.find<AccountCubit>().load,
+        onRefresh: Get.find<AccountCubit>().refresh,
         child: CustomScrollView(
           slivers: [
             CustomSliverSafeArea(

@@ -12,9 +12,9 @@ import '../widgets/registration/registration_loading_mask.dart';
 import 'main_page.dart';
 
 class RegistrationPage extends StatelessWidget {
-  static const routeName = '/registration';
-
   const RegistrationPage({super.key});
+
+  static const routeName = '/registration';
 
   @override
   Widget build(BuildContext context) {

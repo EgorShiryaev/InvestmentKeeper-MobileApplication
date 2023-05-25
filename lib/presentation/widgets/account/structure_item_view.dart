@@ -16,20 +16,20 @@ class StructureItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.headlineSmall;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(title, style: titleStyle),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: List.generate(items.length, (index) {
               final item = items[index];
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 6),
+                padding: const EdgeInsets.symmetric(vertical: 4),
                 child: AccountItemView(item: item),
               );
             }),

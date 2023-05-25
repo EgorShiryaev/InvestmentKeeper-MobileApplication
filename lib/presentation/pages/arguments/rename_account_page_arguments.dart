@@ -1,7 +1,7 @@
 import '../../../domain/entities/account_entity.dart';
 
-class AccountPageArguments {
+class RenameAccountPageArguments {
   final AccountEntity account;
 
-  AccountPageArguments({required this.account});
+  RenameAccountPageArguments({required this.account});
 }

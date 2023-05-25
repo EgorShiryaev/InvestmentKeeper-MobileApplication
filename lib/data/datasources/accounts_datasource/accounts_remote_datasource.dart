@@ -46,4 +46,21 @@ class AccountsRemoteDatasource extends AccountsDatasource {
       throw exception;
     }
   }
+
+  @override
+  Future<void> edit({required int id, required String title}) async {
+    try {
+      setAuthorizationHeader(_requestManager);
+      const url = '${AppSettings.apiVersionV1}/accounts';
+      log('PUT $url');
+      final params = {
+        'id': id,
+        'title': title,
+      };
+      await _requestManager.put(url, data: params);
+    } on DioError catch (error) {
+      final exception = getExceptionFromDioError(error);
+      throw exception;
+    }
+  }
 }

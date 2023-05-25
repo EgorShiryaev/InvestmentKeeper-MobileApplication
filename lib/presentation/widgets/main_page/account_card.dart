@@ -15,7 +15,7 @@ class AccountCard extends StatelessWidget {
   void navigateToAccountPage() {
     Get.toNamed(
       AccountPage.routeName,
-      arguments: AccountPageArguments(id: account.id),
+      arguments: AccountPageArguments(account: account),
     )!
         .then((_) {
       Get.find<UserAccountsCubit>().load();

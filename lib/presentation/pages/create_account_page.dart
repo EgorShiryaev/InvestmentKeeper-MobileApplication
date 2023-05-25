@@ -9,9 +9,9 @@ import '../widgets/create_account/create_account_loading_mask.dart';
 import '../widgets/custom_sliver_safe_area.dart';
 
 class CreateAccountPage extends StatelessWidget {
-  static const routeName = '/createAccount';
-
   const CreateAccountPage({super.key});
+  
+  static const routeName = '/createAccount';
 
   @override
   Widget build(BuildContext context) {

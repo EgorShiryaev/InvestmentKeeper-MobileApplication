@@ -9,22 +9,26 @@ import 'presentation/pages/enter_phone_number_page.dart';
 import 'presentation/pages/login_page.dart';
 import 'presentation/pages/main_page.dart';
 import 'presentation/pages/registration_page.dart';
+import 'presentation/pages/rename_account_page.dart';
+import 'presentation/pages/splash_page.dart';
 import 'presentation/themes/app_theme.dart';
 
 class App extends StatelessWidget {
-  final bool userIsAuth;
-  const App({super.key, required this.userIsAuth});
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthCubit>(
-      create: (context) => Get.find(),
+      create: (context) => Get.find()..autoLogin(),
       child: GetMaterialApp(
         themeMode: ThemeMode.light,
         theme: AppTheme.light,
-        initialRoute:
-            userIsAuth ? MainPage.routeName : EnterPhoneNumberPage.routeName,
+        initialRoute: SplashPage.routeName,
         getPages: [
+          GetPage(
+            name: SplashPage.routeName,
+            page: () => const SplashPage(),
+          ),
           GetPage(
             name: MainPage.routeName,
             page: () => const MainPage(),
@@ -49,6 +53,10 @@ class App extends StatelessWidget {
             name: AccountPage.routeName,
             page: () => const AccountPage(),
           ),
+          GetPage(
+            name: RenameAccountPage.routeName,
+            page: () => const RenameAccountPage(),
+          )
         ],
       ),
     );

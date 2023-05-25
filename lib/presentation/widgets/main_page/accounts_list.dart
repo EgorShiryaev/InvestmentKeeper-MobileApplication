@@ -27,7 +27,7 @@ class AccountsList extends HookWidget {
       children: List.generate(accountsState.value.length, (index) {
         final item = accountsState.value[index];
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.only(bottom: 8),
           child: AccountCard(account: item),
         );
       }),
