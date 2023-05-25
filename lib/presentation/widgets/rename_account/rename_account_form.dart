@@ -7,7 +7,6 @@ import '../../../core/utils/validators/empty_value_validar.dart';
 import '../../cubits/account_cubit/account_cubit.dart';
 import '../../cubits/edit_account_cubit/edit_account_cubit.dart';
 import '../../cubits/edit_account_cubit/edit_account_state.dart';
-import '../../cubits/registration_cubit/registration_state.dart';
 import '../../pages/arguments/rename_account_page_arguments.dart';
 
 class RenameAccountForm extends HookWidget {
