@@ -13,11 +13,15 @@ class AccountCubit extends Cubit<AccountState> {
       : _datasource = datasource,
         super(InitialAccountState());
 
-  Future<void> load() async {
-     final args = Get.arguments as AccountPageArguments;
+  Future<void> refresh() {
+    final args = Get.arguments as AccountPageArguments;
+    return load(args.account.id);
+  }
+
+  Future<void> load(int id) async {
     try {
       emit(LoadingAccountState());
-      final account = await _datasource.get(args.id);
+      final account = await _datasource.get(id);
       emit(LoadedAccountState(account: account));
     } catch (error) {
       final message = error is ExceptionImpl ? error.message : error.toString();

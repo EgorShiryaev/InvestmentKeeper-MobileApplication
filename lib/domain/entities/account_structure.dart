@@ -40,7 +40,5 @@ class AccountStructure {
     );
   }
 
-  factory AccountStructure.empty() {
-    return AccountStructure(stocks: [], bonds: [], etfs: [], futures: []);
-  }
+ 
 }
