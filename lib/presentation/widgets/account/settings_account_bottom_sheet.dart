@@ -12,10 +12,15 @@ class SettingsAccountBottomSheet extends StatelessWidget {
   const SettingsAccountBottomSheet({super.key, required this.account});
 
   void navigateToRenameAccountPage() {
+    hideBottomSheet();
     Get.toNamed(
       RenameAccountPage.routeName,
       arguments: RenameAccountPageArguments(account: account),
     );
+  }
+
+  void hideBottomSheet() {
+    Get.back();
   }
 
   @override

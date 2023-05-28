@@ -4,9 +4,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/validators/empty_value_validar.dart';
-import '../../cubits/accounts_cubit/user_accounts_cubit.dart';
 import '../../cubits/create_account_cubit/create_account_cubit.dart';
 import '../../cubits/create_account_cubit/create_account_state.dart';
+import '../../cubits/user_accounts_cubit/user_accounts_cubit.dart';
+import '../space_between_form_items.dart';
 
 class CreateAccountForm extends HookWidget {
   const CreateAccountForm({super.key});
@@ -51,6 +52,7 @@ class CreateAccountForm extends HookWidget {
               controller: titleController,
               keyboardType: TextInputType.name,
               validator: emptyValueValidator,
+                onFieldSubmitted: (_) => submit(),
               decoration: InputDecoration(
                 labelText: 'Название',
                 suffixIcon: IconButton(
@@ -59,7 +61,7 @@ class CreateAccountForm extends HookWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+           const SpaceBetweenFormItems(),
             FilledButton(
               onPressed: submit,
               child: const Text('Создать'),

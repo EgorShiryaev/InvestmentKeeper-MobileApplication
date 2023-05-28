@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/investment_asset.dart';
-import '../main_page/investment_asset_view.dart';
+import '../../../domain/entities/currency_deposit.dart';
+import '../main_page/currency_deposit_view.dart';
 
-class StructureItemView extends StatelessWidget {
+class StructureCurrencyView extends StatelessWidget {
   final String title;
-  final List<InvestmentAsset> items;
-  const StructureItemView({
+  final List<CurrencyDeposit> items;
+  const StructureCurrencyView({
     super.key,
     required this.title,
     required this.items,
@@ -30,7 +30,7 @@ class StructureItemView extends StatelessWidget {
               final item = items[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
-                child: InvestmentAssetView(item: item),
+                child: CurrencyDepositView(currencyDeposit: item),
               );
             }),
           )

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/get_profit_color.dart';
+import '../../../core/utils/get_price_with_currency.dart';
 import '../../../domain/entities/account_entity.dart';
+import '../profit_widget.dart';
 
 class AccountCollapsedTitle extends StatelessWidget {
   final AccountEntity account;
@@ -11,22 +12,22 @@ class AccountCollapsedTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.titleLarge;
 
-    final profitColor = getProfitTextColor(account.profit);
-    final profitStyle =
-        Theme.of(context).textTheme.bodySmall?.copyWith(color: profitColor);
-
-    final totalPrice =
-        (account.balance + account.currentPrice).toStringAsFixed(2);
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('$totalPrice ₽', style: titleStyle),
         Text(
-          '${account.profit} ₽ · ${account.profitPercent}%',
-          style: profitStyle,
+          getPriceWithCurrency(
+            account.currentPrice + account.mainCurrencyDeposite.value,
+            account.mainCurrencyDeposite.currency,
+          ),
+          style: titleStyle,
         ),
+        ProfitWidget(
+          profit: account.profit,
+          profitPercent: account.profitPercent,
+          currency: account.mainCurrencyDeposite.currency,
+        )
       ],
     );
   }

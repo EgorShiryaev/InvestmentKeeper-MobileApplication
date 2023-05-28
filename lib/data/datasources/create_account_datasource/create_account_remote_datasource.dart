@@ -20,9 +20,7 @@ class CreateAccountRemoteDatasource extends CreateAccountDatasource {
       setAuthorizationHeader(_requestManager);
       const url = '${AppSettings.apiVersionV1}/accounts';
       log('POST $url');
-      final params = {
-        'title': title,
-      };
+      final params = {'title': title, 'currency': 'RUB'};
       await _requestManager.post(url, data: params);
     } on DioError catch (error) {
       final exception = getExceptionFromDioError(error);

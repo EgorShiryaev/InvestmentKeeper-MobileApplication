@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/utils/get_profit_color.dart';
 import '../../../domain/entities/account_entity.dart';
+import '../profit_widget.dart';
 
 class AccountStatus extends StatelessWidget {
   final AccountEntity account;
@@ -9,11 +10,7 @@ class AccountStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor = getProfitTextColor(account.profit);
     final backgroundColor = getProfitBackgroundColor(account.profit);
-
-    final textStyle =
-        Theme.of(context).textTheme.bodySmall?.copyWith(color: textColor);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -25,9 +22,10 @@ class AccountStatus extends StatelessWidget {
           vertical: 5,
           horizontal: 15,
         ),
-        child: Text(
-          '${account.profit} ₽ · ${account.profitPercent}%',
-          style: textStyle,
+        child: ProfitWidget(
+          profit: account.profit,
+          profitPercent: account.profitPercent,
+          currency: account.mainCurrencyDeposite.currency,
         ),
       ),
     );

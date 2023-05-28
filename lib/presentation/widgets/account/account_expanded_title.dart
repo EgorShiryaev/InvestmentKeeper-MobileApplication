@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/get_price_with_currency.dart';
 import '../../../domain/entities/account_entity.dart';
 import '../main_page/account_status.dart';
 
@@ -12,8 +13,6 @@ class AccountExpandedTitle extends StatelessWidget {
     final titleStyle = Theme.of(context).textTheme.titleMedium;
     final priceStyle = Theme.of(context).textTheme.headlineMedium;
 
-    final totalPrice =
-        (account.balance + account.currentPrice).toStringAsFixed(2);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -23,7 +22,13 @@ class AccountExpandedTitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(account.title, style: titleStyle),
-            Text('$totalPrice ₽', style: priceStyle),
+            Text(
+              getPriceWithCurrency(
+                account.currentPrice + account.mainCurrencyDeposite.value,
+                account.mainCurrencyDeposite.currency,
+              ),
+              style: priceStyle,
+            ),
           ],
         ),
         AccountStatus(account: account),

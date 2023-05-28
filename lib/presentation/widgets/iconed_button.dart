@@ -16,10 +16,11 @@ class IconedButton extends StatelessWidget {
     final labelStyle = Theme.of(context).textTheme.bodyLarge;
     return InkWell(
       onTap: onPress,
-      customBorder:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      customBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        padding: const EdgeInsets.all(8),
         child: SizedBox(
           height: 48,
           child: Row(

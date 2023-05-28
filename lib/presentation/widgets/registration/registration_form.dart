@@ -11,6 +11,7 @@ import '../../cubits/auth_cubit/auth_cubit.dart';
 import '../../cubits/registration_cubit/registration_cubit.dart';
 import '../../cubits/registration_cubit/registration_state.dart';
 import '../../pages/arguments/registration_page_arguments.dart';
+import '../space_between_form_items.dart';
 
 class RegistrationForm extends HookWidget {
   const RegistrationForm({super.key});
@@ -68,7 +69,7 @@ class RegistrationForm extends HookWidget {
     return BlocListener<RegistrationCubit, RegistrationState>(
       listener: (context, state) {
         if (state is SuccessRegistrationState) {
-          Get.find<AuthCubit>().login(state.data);
+          BlocProvider.of<AuthCubit>(context).login(state.data);
         } else if (state is ErrorRegistrationState) {
           Get.snackbar('Произошла ошибка!', state.message);
         } else if (state is UserIsAlreadyExistsRegistrationState) {
@@ -99,7 +100,7 @@ class RegistrationForm extends HookWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SpaceBetweenFormItems(),
             TextFormField(
               obscureText: !passwordVisibilityState.value,
               controller: passwordController,
@@ -125,7 +126,7 @@ class RegistrationForm extends HookWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SpaceBetweenFormItems(),
             TextFormField(
               obscureText: !confirmPasswordVisibilityState.value,
               controller: confirmPasswordController,
@@ -152,7 +153,7 @@ class RegistrationForm extends HookWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SpaceBetweenFormItems(),
             FilledButton(
               onPressed: submit,
               child: const Text('Продолжить'),

@@ -29,7 +29,7 @@ class AppTheme {
     );
   }
 
-  static double get sliverAppBarScrolledUnderElevation => 0;
+  static const double sliverAppBarScrolledUnderElevation = 0;
 
-  static double get sliverAppBarTitleTwoLinesTextHeight => 164;
+  static const double sliverAppBarTitleTwoLinesTextHeight = 164;
 }
