@@ -9,6 +9,7 @@ import '../../cubits/auth_cubit/auth_cubit.dart';
 import '../../cubits/login_cubit/login_cubit.dart';
 import '../../cubits/login_cubit/login_state.dart';
 import '../../pages/arguments/login_page_arguments.dart';
+import '../space_between_form_items.dart';
 
 class LoginForm extends HookWidget {
   const LoginForm({super.key});
@@ -55,7 +56,7 @@ class LoginForm extends HookWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is SuccessLoginState) {
-          Get.find<AuthCubit>().login(state.data);
+          BlocProvider.of<AuthCubit>(context).login(state.data);
         } else if (state is ErrorLoginState) {
           Get.snackbar('Произошла ошибка!', state.message);
         } else if (state is FailureLoginState) {
@@ -95,7 +96,7 @@ class LoginForm extends HookWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SpaceBetweenFormItems(),
             FilledButton(
               onPressed: submit,
               child: const Text('Продолжить'),

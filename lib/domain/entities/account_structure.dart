@@ -1,24 +1,30 @@
-import 'account_item_entity.dart';
+import 'currency_deposit.dart';
 import 'instrument_type.dart';
+import 'investment_asset.dart';
 
 class AccountStructure {
-  final List<AccountItemEntity> stocks;
-  final List<AccountItemEntity> bonds;
-  final List<AccountItemEntity> etfs;
-  final List<AccountItemEntity> futures;
+  final List<InvestmentAsset> stocks;
+  final List<InvestmentAsset> bonds;
+  final List<InvestmentAsset> etfs;
+  final List<InvestmentAsset> futures;
+  final List<CurrencyDeposit> currencies;
 
   AccountStructure({
     required this.stocks,
     required this.bonds,
     required this.etfs,
     required this.futures,
+    required this.currencies,
   });
 
-  factory AccountStructure.fromAccountItems(List<AccountItemEntity> items) {
-    final stocks = <AccountItemEntity>[];
-    final bonds = <AccountItemEntity>[];
-    final etfs = <AccountItemEntity>[];
-    final futures = <AccountItemEntity>[];
+  factory AccountStructure.fromAccountItems(
+    List<InvestmentAsset> items,
+    List<CurrencyDeposit> currencyDeposits,
+  ) {
+    final stocks = <InvestmentAsset>[];
+    final bonds = <InvestmentAsset>[];
+    final etfs = <InvestmentAsset>[];
+    final futures = <InvestmentAsset>[];
 
     for (final element in items) {
       if (element.instrument.type == InstrumentType.stock) {
@@ -37,8 +43,7 @@ class AccountStructure {
       bonds: bonds,
       etfs: etfs,
       futures: futures,
+      currencies: currencyDeposits,
     );
   }
-
- 
 }

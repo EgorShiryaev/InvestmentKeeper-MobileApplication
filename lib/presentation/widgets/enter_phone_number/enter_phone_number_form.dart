@@ -8,6 +8,7 @@ import '../../../core/settings/phone_number_formatter.dart';
 import '../../../core/utils/validators/phone_number_validator.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_cubit.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_state.dart';
+import '../space_between_form_items.dart';
 
 class EnterPhoneNumberForm extends HookWidget {
   const EnterPhoneNumberForm({super.key});
@@ -71,6 +72,7 @@ class EnterPhoneNumberForm extends HookWidget {
               keyboardType: TextInputType.number,
               inputFormatters: [PhoneNumberFormatter()],
               validator: phoneNumberFieldValidator,
+              onFieldSubmitted: (_) => submit(),
               decoration: InputDecoration(
                 labelText: 'Номер телефона',
                 suffixIcon: IconButton(
@@ -80,7 +82,7 @@ class EnterPhoneNumberForm extends HookWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SpaceBetweenFormItems(),
             FilledButton(
               onPressed: submit,
               child: const Text('Продолжить'),

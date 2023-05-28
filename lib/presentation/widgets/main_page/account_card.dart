@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/entities/account_entity.dart';
-import '../../cubits/accounts_cubit/user_accounts_cubit.dart';
+import '../../cubits/user_accounts_cubit/user_accounts_cubit.dart';
 import '../../pages/account_page.dart';
 import '../../pages/arguments/account_page_arguments.dart';
-import 'account_item_view.dart';
 import 'account_status.dart';
+import 'currency_deposit_view.dart';
+import 'investment_asset_price_view.dart';
+import 'investment_asset_view.dart';
 
 class AccountCard extends StatelessWidget {
   final AccountEntity account;
@@ -24,14 +26,14 @@ class AccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleMediumStyle = Theme.of(context).textTheme.titleMedium;
     final bodyMeduimStyle = Theme.of(context).textTheme.bodyMedium;
     final totalPrice =
-        (account.balance + account.currentPrice).toStringAsFixed(2);
+        account.currentPrice + account.mainCurrencyDeposite.value;
     return Card(
       child: InkWell(
-        customBorder:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        customBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         onTap: navigateToAccountPage,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -43,7 +45,10 @@ class AccountCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('$totalPrice ₽', style: titleMediumStyle),
+                      InvestmentAssetPriceView(
+                        currency: account.mainCurrencyDeposite.currency,
+                        price: totalPrice,
+                      ),
                       const SizedBox(height: 4),
                       Text(account.title, style: bodyMeduimStyle),
                     ],
@@ -55,9 +60,17 @@ class AccountCard extends StatelessWidget {
               Column(
                 children: List.generate(account.items.length, (index) {
                   final item = account.items[index];
-                  return AccountItemView(item: item);
+                  return InvestmentAssetView(item: item);
                 }),
-              )
+              ),
+              const Divider(),
+              Column(
+                children:
+                    List.generate(account.currencyDeposits.length, (index) {
+                  final item = account.currencyDeposits[index];
+                  return CurrencyDepositView(currencyDeposit: item);
+                }),
+              ),
             ],
           ),
         ),

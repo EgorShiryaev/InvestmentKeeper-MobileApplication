@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../domain/entities/account_structure.dart';
 import '../../cubits/account_cubit/account_state.dart';
 import '../../pages/arguments/account_page_arguments.dart';
+import 'structure_currency_view.dart';
 import 'structure_item_view.dart';
 
 class AccountStructureList extends HookWidget {
@@ -52,6 +53,8 @@ class AccountStructureList extends HookWidget {
           StructureItemView(title: 'Фонды', items: structure.etfs),
         if (structure.futures.isNotEmpty)
           StructureItemView(title: 'Фьючерсы', items: structure.futures),
+        if (structure.currencies.isNotEmpty)
+          StructureCurrencyView(title: 'Валюта', items: structure.currencies),
       ],
     );
   }

@@ -13,6 +13,7 @@ Instrument _$InstrumentFromJson(Map<String, dynamic> json) => Instrument(
       title: json['title'] as String,
       lot: json['lot'] as int,
       type: $enumDecode(_$InstrumentTypeEnumMap, json['type']),
+      currency: $enumDecode(_$CurrencyEnumMap, json['currency']),
     );
 
 Map<String, dynamic> _$InstrumentToJson(Instrument instance) =>
@@ -23,6 +24,7 @@ Map<String, dynamic> _$InstrumentToJson(Instrument instance) =>
       'title': instance.title,
       'lot': instance.lot,
       'type': _$InstrumentTypeEnumMap[instance.type]!,
+      'currency': _$CurrencyEnumMap[instance.currency]!,
     };
 
 const _$InstrumentTypeEnumMap = {
@@ -30,4 +32,8 @@ const _$InstrumentTypeEnumMap = {
   InstrumentType.bond: 'bond',
   InstrumentType.etf: 'etf',
   InstrumentType.future: 'future',
+};
+
+const _$CurrencyEnumMap = {
+  Currency.rub: 'RUB',
 };

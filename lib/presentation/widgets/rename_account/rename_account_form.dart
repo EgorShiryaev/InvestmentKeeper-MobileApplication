@@ -8,6 +8,7 @@ import '../../cubits/account_cubit/account_cubit.dart';
 import '../../cubits/edit_account_cubit/edit_account_cubit.dart';
 import '../../cubits/edit_account_cubit/edit_account_state.dart';
 import '../../pages/arguments/rename_account_page_arguments.dart';
+import '../space_between_form_items.dart';
 
 class RenameAccountForm extends HookWidget {
   const RenameAccountForm({super.key});
@@ -41,9 +42,7 @@ class RenameAccountForm extends HookWidget {
       listener: (context, state) {
         if (state is SuccessEditAccountState) {
           final args = Get.arguments as RenameAccountPageArguments;
-          Get
-            ..back()
-            ..back();
+          Get.back();
           Get.find<AccountCubit>().load(args.account.id);
         } else if (state is FailureEditAccountState) {
           Get.snackbar('Произошла ошибка!', state.message);
@@ -68,7 +67,7 @@ class RenameAccountForm extends HookWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SpaceBetweenFormItems(),
             FilledButton(
               onPressed: submit,
               child: const Text('Продолжить'),

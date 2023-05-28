@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../data/datasources/create_account_datasource/create_account_datasource.dart';
-import '../../data/datasources/create_account_datasource/create_account_remote_dataspurce.dart';
+import '../../data/datasources/create_account_datasource/create_account_remote_datasource.dart';
 import '../../presentation/cubits/create_account_cubit/create_account_cubit.dart';
 
 void createAccountCubitDependencyInjection() {

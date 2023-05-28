@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:get/get.dart';
 
-import '../cubits/accounts_cubit/user_accounts_cubit.dart';
+import '../cubits/user_accounts_cubit/user_accounts_cubit.dart';
 import '../widgets/main_page/main_page_app_bar.dart';
 import '../widgets/main_page/main_page_body.dart';
 import 'create_account_page.dart';
