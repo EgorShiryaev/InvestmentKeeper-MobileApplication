@@ -18,8 +18,9 @@ class AccountEntity extends AccountModel {
     required super.currencyDeposits,
     required super.currency,
   }) {
-    profit = purchasePrice - currentPrice;
-    profitPercent = roundPercent(profit / purchasePrice);
+    profit = currentPrice - purchasePrice;
+    profitPercent =
+        purchasePrice != 0 ? roundPercent(profit / purchasePrice) : 0;
     structure = AccountStructure.fromAccountItems(items, currencyDeposits);
     mainCurrencyDeposit = currencyDeposits.firstWhere(
       (element) => element.currency == currency,

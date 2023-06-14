@@ -45,6 +45,7 @@ class AccountSliverAppBar extends HookWidget {
     }
 
     final price = account.currentPrice + account.mainCurrencyDeposit.value;
+    
 
     return LargeSliverAppBarFlexibleSpace(
       collapsedTitle: AccountCollapsedTitle(price: price, account: account),

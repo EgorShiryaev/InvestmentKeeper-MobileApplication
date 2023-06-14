@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/get_currency_char.dart';
+import '../../../core/utils/currency_utils/get_currency_char.dart';
 import '../../../domain/entities/account_entity.dart';
+import '../money_widget.dart';
 import '../profit_widget.dart';
 
 class AccountCollapsedTitle extends StatelessWidget {
@@ -16,13 +17,16 @@ class AccountCollapsedTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.titleLarge;
-    final currencyChar = getCurrencyChar(account.currency);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('$price $currencyChar', style: titleStyle),
+        MoneyWidget(
+          currency: account.currency,
+          moneyValue: price,
+          textStyle: titleStyle,
+        ),
         ProfitWidget(
           profit: account.profit,
           profitPercent: account.profitPercent,

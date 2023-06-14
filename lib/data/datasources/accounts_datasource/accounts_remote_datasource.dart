@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 import '../../../core/settings/app_settings.dart';
+import '../../../core/utils/auth_utils/set_authorization_header.dart';
 import '../../../core/utils/get_exception_from_dio_error.dart';
-import '../../../core/utils/set_authorization_header.dart';
 import '../../../domain/entities/account_entity.dart';
 import 'accounts_datasource.dart';
 

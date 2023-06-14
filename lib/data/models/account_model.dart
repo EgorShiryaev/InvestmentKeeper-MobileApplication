@@ -24,7 +24,7 @@ class AccountModel {
     required this.currentPrice,
     required this.items,
     required this.currencyDeposits,
-    required this.currency,
+     this.currency = Currency.rub,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) =>

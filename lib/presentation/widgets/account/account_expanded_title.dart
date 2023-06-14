@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/get_currency_char.dart';
+import '../../../core/utils/currency_utils/get_currency_char.dart';
 import '../../../domain/entities/account_entity.dart';
 import '../main_page/account_status.dart';
+import '../money_widget.dart';
 
 class AccountExpandedTitle extends StatelessWidget {
   final double price;
@@ -17,7 +18,6 @@ class AccountExpandedTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.titleMedium;
     final priceStyle = Theme.of(context).textTheme.headlineMedium;
-     final currencyChar = getCurrencyChar(account.currency);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,7 +28,11 @@ class AccountExpandedTitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(account.title, style: titleStyle),
-            Text('$price $currencyChar', style: priceStyle),
+            MoneyWidget(
+              currency: account.currency,
+              moneyValue: price,
+              textStyle: priceStyle,
+            ),
           ],
         ),
         AccountStatus(account: account),

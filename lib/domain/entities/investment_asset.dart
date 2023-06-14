@@ -13,6 +13,7 @@ class InvestmentAsset {
   final double averagePurchasePrice;
   final double currentPrice;
   final Instrument instrument;
+
   late final double profit;
   late final double profitPercent;
   late final int totalLots;
@@ -24,10 +25,9 @@ class InvestmentAsset {
     required this.averagePurchasePrice,
     required this.currentPrice,
     required this.instrument,
-    required this.totalLots,
   }) {
     totalLots = lots * instrument.lot;
-    profit = (averagePurchasePrice - currentPrice) * totalLots;
+    profit = (currentPrice - averagePurchasePrice) * totalLots;
     profitPercent = roundPercent(profit / (averagePurchasePrice * totalLots));
     totalCurrentPrice = currentPrice * totalLots;
   }

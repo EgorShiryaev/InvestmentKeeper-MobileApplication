@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/get_currency_char.dart';
+import '../../../core/utils/currency_utils/get_currency_char.dart';
 import '../../../domain/entities/investment_asset.dart';
 import '../profit_widget.dart';
 import 'investment_asset_price_view.dart';
@@ -30,7 +30,7 @@ class InvestmentAssetView extends StatelessWidget {
                 Text(item.instrument.title, style: titleStyle),
                 Text(
                   '${item.totalLots} шт. · '
-                  '${item.currentPrice} $currencyChar',
+                  '${item.averagePurchasePrice} $currencyChar',
                   style: lotsStyle,
                 ),
               ],

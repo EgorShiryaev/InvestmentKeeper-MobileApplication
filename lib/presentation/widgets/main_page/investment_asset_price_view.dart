@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/get_currency_char.dart';
 import '../../../domain/entities/currency.dart';
+import '../money_widget.dart';
 
 class InvestmentAssetPriceView extends StatelessWidget {
   final double price;
@@ -15,11 +15,11 @@ class InvestmentAssetPriceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final priceStyle = Theme.of(context).textTheme.titleMedium;
-    final currencyChar = getCurrencyChar(currency);
-    return Text(
-      '$price $currencyChar',
-      style: priceStyle,
+    final priceStyle = Theme.of(context).textTheme.titleMedium!;
+    return MoneyWidget(
+      moneyValue: price,
+      currency: currency,
+      textStyle: priceStyle,
     );
   }
 }
