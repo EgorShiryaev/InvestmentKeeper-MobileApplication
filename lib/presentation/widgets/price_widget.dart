@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/utils/double_to_string.dart';
 import '../../core/utils/get_currency_char.dart';
 import '../../domain/entities/currency.dart';
 
@@ -19,7 +18,7 @@ class PriceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final currencyChar = getCurrencyChar(currency);
     return Text(
-      '${doubleToString(price)} $currencyChar',
+      '$price $currencyChar',
       style: textStyle,
     );
   }

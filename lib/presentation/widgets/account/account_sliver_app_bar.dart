@@ -44,9 +44,11 @@ class AccountSliverAppBar extends HookWidget {
       return const SizedBox();
     }
 
+    final price = account.currentPrice + account.mainCurrencyDeposit.value;
+
     return LargeSliverAppBarFlexibleSpace(
-      collapsedTitle: AccountCollapsedTitle(account: account),
-      expandedTitle: AccountExpandedTitle(account: account),
+      collapsedTitle: AccountCollapsedTitle(price: price, account: account),
+      expandedTitle: AccountExpandedTitle(price: price, account: account),
     );
   }
 }

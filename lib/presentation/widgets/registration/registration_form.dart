@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/validators/confirm_password_validator.dart';
-import '../../../core/utils/validators/empty_value_validar.dart';
+import '../../../core/utils/validators/empty_value_validator.dart';
 import '../../../core/utils/validators/password_validator.dart';
 import '../../cubits/auth_cubit/auth_cubit.dart';
 import '../../cubits/registration_cubit/registration_cubit.dart';

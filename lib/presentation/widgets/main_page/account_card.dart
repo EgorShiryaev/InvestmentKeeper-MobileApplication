@@ -28,7 +28,7 @@ class AccountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bodyMeduimStyle = Theme.of(context).textTheme.bodyMedium;
     final totalPrice =
-        account.currentPrice + account.mainCurrencyDeposite.value;
+        account.currentPrice + account.mainCurrencyDeposit.value;
     return Card(
       child: InkWell(
         customBorder: RoundedRectangleBorder(
@@ -46,7 +46,7 @@ class AccountCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       InvestmentAssetPriceView(
-                        currency: account.mainCurrencyDeposite.currency,
+                        currency: account.currency,
                         price: totalPrice,
                       ),
                       const SizedBox(height: 4),

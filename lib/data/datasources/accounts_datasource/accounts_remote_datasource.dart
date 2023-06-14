@@ -48,6 +48,20 @@ class AccountsRemoteDatasource extends AccountsDatasource {
   }
 
   @override
+  Future<void> create({required String title}) async {
+    try {
+      setAuthorizationHeader(_requestManager);
+      const url = '${AppSettings.apiVersionV1}/accounts';
+      log('POST $url');
+      final params = {'title': title, 'currency': 'RUB'};
+      await _requestManager.post(url, data: params);
+    } on DioError catch (error) {
+      final exception = getExceptionFromDioError(error);
+      throw exception;
+    }
+  }
+
+  @override
   Future<void> edit({required int id, required String title}) async {
     try {
       setAuthorizationHeader(_requestManager);

@@ -1,14 +1,17 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
+import '../../../core/settings/price_formatter.dart';
+import '../../../core/utils/validators/price_validator.dart';
 import '../../cubits/create_purchase_cubit/create_purchase_cubit.dart';
 import '../../cubits/create_purchase_cubit/create_purchase_state.dart';
 import '../../cubits/user_accounts_cubit/user_accounts_cubit.dart';
 import '../../pages/arguments/create_purchase_page_arguments.dart';
+import '../checkbox_view.dart';
+import '../number_field.dart';
+import '../pressable_field.dart';
 import '../space_between_form_items.dart';
 
 class CreatePurchaseForm extends HookWidget {
@@ -41,8 +44,17 @@ class CreatePurchaseForm extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final dateController = useTextEditingController(text: '123');
+    final dateController = useTextEditingController();
     final timeController = useTextEditingController();
+    final priceController = useTextEditingController();
+    final lotsNumberController = useTextEditingController(text: '0');
+    final commisionController = useTextEditingController();
+
+    final priceFocusNode = useFocusNode();
+    final lotsNumberFocusNode = useFocusNode();
+    final commisionFocusNode = useFocusNode();
+
+    final withdrawFundsFromBalance = useState(true);
 
     final formKey = useRef(GlobalKey<FormState>()).value;
 
@@ -69,31 +81,55 @@ class CreatePurchaseForm extends HookWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(
-                  child: InkWell(
-                    customBorder: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(4),
-                        topRight: Radius.circular(4),
-                      ),
-                    ),
-                    onTap: () {
-                      log('tap');
-                    },
-                    child: Container(
-                      color: Theme.of(context).inputDecorationTheme.fillColor,
-                      width: 60,
-                      height: 60,
-                    ),
+                  child: PressableTextField(
+                    controller: dateController,
+                    label: 'Дата',
+                    onPress: () {},
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: TextFormField(
+                  child: PressableTextField(
                     controller: timeController,
-                    decoration: const InputDecoration(labelText: 'Время'),
+                    label: 'Время',
+                    onPress: () {},
                   ),
                 ),
               ],
+            ),
+            const SpaceBetweenFormItems(),
+            TextFormField(
+              autofocus: true,
+              controller: priceController,
+              focusNode: priceFocusNode,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(labelText: 'Цена покупки'),
+              keyboardType: TextInputType.datetime,
+              inputFormatters: [PriceFormatter()],
+              validator: priceValidator,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+            ),
+            const SpaceBetweenFormItems(),
+            NumberField(
+              controller: lotsNumberController,
+              focusNode: lotsNumberFocusNode,
+              label: 'Количество лотов',
+            ),
+            const SpaceBetweenFormItems(),
+            TextFormField(
+              controller: commisionController,
+              focusNode: commisionFocusNode,
+              textInputAction: TextInputAction.next,
+              decoration: const InputDecoration(labelText: 'Комиссия'),
+              keyboardType: TextInputType.datetime,
+              inputFormatters: [PriceFormatter()],
+              validator: priceValidator,
+            ),
+            const SpaceBetweenFormItems(),
+            CheckBoxView(
+              label: 'Списать средства с счета',
+              value: withdrawFundsFromBalance.value,
+              onPress: (value) => withdrawFundsFromBalance.value = value,
             ),
             const SpaceBetweenFormItems(),
             FilledButton(

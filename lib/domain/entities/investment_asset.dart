@@ -1,6 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../core/utils/round_percent.dart';
 import '../../domain/entities/instrument.dart';
 
 part 'investment_asset.g.dart';
@@ -12,10 +13,10 @@ class InvestmentAsset {
   final double averagePurchasePrice;
   final double currentPrice;
   final Instrument instrument;
-  final int totalLots;
-  final double? totalCurrentPrice;
-  final double? profit;
-  final double? profitPercent;
+  late final double profit;
+  late final double profitPercent;
+  late final int totalLots;
+  late final double totalCurrentPrice;
 
   InvestmentAsset({
     required this.id,
@@ -24,10 +25,12 @@ class InvestmentAsset {
     required this.currentPrice,
     required this.instrument,
     required this.totalLots,
-    this.totalCurrentPrice,
-    this.profit,
-    this.profitPercent,
-  });
+  }) {
+    totalLots = lots * instrument.lot;
+    profit = (averagePurchasePrice - currentPrice) * totalLots;
+    profitPercent = roundPercent(profit / (averagePurchasePrice * totalLots));
+    totalCurrentPrice = currentPrice * totalLots;
+  }
 
   factory InvestmentAsset.fromJson(Map<String, dynamic> json) =>
       _$InvestmentAssetFromJson(json);

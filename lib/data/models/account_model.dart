@@ -1,6 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../domain/entities/currency.dart';
 import '../../domain/entities/currency_deposit.dart';
 import '../../domain/entities/investment_asset.dart';
 
@@ -12,20 +13,18 @@ class AccountModel {
   final String title;
   final double purchasePrice;
   final double currentPrice;
-  final double profit;
-  final double profitPercent;
   final List<InvestmentAsset> items;
   final List<CurrencyDeposit> currencyDeposits;
+  final Currency currency;
 
-  AccountModel({
+  AccountModel( {
     required this.id,
     required this.title,
     required this.purchasePrice,
     required this.currentPrice,
-    required this.profit,
-    required this.profitPercent,
     required this.items,
     required this.currencyDeposits,
+    required this.currency,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) =>

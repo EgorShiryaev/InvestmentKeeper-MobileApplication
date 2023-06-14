@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/utils/double_to_string.dart';
-import '../../core/utils/get_price_with_currency.dart';
+import '../../core/utils/get_currency_char.dart';
 import '../../core/utils/get_profit_color.dart';
 import '../../domain/entities/currency.dart';
 
@@ -22,11 +21,8 @@ class ProfitWidget extends StatelessWidget {
     final color = getProfitTextColor(profit);
 
     final profitStyle = bodySmallStyle!.copyWith(color: color);
-    final profitPersentText = doubleToString(profitPercent);
+    final currencyChar = getCurrencyChar(currency);
 
-    return Text(
-      '${getPriceWithCurrency(profit, currency)} · $profitPersentText%',
-      style: profitStyle,
-    );
+    return Text('$profit $currencyChar · $profitPercent%', style: profitStyle);
   }
 }
