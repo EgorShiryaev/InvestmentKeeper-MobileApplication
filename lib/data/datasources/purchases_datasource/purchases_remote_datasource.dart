@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 import '../../../core/settings/app_settings.dart';
+import '../../../core/utils/auth_utils/set_authorization_header.dart';
 import '../../../core/utils/get_exception_from_dio_error.dart';
-import '../../../core/utils/set_authorization_header.dart';
 import 'purchases_datasource.dart';
 
 class PurchasesRemoteDatasource extends PurchasesDatasource {
@@ -21,22 +21,24 @@ class PurchasesRemoteDatasource extends PurchasesDatasource {
     required int lots,
     required double price,
     required bool withdrawFundsFromBalance,
-    DateTime? date,
+    required DateTime date,
     double? commission,
   }) async {
     try {
       setAuthorizationHeader(_requestManager);
       const url = '${AppSettings.apiVersionV1}/purchases';
       log('POST $url');
+      final dateUtcIso = date.toUtc().toIso8601String();
       final params = {
         'accountId': accountId,
         'instrumentId': instrumentId,
         'lots': lots,
         'price': price,
         'withdrawFundsFromBalance': withdrawFundsFromBalance,
-        'date': date?.toIso8601String(),
+        'date': dateUtcIso,
         'commission': commission,
       };
+      log('BODY ${params}');
       await _requestManager.post(url, data: params);
     } on DioError catch (error) {
       final exception = getExceptionFromDioError(error);

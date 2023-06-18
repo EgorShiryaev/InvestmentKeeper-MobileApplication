@@ -11,8 +11,6 @@ AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       title: json['title'] as String,
       purchasePrice: (json['purchasePrice'] as num).toDouble(),
       currentPrice: (json['currentPrice'] as num).toDouble(),
-      profit: (json['profit'] as num).toDouble(),
-      profitPercent: (json['profitPercent'] as num).toDouble(),
       items: (json['items'] as List<dynamic>)
           .map((e) => InvestmentAsset.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -27,8 +25,6 @@ Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
       'title': instance.title,
       'purchasePrice': instance.purchasePrice,
       'currentPrice': instance.currentPrice,
-      'profit': instance.profit,
-      'profitPercent': instance.profitPercent,
       'items': instance.items,
       'currencyDeposits': instance.currencyDeposits,
     };

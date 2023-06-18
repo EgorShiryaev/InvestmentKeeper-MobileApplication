@@ -1,25 +1,29 @@
+import '../../core/utils/round_percent.dart';
 import '../../data/models/account_model.dart';
 import 'account_structure.dart';
-import 'currency.dart';
 import 'currency_deposit.dart';
 
 class AccountEntity extends AccountModel {
+  late final double profit;
+  late final double profitPercent;
   late final AccountStructure structure;
-  late final CurrencyDeposit mainCurrencyDeposite;
+  late final CurrencyDeposit mainCurrencyDeposit;
 
   AccountEntity({
     required super.id,
     required super.title,
     required super.purchasePrice,
     required super.currentPrice,
-    required super.profit,
-    required super.profitPercent,
     required super.items,
     required super.currencyDeposits,
+    required super.currency,
   }) {
+    profit = currentPrice - purchasePrice;
+    profitPercent =
+        purchasePrice != 0 ? roundPercent(profit / purchasePrice) : 0;
     structure = AccountStructure.fromAccountItems(items, currencyDeposits);
-    mainCurrencyDeposite = currencyDeposits.firstWhere(
-      (element) => element.currency == Currency.rub,
+    mainCurrencyDeposit = currencyDeposits.firstWhere(
+      (element) => element.currency == currency,
     );
   }
 
@@ -29,10 +33,9 @@ class AccountEntity extends AccountModel {
       title: model.title,
       purchasePrice: model.purchasePrice,
       currentPrice: model.currentPrice,
-      profit: model.profit,
-      profitPercent: model.profitPercent,
       items: model.items,
       currencyDeposits: model.currencyDeposits,
+      currency: model.currency,
     );
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
-import '../../../core/utils/show_custom_bottom_sheet.dart';
+import '../../../core/utils/modals_utils/show_custom_bottom_sheet.dart';
 import '../../cubits/account_cubit/account_cubit.dart';
 import '../../cubits/account_cubit/account_state.dart';
 import '../../pages/arguments/account_page_arguments.dart';

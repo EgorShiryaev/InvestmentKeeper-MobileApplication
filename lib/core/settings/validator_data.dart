@@ -7,4 +7,6 @@ class ValidatorData {
       r'специальных символов # ? ! @ $ % ^ & *';
   static String passwordsNotEquals = 'Пароли не совпадают';
   static String trimmedValueIsEmpty = 'Значение не может состоять из пробелов';
+  static String lastCharPriceIsPoint = 'Число не может заканчиваться на точку';
+  static String notBeZero = 'Не может быть нулем';
 }

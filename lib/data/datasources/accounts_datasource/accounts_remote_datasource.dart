@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 import '../../../core/settings/app_settings.dart';
+import '../../../core/utils/auth_utils/set_authorization_header.dart';
 import '../../../core/utils/get_exception_from_dio_error.dart';
-import '../../../core/utils/set_authorization_header.dart';
 import '../../../domain/entities/account_entity.dart';
 import 'accounts_datasource.dart';
 
@@ -37,10 +37,24 @@ class AccountsRemoteDatasource extends AccountsDatasource {
   Future<AccountEntity> get(int id) async {
     try {
       setAuthorizationHeader(_requestManager);
-      const url = '${AppSettings.apiVersionV1}/accounts';
+      final url = '${AppSettings.apiVersionV1}/accounts/$id';
       log('GET $url');
-      final res = await _requestManager.get(url, queryParameters: {'id': id});
+      final res = await _requestManager.get(url);
       return AccountEntity.fromJson(res.data as Map<String, dynamic>);
+    } on DioError catch (error) {
+      final exception = getExceptionFromDioError(error);
+      throw exception;
+    }
+  }
+
+  @override
+  Future<void> create({required String title}) async {
+    try {
+      setAuthorizationHeader(_requestManager);
+      const url = '${AppSettings.apiVersionV1}/accounts';
+      log('POST $url');
+      final params = {'title': title, 'currency': 'RUB'};
+      await _requestManager.post(url, data: params);
     } on DioError catch (error) {
       final exception = getExceptionFromDioError(error);
       throw exception;

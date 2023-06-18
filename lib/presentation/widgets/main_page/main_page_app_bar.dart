@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../cubits/auth_cubit/auth_cubit.dart';
 import '../../themes/app_theme.dart';
 import '../scroll_under_flexible_space.dart';
 
@@ -17,6 +19,12 @@ class MainPageAppBar extends StatelessWidget {
           collapsedTitle: Text('Главная'),
         ),
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.logout_rounded),
+          onPressed: () => BlocProvider.of<AuthCubit>(context).logout(),
+        )
+      ],
     );
   }
 }

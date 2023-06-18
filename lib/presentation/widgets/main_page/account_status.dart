@@ -25,7 +25,7 @@ class AccountStatus extends StatelessWidget {
         child: ProfitWidget(
           profit: account.profit,
           profitPercent: account.profitPercent,
-          currency: account.mainCurrencyDeposite.currency,
+          currency: account.currency,
         ),
       ),
     );

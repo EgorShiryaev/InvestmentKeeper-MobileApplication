@@ -1,4 +1,4 @@
-import '../../domain/entities/currency.dart';
+import '../../../domain/entities/currency.dart';
 
 String getCurrencyChar(Currency currency) {
   switch (currency) {

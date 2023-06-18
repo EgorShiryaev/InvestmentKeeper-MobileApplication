@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-import '../../../core/utils/validators/empty_value_validar.dart';
+import '../../../core/utils/validators/empty_value_validator.dart';
 import '../../cubits/create_account_cubit/create_account_cubit.dart';
 import '../../cubits/create_account_cubit/create_account_state.dart';
 import '../../cubits/user_accounts_cubit/user_accounts_cubit.dart';

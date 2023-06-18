@@ -14,7 +14,7 @@ class CreateAccountAppBar extends StatelessWidget {
         top: false,
         bottom: false,
         child: LargeSliverAppBarFlexibleSpace(
-          collapsedTitle: Text('Брокерского счета'),
+          collapsedTitle: Text('Создать счет'),
         ),
       ),
     );

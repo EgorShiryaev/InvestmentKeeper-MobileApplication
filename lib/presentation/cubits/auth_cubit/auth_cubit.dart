@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/exceptions/exception_impl.dart';
-import '../../../core/settings/app_settings.dart';
 import '../../../data/datasources/auth_datasource/auth_datasource.dart';
 import '../../../data/datasources/login_datasource/login_datasource.dart';
 import '../../../domain/entities/auth_data.dart';
@@ -25,11 +24,10 @@ class AuthCubit extends Cubit<AuthState> {
         emit(UserIsUnauthState());
         return;
       }
-      final currentUser = await _loginDatasource.login(
+      await _loginDatasource.login(
         phoneNumber: data.phoneNumber,
         password: data.password,
       );
-      AppSettings.currentUser = currentUser;
       emit(UserIsAuthState());
     } catch (error) {
       final message = error is ExceptionImpl ? error.message : error.toString();

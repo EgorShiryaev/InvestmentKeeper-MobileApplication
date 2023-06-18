@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 import '../../../core/settings/app_settings.dart';
-import '../../../core/utils/encode_password.dart';
+import '../../../core/utils/auth_utils/encode_password.dart';
 import '../../../core/utils/get_exception_from_dio_error.dart';
 import '../../../domain/entities/user.dart';
 import 'login_datasource.dart';
@@ -32,7 +32,9 @@ class LoginRemoteDatasource extends LoginDatasource {
         data: params,
       );
 
-      return User.fromJson(response.data);
+      final user = User.fromJson(response.data);
+      AppSettings.currentUser = user;
+      return user;
     } on DioError catch (error) {
       final exception = getExceptionFromDioError(error);
       throw exception;

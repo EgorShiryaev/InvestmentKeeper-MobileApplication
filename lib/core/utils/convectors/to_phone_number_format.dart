@@ -1,4 +1,4 @@
-import '../settings/phone_number_format.dart';
+import '../../settings/phone_number_format.dart';
 
 String toPhoneNumberFormat(String value) {
   final buffer = StringBuffer(PhoneNumberFormat.code);

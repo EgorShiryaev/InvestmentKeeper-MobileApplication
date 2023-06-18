@@ -1,3 +1,4 @@
+
 bool checkAllCharactersToRegex(String stroke, RegExp regExp) {
   final matches = regExp.allMatches(stroke);
 

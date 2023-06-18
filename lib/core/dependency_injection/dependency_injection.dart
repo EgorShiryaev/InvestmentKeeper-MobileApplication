@@ -19,8 +19,8 @@ void dependencyInjection() {
   registrationDependencyInjection();
   authCubitDependencyInjection();
   userAccountsCubitDependencyInjection();
-  createAccountCubitDependencyInjection();
   accountCubitDependencyInjection();
+  createAccountCubitDependencyInjection();
   editAccountCubitDependencyInjection();
   createPurchaseCubitDependencyInjection();
 }
