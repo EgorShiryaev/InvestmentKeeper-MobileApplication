@@ -1,8 +1,6 @@
 // ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
-import 'auth_data.dart';
-
 part 'user.g.dart';
 
 @JsonSerializable()

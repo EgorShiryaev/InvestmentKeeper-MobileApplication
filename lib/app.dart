@@ -6,6 +6,7 @@ import 'presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'presentation/pages/account_page.dart';
 import 'presentation/pages/create_account_page.dart';
 import 'presentation/pages/create_purchase_page.dart';
+import 'presentation/pages/create_sale_page.dart';
 import 'presentation/pages/enter_phone_number_page.dart';
 import 'presentation/pages/login_page.dart';
 import 'presentation/pages/main_page.dart';
@@ -61,6 +62,10 @@ class App extends StatelessWidget {
           GetPage(
             name: CreatePurchasePage.routeName,
             page: () => const CreatePurchasePage(),
+          ),
+          GetPage(
+            name: CreateSalePage.routeName,
+            page: () => const CreateSalePage(),
           ),
         ],
       ),
