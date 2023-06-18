@@ -12,16 +12,16 @@ import '../../../core/utils/modals_utils/show_calendar.dart';
 import '../../../core/utils/modals_utils/show_clock.dart';
 import '../../../core/utils/validators/price_validator.dart';
 import '../../cubits/account_cubit/account_cubit.dart';
-import '../../cubits/create_purchase_cubit/create_purchase_cubit.dart';
-import '../../cubits/create_purchase_cubit/create_purchase_state.dart';
-import '../../pages/arguments/create_purchase_page_arguments.dart';
+import '../../cubits/create_sale_cubit/create_sale_cubit.dart';
+import '../../cubits/create_sale_cubit/create_sale_state.dart';
+import '../../pages/arguments/create_sale_page_arguments.dart';
 import '../checkbox_view.dart';
 import '../number_field.dart';
 import '../pressable_field.dart';
 import '../space_between_form_items.dart';
 
-class CreatePurchaseForm extends HookWidget {
-  const CreatePurchaseForm({super.key});
+class CreateSaleForm extends HookWidget {
+  const CreateSaleForm({super.key});
 
   void submitForm(
     BuildContext context, {
@@ -35,7 +35,7 @@ class CreatePurchaseForm extends HookWidget {
     String? commissionValue,
   }) {
     if (formKey.currentState?.validate() ?? false) {
-      final args = Get.arguments as CreatePurchasePageArguments;
+      final args = Get.arguments as CreateSalePageArguments;
       FocusScope.of(context).unfocus();
       final lots = int.parse(lotsValue);
       final price = getValueOfPrice(priceValue);
@@ -47,7 +47,7 @@ class CreatePurchaseForm extends HookWidget {
         timeValue.hour,
         timeValue.minute,
       );
-      Get.find<CreatePurchaseCubit>().create(
+      Get.find<CreateSaleCubit>().create(
         accountId: args.account.id,
         instrumentId: instrumentId,
         lots: lots,
@@ -63,7 +63,7 @@ class CreatePurchaseForm extends HookWidget {
   Widget build(BuildContext context) {
     final dateState = useState(DateTime.now());
     final timeState = useState(TimeOfDay.now());
-    final withdrawFundsFromBalance = useState(true);
+    final depositFundsToAccount = useState(true);
 
     final dateController = useTextEditingController();
     final timeController = useTextEditingController();
@@ -112,23 +112,23 @@ class CreatePurchaseForm extends HookWidget {
         instrumentId: 1,
         lotsValue: lotsNumberController.text,
         priceValue: priceController.text,
-        withdrawFundsFromBalance: withdrawFundsFromBalance.value,
+        withdrawFundsFromBalance: depositFundsToAccount.value,
       );
     }, [
       dateState.value,
       timeState.value,
       lotsNumberController.text,
       priceController.text,
-      withdrawFundsFromBalance.value
+      depositFundsToAccount.value
     ]);
 
-    return BlocListener<CreatePurchaseCubit, CreatePurchaseState>(
+    return BlocListener<CreateSaleCubit, CreateSaleState>(
       listener: (context, state) {
-        if (state is SuccessCreatePurchaseState) {
-          final args = Get.arguments as CreatePurchasePageArguments;
+        if (state is SuccessCreateSaleState) {
+          final args = Get.arguments as CreateSalePageArguments;
           Get.back();
           Get.find<AccountCubit>().load(args.account.id);
-        } else if (state is FailureCreatePurchaseState) {
+        } else if (state is FailureCreateSaleState) {
           Get.snackbar('Произошла ошибка!', state.message);
         }
       },
@@ -163,7 +163,7 @@ class CreatePurchaseForm extends HookWidget {
               controller: priceController,
               focusNode: priceFocusNode,
               textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(labelText: 'Цена покупки'),
+              decoration: const InputDecoration(labelText: 'Цена продажи'),
               keyboardType: TextInputType.datetime,
               inputFormatters: [PriceFormatter()],
               validator: priceValidator,
@@ -186,9 +186,9 @@ class CreatePurchaseForm extends HookWidget {
             ),
             const SpaceBetweenFormItems(),
             CheckBoxView(
-              label: 'Списать средства с счета',
-              value: withdrawFundsFromBalance.value,
-              onPress: (value) => withdrawFundsFromBalance.value = value,
+              label: 'Зачислить средства на счет',
+              value: depositFundsToAccount.value,
+              onPress: (value) => depositFundsToAccount.value = value,
             ),
             const SpaceBetweenFormItems(),
             FilledButton(

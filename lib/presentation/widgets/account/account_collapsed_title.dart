@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/currency_utils/get_currency_char.dart';
 import '../../../domain/entities/account_entity.dart';
 import '../money_widget.dart';
 import '../profit_widget.dart';

@@ -28,7 +28,6 @@ class AccountCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final bodyMeduimStyle = Theme.of(context).textTheme.bodyMedium;
     final totalPrice = account.currentPrice + account.mainCurrencyDeposit.value;
-    final totalPriceStyle = Theme.of(context).textTheme.titleMedium;
     return Card(
       child: InkWell(
         customBorder: RoundedRectangleBorder(

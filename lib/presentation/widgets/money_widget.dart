@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/utils/currency_utils/get_currency_char.dart';
 import '../../core/utils/get_money_value_text.dart';
-import '../../core/utils/round_double.dart';
 import '../../domain/entities/currency.dart';
 
 class MoneyWidget extends StatelessWidget {
