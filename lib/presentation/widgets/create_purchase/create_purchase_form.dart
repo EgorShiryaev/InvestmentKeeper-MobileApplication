@@ -1,23 +1,22 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 import '../../../core/settings/price_formatter.dart';
-import '../../../core/utils/formaters/format_date_to_string.dart';
-import '../../../core/utils/formaters/format_time_to_string.dart';
+import '../../../core/utils/currency_utils/get_currency_char.dart';
 import '../../../core/utils/formaters/get_value_of_price.dart';
-import '../../../core/utils/modals_utils/show_calendar.dart';
-import '../../../core/utils/modals_utils/show_clock.dart';
+import '../../../core/utils/get_money_value_text.dart';
 import '../../../core/utils/validators/price_validator.dart';
+import '../../../domain/entities/instrument.dart';
 import '../../cubits/account_cubit/account_cubit.dart';
 import '../../cubits/create_purchase_cubit/create_purchase_cubit.dart';
 import '../../cubits/create_purchase_cubit/create_purchase_state.dart';
 import '../../pages/arguments/create_purchase_page_arguments.dart';
 import '../checkbox_view.dart';
+import '../date_time_field.dart';
 import '../number_field.dart';
-import '../pressable_field.dart';
+import '../selected_instrument_view.dart';
 import '../space_between_form_items.dart';
 
 class CreatePurchaseForm extends HookWidget {
@@ -26,7 +25,7 @@ class CreatePurchaseForm extends HookWidget {
   void submitForm(
     BuildContext context, {
     required GlobalKey<FormState> formKey,
-    required int instrumentId,
+    required int? instrumentId,
     required String lotsValue,
     required String priceValue,
     required bool withdrawFundsFromBalance,
@@ -49,7 +48,7 @@ class CreatePurchaseForm extends HookWidget {
       );
       Get.find<CreatePurchaseCubit>().create(
         accountId: args.account.id,
-        instrumentId: instrumentId,
+        instrumentId: instrumentId!,
         lots: lots,
         price: price!,
         withdrawFundsFromBalance: withdrawFundsFromBalance,
@@ -63,10 +62,14 @@ class CreatePurchaseForm extends HookWidget {
   Widget build(BuildContext context) {
     final dateState = useState(DateTime.now());
     final timeState = useState(TimeOfDay.now());
+    final selectedInstrument = useState<Instrument?>(null);
     final withdrawFundsFromBalance = useState(true);
+    final priceState = useState('');
+    final lotsState = useState('');
+    final commissionState = useState('');
 
-    final dateController = useTextEditingController();
-    final timeController = useTextEditingController();
+    final totalPriceState = useState('');
+
     final priceController = useTextEditingController();
     final lotsNumberController = useTextEditingController(text: '0');
     final commisionController = useTextEditingController();
@@ -77,39 +80,13 @@ class CreatePurchaseForm extends HookWidget {
 
     final formKey = useRef(GlobalKey<FormState>()).value;
 
-    useEffect(() {
-      dateController.text = formatDateToString(dateState.value);
-      return null;
-    }, [dateState.value]);
-
-    useEffect(() {
-      timeController.text = formatTimeToString(timeState.value);
-      return null;
-    }, [timeState.value]);
-
-    final onPressDateField = useCallback(() {
-      showCalendar(context, currentDate: dateState.value).then((value) {
-        if (value != null) {
-          dateState.value = value;
-        }
-      });
-    }, []);
-
-    final onPressTimeField = useCallback(() {
-      showClock(context, currentTime: timeState.value).then((value) {
-        if (value != null) {
-          timeState.value = value;
-        }
-      });
-    }, []);
-
     final submit = useCallback(() {
       submitForm(
         context,
         formKey: formKey,
         dateValue: dateState.value,
         timeValue: timeState.value,
-        instrumentId: 1,
+        instrumentId: selectedInstrument.value?.id,
         lotsValue: lotsNumberController.text,
         priceValue: priceController.text,
         withdrawFundsFromBalance: withdrawFundsFromBalance.value,
@@ -119,7 +96,32 @@ class CreatePurchaseForm extends HookWidget {
       timeState.value,
       lotsNumberController.text,
       priceController.text,
-      withdrawFundsFromBalance.value
+      withdrawFundsFromBalance.value,
+      selectedInstrument.value
+    ]);
+
+    useEffect(() {
+      final price = getValueOfPrice(priceController.text);
+      final lots = int.parse(lotsNumberController.text);
+      final instrument = selectedInstrument.value;
+
+      if (price != 0 && price != null && lots != 0 && instrument != null) {
+        final totalLots = lots * instrument.lot;
+        final comission = getValueOfPrice(commisionController.text) ?? 0;
+        final newTotalPrice = price * totalLots + comission;
+        final currencyChar = getCurrencyChar(instrument.currency);
+
+        totalPriceState.value =
+            newTotalPrice != 0 && withdrawFundsFromBalance.value
+                ? '${getMoneyValueText(newTotalPrice)} $currencyChar'
+                : '';
+      }
+    }, [
+      priceState.value,
+      lotsState.value,
+      commissionState.value,
+      selectedInstrument.value,
+      withdrawFundsFromBalance.value,
     ]);
 
     return BlocListener<CreatePurchaseCubit, CreatePurchaseState>(
@@ -137,26 +139,9 @@ class CreatePurchaseForm extends HookWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: PressableTextField(
-                    controller: dateController,
-                    label: 'Дата',
-                    onPress: onPressDateField,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: PressableTextField(
-                    controller: timeController,
-                    label: 'Время',
-                    onPress: onPressTimeField,
-                  ),
-                ),
-              ],
-            ),
+            DateTimeField(dateState: dateState, timeState: timeState),
+            const SpaceBetweenFormItems(),
+            SelectedInstrumentView(instrumentState: selectedInstrument),
             const SpaceBetweenFormItems(),
             TextFormField(
               autofocus: true,
@@ -168,12 +153,14 @@ class CreatePurchaseForm extends HookWidget {
               inputFormatters: [PriceFormatter()],
               validator: priceValidator,
               onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              onChanged: (value) => priceState.value = value,
             ),
             const SpaceBetweenFormItems(),
             NumberField(
               controller: lotsNumberController,
               focusNode: lotsNumberFocusNode,
               label: 'Количество лотов',
+              state: lotsState,
             ),
             const SpaceBetweenFormItems(),
             TextFormField(
@@ -183,6 +170,7 @@ class CreatePurchaseForm extends HookWidget {
               decoration: const InputDecoration(labelText: 'Комиссия'),
               keyboardType: TextInputType.datetime,
               inputFormatters: [PriceFormatter()],
+              onChanged: (value) => commissionState.value = value,
             ),
             const SpaceBetweenFormItems(),
             CheckBoxView(
@@ -193,7 +181,7 @@ class CreatePurchaseForm extends HookWidget {
             const SpaceBetweenFormItems(),
             FilledButton(
               onPressed: submit,
-              child: const Text('Создать'),
+              child: Text('Создать ${totalPriceState.value}'),
             )
           ],
         ),

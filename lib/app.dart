@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:investment_keeper/presentation/pages/create_withdrawal_page.dart';
 
 import 'presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'presentation/pages/account_page.dart';
@@ -9,11 +8,13 @@ import 'presentation/pages/create_account_page.dart';
 import 'presentation/pages/create_purchase_page.dart';
 import 'presentation/pages/create_refill_page.dart';
 import 'presentation/pages/create_sale_page.dart';
+import 'presentation/pages/create_withdrawal_page.dart';
 import 'presentation/pages/enter_phone_number_page.dart';
 import 'presentation/pages/login_page.dart';
 import 'presentation/pages/main_page.dart';
 import 'presentation/pages/registration_page.dart';
 import 'presentation/pages/rename_account_page.dart';
+import 'presentation/pages/select_instrument_page.dart';
 import 'presentation/pages/splash_page.dart';
 import 'presentation/themes/app_theme.dart';
 
@@ -76,6 +77,10 @@ class App extends StatelessWidget {
           GetPage(
             name: CreateWithdrawalPage.routeName,
             page: () => const CreateWithdrawalPage(),
+          ),
+          GetPage(
+            name: SelectInstrumentPage.routeName,
+            page: () => const SelectInstrumentPage(),
           ),
         ],
       ),

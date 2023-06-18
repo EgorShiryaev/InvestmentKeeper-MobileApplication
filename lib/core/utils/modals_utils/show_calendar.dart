@@ -4,16 +4,14 @@ final firstDate = DateTime(1950);
 
 Future<DateTime?> showCalendar(
   BuildContext context, {
-  required DateTime? currentDate,
+  required DateTime currentDate,
 }) {
   final lastDate = DateTime.now();
-  final initialDate = DateTime.now();
 
   return showDatePicker(
     context: context,
-    initialDate: initialDate,
+    initialDate: currentDate,
     firstDate: firstDate,
     lastDate: lastDate,
-    currentDate: currentDate ?? initialDate,
   );
 }

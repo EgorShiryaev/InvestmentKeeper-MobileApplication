@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/exceptions/exception_impl.dart';
-import '../../../data/datasources/refills_datasource/refills_datasource.dart';
 import '../../../data/datasources/withdrawals_datasource/withdrawals_datasource.dart';
 import '../../../domain/entities/currency.dart';
 import 'create_withdrawal_state.dart';

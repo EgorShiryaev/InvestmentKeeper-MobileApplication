@@ -15,7 +15,7 @@ class CreateSaleCubit extends Cubit<CreateSaleState> {
     required int instrumentId,
     required int lots,
     required double price,
-    required bool withdrawFundsFromBalance,
+    required bool depositFundsToAccount,
     required DateTime date,
     double? commission,
   }) async {
@@ -26,7 +26,7 @@ class CreateSaleCubit extends Cubit<CreateSaleState> {
         instrumentId: instrumentId,
         lots: lots,
         price: price,
-        addFundsFromSaleToBalance: withdrawFundsFromBalance,
+        addFundsFromSaleToBalance: depositFundsToAccount,
         date: date,
         commission: commission,
       );

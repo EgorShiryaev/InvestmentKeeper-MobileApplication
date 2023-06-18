@@ -17,6 +17,8 @@ AccountModel _$AccountModelFromJson(Map<String, dynamic> json) => AccountModel(
       currencyDeposits: (json['currencyDeposits'] as List<dynamic>)
           .map((e) => CurrencyDeposit.fromJson(e as Map<String, dynamic>))
           .toList(),
+      currency: $enumDecodeNullable(_$CurrencyEnumMap, json['currency']) ??
+          Currency.rub,
     );
 
 Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
@@ -27,4 +29,9 @@ Map<String, dynamic> _$AccountModelToJson(AccountModel instance) =>
       'currentPrice': instance.currentPrice,
       'items': instance.items,
       'currencyDeposits': instance.currencyDeposits,
+      'currency': _$CurrencyEnumMap[instance.currency]!,
     };
+
+const _$CurrencyEnumMap = {
+  Currency.rub: 'RUB',
+};
