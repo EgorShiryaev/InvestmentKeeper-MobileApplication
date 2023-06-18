@@ -1,5 +1,7 @@
 import 'package:flutter/services.dart';
 
+final numberRegExp = RegExp(r'^[0-9.]+$');
+
 class PriceFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
@@ -14,7 +16,9 @@ class PriceFormatter extends TextInputFormatter {
       if (element == '.' && buffer.toString().contains('.')) {
         continue;
       }
-      buffer.write(element);
+      if (numberRegExp.hasMatch(element)) {
+        buffer.write(element);
+      }
     }
     if (!buffer.toString().contains(' ')) {
       buffer.write(' ');
@@ -26,7 +30,7 @@ class PriceFormatter extends TextInputFormatter {
     final newText = buffer.toString();
     return TextEditingValue(
       text: newText,
-      selection: TextSelection.collapsed(offset: newText.length),
+      selection: TextSelection.collapsed(offset: newText.length - 2),
     );
   }
 }

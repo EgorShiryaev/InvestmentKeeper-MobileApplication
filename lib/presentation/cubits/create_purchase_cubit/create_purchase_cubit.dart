@@ -16,7 +16,7 @@ class CreatePurchaseCubit extends Cubit<CreatePurchaseState> {
     required int lots,
     required double price,
     required bool withdrawFundsFromBalance,
-    DateTime? date,
+    required DateTime date,
     double? commission,
   }) async {
     try {

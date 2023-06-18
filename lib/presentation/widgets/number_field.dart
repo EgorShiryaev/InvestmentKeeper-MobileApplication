@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../core/settings/number_formatter.dart';
 import '../../core/utils/validators/number_validator.dart';
 
+const iconColor = Color(0xFF424242);
+
 class NumberField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -45,11 +47,17 @@ class NumberField extends StatelessWidget {
         labelText: label,
         prefixIcon: IconButton(
           onPressed: decrement,
-          icon: const Icon(Icons.remove_rounded),
+          icon: const Icon(
+            Icons.remove_rounded,
+            color: iconColor,
+          ),
         ),
         suffixIcon: IconButton(
           onPressed: increment,
-          icon: const Icon(Icons.add_rounded),
+          icon: const Icon(
+            Icons.add_rounded,
+            color: iconColor,
+          ),
         ),
       ),
       keyboardType: TextInputType.number,

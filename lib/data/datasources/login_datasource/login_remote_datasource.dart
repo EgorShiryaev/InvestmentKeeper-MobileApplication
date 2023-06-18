@@ -32,7 +32,9 @@ class LoginRemoteDatasource extends LoginDatasource {
         data: params,
       );
 
-      return User.fromJson(response.data);
+      final user = User.fromJson(response.data);
+      AppSettings.currentUser = user;
+      return user;
     } on DioError catch (error) {
       final exception = getExceptionFromDioError(error);
       throw exception;

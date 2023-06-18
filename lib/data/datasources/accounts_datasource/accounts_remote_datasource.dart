@@ -37,9 +37,9 @@ class AccountsRemoteDatasource extends AccountsDatasource {
   Future<AccountEntity> get(int id) async {
     try {
       setAuthorizationHeader(_requestManager);
-      const url = '${AppSettings.apiVersionV1}/accounts';
+      final url = '${AppSettings.apiVersionV1}/accounts/$id';
       log('GET $url');
-      final res = await _requestManager.get(url, queryParameters: {'id': id});
+      final res = await _requestManager.get(url);
       return AccountEntity.fromJson(res.data as Map<String, dynamic>);
     } on DioError catch (error) {
       final exception = getExceptionFromDioError(error);

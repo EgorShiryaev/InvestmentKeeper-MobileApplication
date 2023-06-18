@@ -5,7 +5,7 @@ abstract class PurchasesDatasource {
     required int lots,
     required double price,
     required bool withdrawFundsFromBalance,
-    DateTime? date,
+    required DateTime date,
     double? commission,
   });
 }
