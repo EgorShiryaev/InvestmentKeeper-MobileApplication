@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:investment_keeper/presentation/pages/create_withdrawal_page.dart';
 
 import 'presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'presentation/pages/account_page.dart';
@@ -71,6 +72,10 @@ class App extends StatelessWidget {
           GetPage(
             name: CreateRefillPage.routeName,
             page: () => const CreateRefillPage(),
+          ),
+          GetPage(
+            name: CreateWithdrawalPage.routeName,
+            page: () => const CreateWithdrawalPage(),
           ),
         ],
       ),

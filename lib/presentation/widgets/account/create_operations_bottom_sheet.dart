@@ -5,9 +5,11 @@ import '../../../domain/entities/account_entity.dart';
 import '../../pages/arguments/create_purchase_page_arguments.dart';
 import '../../pages/arguments/create_refill_page_arguments.dart';
 import '../../pages/arguments/create_sale_page_arguments.dart';
+import '../../pages/arguments/create_withdrawal_page_arguments.dart';
 import '../../pages/create_purchase_page.dart';
 import '../../pages/create_refill_page.dart';
 import '../../pages/create_sale_page.dart';
+import '../../pages/create_withdrawal_page.dart';
 import '../../themes/app_theme.dart';
 import '../iconed_button.dart';
 
@@ -36,6 +38,14 @@ class CreateOperationsBottomSheet extends StatelessWidget {
     Get.toNamed(
       CreateRefillPage.routeName,
       arguments: CreateRefillPageArguments(account: account),
+    );
+  }
+
+  void navigateToCreateWithdrawalPage() {
+    hideBottomSheet();
+    Get.toNamed(
+      CreateWithdrawalPage.routeName,
+      arguments: CreateWithdrawalPageArguments(account: account),
     );
   }
 
@@ -70,7 +80,7 @@ class CreateOperationsBottomSheet extends StatelessWidget {
           IconedButton(
             icon: Icons.upload_rounded,
             label: 'Вывод средств',
-            onPress: () => {},
+            onPress: navigateToCreateWithdrawalPage,
           ),
         ],
       ),
