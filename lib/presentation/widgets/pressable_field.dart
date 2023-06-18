@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/utils/validators/empty_value_validator.dart';
+
 class PressableTextField extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onPress;
@@ -18,16 +20,14 @@ class PressableTextField extends StatelessWidget {
         TextFormField(
           controller: controller,
           decoration: InputDecoration(labelText: label),
+          validator: emptyValueValidator,
         ),
         Positioned.fill(
           child: Material(
             color: Colors.transparent,
             child: InkWell(
               customBorder: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(4),
-                  topRight: Radius.circular(4),
-                ),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
               ),
               onTap: onPress,
               splashColor: Colors.white.withOpacity(0.25),

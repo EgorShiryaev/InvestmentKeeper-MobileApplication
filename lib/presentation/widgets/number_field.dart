@@ -9,11 +9,13 @@ class NumberField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final String label;
+  final ValueNotifier<String> state;
   const NumberField({
     super.key,
     required this.controller,
     required this.label,
     required this.focusNode,
+    required this.state,
   });
 
   void decrement() {
@@ -27,6 +29,7 @@ class NumberField extends StatelessWidget {
       text: newValue,
       selection: TextSelection.collapsed(offset: newValue.length),
     );
+    state.value = newValue;
   }
 
   void increment() {
@@ -35,6 +38,7 @@ class NumberField extends StatelessWidget {
       text: newValue,
       selection: TextSelection.collapsed(offset: newValue.length),
     );
+    state.value = newValue;
   }
 
   @override
@@ -64,6 +68,7 @@ class NumberField extends StatelessWidget {
       inputFormatters: [NumberFormatter()],
       validator: numberValidator,
       onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+      onChanged: (v) => state.value = v,
     );
   }
 }

@@ -12,8 +12,9 @@ InvestmentAsset _$InvestmentAssetFromJson(Map<String, dynamic> json) =>
       lots: json['lots'] as int,
       averagePurchasePrice: (json['averagePurchasePrice'] as num).toDouble(),
       currentPrice: (json['currentPrice'] as num).toDouble(),
-      instrument:
-          Instrument.fromJson(json['instrument'] as Map<String, dynamic>),
+      instrument: Instrument.fromJson(
+        json['instrument'] as Map<String, dynamic>,
+      ),
     );
 
 Map<String, dynamic> _$InvestmentAssetToJson(InvestmentAsset instance) =>
@@ -23,4 +24,8 @@ Map<String, dynamic> _$InvestmentAssetToJson(InvestmentAsset instance) =>
       'averagePurchasePrice': instance.averagePurchasePrice,
       'currentPrice': instance.currentPrice,
       'instrument': instance.instrument,
+      'profit': instance.profit,
+      'profitPercent': instance.profitPercent,
+      'totalLots': instance.totalLots,
+      'totalCurrentPrice': instance.totalCurrentPrice,
     };
