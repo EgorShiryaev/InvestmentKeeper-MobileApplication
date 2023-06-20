@@ -1,7 +1,7 @@
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 
 class CreatePurchasePageArguments {
-  final AccountEntity account;
+  final Account account;
 
   CreatePurchasePageArguments({required this.account});
 }

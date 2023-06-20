@@ -4,7 +4,7 @@ import '../../../domain/entities/currency.dart';
 import '../money_widget.dart';
 
 class InvestmentAssetPriceView extends StatelessWidget {
-  final double price;
+  final num price;
   final Currency currency;
 
   const InvestmentAssetPriceView({
@@ -17,7 +17,7 @@ class InvestmentAssetPriceView extends StatelessWidget {
   Widget build(BuildContext context) {
     final priceStyle = Theme.of(context).textTheme.titleMedium!;
     return MoneyWidget(
-      moneyValue: price,
+      value: price,
       currency: currency,
       textStyle: priceStyle,
     );

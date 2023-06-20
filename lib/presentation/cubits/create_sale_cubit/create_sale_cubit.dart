@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/exceptions/exception_impl.dart';
 import '../../../data/datasources/sales_datasource/sales_datasource.dart';
+import '../../../domain/entities/money.dart';
 import 'create_sale_state.dart';
 
 class CreateSaleCubit extends Cubit<CreateSaleState> {
@@ -14,10 +15,10 @@ class CreateSaleCubit extends Cubit<CreateSaleState> {
     required int accountId,
     required int instrumentId,
     required int lots,
-    required double price,
+    required Money price,
     required bool depositFundsToAccount,
     required DateTime date,
-    double? commission,
+    Money? commission,
   }) async {
     try {
       emit(LoadingCreateSaleState());

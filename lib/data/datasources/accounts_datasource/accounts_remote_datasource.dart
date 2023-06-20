@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import '../../../core/settings/app_settings.dart';
 import '../../../core/utils/auth_utils/set_authorization_header.dart';
 import '../../../core/utils/get_exception_from_dio_error.dart';
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import 'accounts_datasource.dart';
 
 class AccountsRemoteDatasource extends AccountsDatasource {
@@ -16,7 +16,7 @@ class AccountsRemoteDatasource extends AccountsDatasource {
   }) : _requestManager = requestManager;
 
   @override
-  Future<List<AccountEntity>> getAll() async {
+  Future<List<Account>> getAll() async {
     try {
       setAuthorizationHeader(_requestManager);
       const url = '${AppSettings.apiVersionV1}/accounts';
@@ -25,7 +25,7 @@ class AccountsRemoteDatasource extends AccountsDatasource {
       // ignore: avoid_dynamic_calls
       final data = res.data['accounts'] as List;
       return data
-          .map((v) => AccountEntity.fromJson(v as Map<String, dynamic>))
+          .map((v) => Account.fromJson(v as Map<String, dynamic>))
           .toList();
     } on DioError catch (error) {
       final exception = getExceptionFromDioError(error);
@@ -34,13 +34,13 @@ class AccountsRemoteDatasource extends AccountsDatasource {
   }
 
   @override
-  Future<AccountEntity> get(int id) async {
+  Future<Account> get(int id) async {
     try {
       setAuthorizationHeader(_requestManager);
       final url = '${AppSettings.apiVersionV1}/accounts/$id';
       log('GET $url');
       final res = await _requestManager.get(url);
-      return AccountEntity.fromJson(res.data as Map<String, dynamic>);
+      return Account.fromJson(res.data as Map<String, dynamic>);
     } on DioError catch (error) {
       final exception = getExceptionFromDioError(error);
       throw exception;

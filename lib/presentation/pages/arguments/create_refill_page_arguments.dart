@@ -1,7 +1,7 @@
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 
 class CreateRefillPageArguments {
-  final AccountEntity account;
+  final Account account;
 
   CreateRefillPageArguments({required this.account});
 }

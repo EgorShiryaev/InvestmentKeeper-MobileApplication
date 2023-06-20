@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import '../../cubits/user_accounts_cubit/user_accounts_cubit.dart';
 import '../../pages/account_page.dart';
 import '../../pages/arguments/account_page_arguments.dart';
@@ -11,7 +11,7 @@ import 'investment_asset_price_view.dart';
 import 'investment_asset_view.dart';
 
 class AccountCard extends StatelessWidget {
-  final AccountEntity account;
+  final Account account;
   const AccountCard({super.key, required this.account});
 
   void navigateToAccountPage() {
@@ -27,7 +27,6 @@ class AccountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bodyMeduimStyle = Theme.of(context).textTheme.bodyMedium;
-    final totalPrice = account.currentPrice + account.mainCurrencyDeposit.value;
     return Card(
       child: InkWell(
         customBorder: RoundedRectangleBorder(
@@ -46,7 +45,7 @@ class AccountCard extends StatelessWidget {
                     children: [
                       InvestmentAssetPriceView(
                         currency: account.currency,
-                        price: totalPrice,
+                        price:  account.totalMoneyValue,
                       ),
                       const SizedBox(height: 4),
                       Text(account.title, style: bodyMeduimStyle),

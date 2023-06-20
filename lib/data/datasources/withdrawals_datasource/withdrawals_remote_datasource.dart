@@ -7,6 +7,7 @@ import '../../../core/utils/auth_utils/set_authorization_header.dart';
 import '../../../core/utils/convectors/currency_to_josn.dart';
 import '../../../core/utils/get_exception_from_dio_error.dart';
 import '../../../domain/entities/currency.dart';
+import '../../../domain/entities/money.dart';
 import 'withdrawals_datasource.dart';
 
 class WithdrawalsRemoteDatasource extends WithdrawalsDatasource {
@@ -19,7 +20,7 @@ class WithdrawalsRemoteDatasource extends WithdrawalsDatasource {
   @override
   Future<void> create({
     required int accountId,
-    required double value,
+    required Money value,
     required Currency currency,
     required DateTime date,
   }) async {

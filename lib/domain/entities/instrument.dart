@@ -1,12 +1,6 @@
-// ignore: depend_on_referenced_packages
-import 'package:json_annotation/json_annotation.dart';
-
 import 'currency.dart';
 import 'instrument_type.dart';
 
-part 'instrument.g.dart';
-
-@JsonSerializable()
 class Instrument {
   final int id;
   final String figi;
@@ -23,11 +17,18 @@ class Instrument {
     required this.title,
     required this.lot,
     required this.type,
-    required this.currency, 
+    required this.currency,
   });
 
-  factory Instrument.fromJson(Map<String, dynamic> json) =>
-      _$InstrumentFromJson(json);
-
-  Map<String, dynamic> toJson() => _$InstrumentToJson(this);
+  factory Instrument.fromJson(Map<String, dynamic> json) {
+    return Instrument(
+      id: json['id'],
+      figi: json['figi'],
+      ticker: json['ticker'],
+      title: json['title'],
+      lot: json['lot'],
+      type: instrumentTypesMap[json['type']]!,
+      currency: currenciesMap[json['currency']]!,
+    );
+  }
 }

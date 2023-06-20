@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/exceptions/exception_impl.dart';
 import '../../../data/datasources/purchases_datasource/purchases_datasource.dart';
+import '../../../domain/entities/money.dart';
 import 'create_purchase_state.dart';
 
 class CreatePurchaseCubit extends Cubit<CreatePurchaseState> {
@@ -14,10 +15,10 @@ class CreatePurchaseCubit extends Cubit<CreatePurchaseState> {
     required int accountId,
     required int instrumentId,
     required int lots,
-    required double price,
+    required Money price,
     required bool withdrawFundsFromBalance,
     required DateTime date,
-    double? commission,
+    Money? commission,
   }) async {
     try {
       emit(LoadingCreatePurchaseState());

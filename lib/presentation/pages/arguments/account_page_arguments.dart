@@ -1,7 +1,7 @@
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 
 class AccountPageArguments {
-  final AccountEntity account;
+  final Account account;
 
   AccountPageArguments({required this.account});
 }

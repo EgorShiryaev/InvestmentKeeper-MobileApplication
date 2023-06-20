@@ -6,7 +6,7 @@ import '../../core/utils/get_profit_color.dart';
 import '../../domain/entities/currency.dart';
 
 class ProfitWidget extends StatelessWidget {
-  final double profit;
+  final num profit;
   final double profitPercent;
   final Currency currency;
   const ProfitWidget({
@@ -20,14 +20,12 @@ class ProfitWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final bodySmallStyle = Theme.of(context).textTheme.bodySmall;
     final color = getProfitTextColor(profit);
-
     final profitStyle = bodySmallStyle!.copyWith(color: color);
     final currencyChar = getCurrencyChar(currency);
-    final profitText = getMoneyValueText(profit);
     final profitPercentText = getMoneyValueText(profitPercent);
 
     return Text(
-      '$profitText $currencyChar · $profitPercentText%',
+      '$profit $currencyChar · $profitPercentText%',
       style: profitStyle,
     );
   }

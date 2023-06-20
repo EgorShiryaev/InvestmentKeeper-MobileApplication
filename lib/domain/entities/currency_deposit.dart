@@ -1,22 +1,22 @@
-// ignore: depend_on_referenced_packages
-import 'package:json_annotation/json_annotation.dart';
-
 import 'currency.dart';
+import 'money.dart';
 
-part 'currency_deposit.g.dart';
-
-@JsonSerializable()
 class CurrencyDeposit {
   final Currency currency;
-  final double value;
+  final Money value;
+  late final num valueNum;
 
   CurrencyDeposit({
     required this.currency,
     required this.value,
-  });
+  }) {
+    valueNum = value.toNum();
+  }
 
-  factory CurrencyDeposit.fromJson(Map<String, dynamic> json) =>
-      _$CurrencyDepositFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CurrencyDepositToJson(this);
+  factory CurrencyDeposit.fromJson(Map<String, dynamic> json) {
+    return CurrencyDeposit(
+      currency: currenciesMap[json['currency']]!,
+      value: Money.fromJson(json['value']),
+    );
+  }
 }

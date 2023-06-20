@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import '../main_page/account_status.dart';
 import '../money_widget.dart';
 
 class AccountExpandedTitle extends StatelessWidget {
-  final double price;
-  final AccountEntity account;
+  final num price;
+  final Account account;
   const AccountExpandedTitle({
     super.key,
     required this.account,
@@ -29,7 +29,7 @@ class AccountExpandedTitle extends StatelessWidget {
             Text(account.title, style: titleStyle),
             MoneyWidget(
               currency: account.currency,
-              moneyValue: price,
+              value: price,
               textStyle: priceStyle,
             ),
           ],

@@ -6,9 +6,11 @@ import 'package:get/get.dart';
 import '../../../core/settings/price_formatter.dart';
 import '../../../core/utils/currency_utils/get_currency_char.dart';
 import '../../../core/utils/formaters/get_value_of_price.dart';
+import '../../../core/utils/formaters/remove_currency_char.dart';
 import '../../../core/utils/get_money_value_text.dart';
 import '../../../core/utils/validators/price_validator.dart';
 import '../../../domain/entities/instrument.dart';
+import '../../../domain/entities/money.dart';
 import '../../cubits/account_cubit/account_cubit.dart';
 import '../../cubits/create_sale_cubit/create_sale_cubit.dart';
 import '../../cubits/create_sale_cubit/create_sale_state.dart';
@@ -37,8 +39,6 @@ class CreateSaleForm extends HookWidget {
       final args = Get.arguments as CreateSalePageArguments;
       FocusScope.of(context).unfocus();
       final lots = int.parse(lotsValue);
-      final price = getValueOfPrice(priceValue);
-      final commission = getValueOfPrice(commissionValue);
       final date = DateTime(
         dateValue.year,
         dateValue.month,
@@ -46,11 +46,16 @@ class CreateSaleForm extends HookWidget {
         timeValue.hour,
         timeValue.minute,
       );
+      final priceStr = removeCurrencyChar(priceValue);
+      final commissionStr = removeCurrencyChar(commissionValue);
+      final price = Money.fromString(priceStr!);
+      final commission =
+          commissionStr != null ? Money.fromString(commissionStr) : null;
       Get.find<CreateSaleCubit>().create(
         accountId: args.account.id,
         instrumentId: instrumentId!,
         lots: lots,
-        price: price!,
+        price: price,
         depositFundsToAccount: depositFundsToAccount,
         date: date,
         commission: commission,
@@ -90,6 +95,7 @@ class CreateSaleForm extends HookWidget {
         lotsValue: lotsNumberController.text,
         priceValue: priceController.text,
         depositFundsToAccount: depositFundsToAccount.value,
+        commissionValue: commissionState.value,
       );
     }, [
       dateState.value,
@@ -108,7 +114,7 @@ class CreateSaleForm extends HookWidget {
       if (price != 0 && price != null && lots != 0 && instrument != null) {
         final totalLots = lots * instrument.lot;
         final comission = getValueOfPrice(commisionController.text) ?? 0;
-        final newTotalPrice = price * totalLots + comission;
+        final newTotalPrice = price * totalLots - comission;
         final currencyChar = getCurrencyChar(instrument.currency);
 
         totalPriceState.value =
@@ -116,6 +122,7 @@ class CreateSaleForm extends HookWidget {
                 ? '${getMoneyValueText(newTotalPrice)} $currencyChar'
                 : '';
       }
+      return null;
     }, [
       priceState.value,
       lotsState.value,
