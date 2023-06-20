@@ -6,9 +6,11 @@ import 'package:get/get.dart';
 import '../../../core/settings/price_formatter.dart';
 import '../../../core/utils/currency_utils/get_currency_char.dart';
 import '../../../core/utils/formaters/get_value_of_price.dart';
+import '../../../core/utils/formaters/remove_currency_char.dart';
 import '../../../core/utils/get_money_value_text.dart';
 import '../../../core/utils/validators/price_validator.dart';
 import '../../../domain/entities/instrument.dart';
+import '../../../domain/entities/money.dart';
 import '../../cubits/account_cubit/account_cubit.dart';
 import '../../cubits/create_purchase_cubit/create_purchase_cubit.dart';
 import '../../cubits/create_purchase_cubit/create_purchase_state.dart';
@@ -37,8 +39,6 @@ class CreatePurchaseForm extends HookWidget {
       final args = Get.arguments as CreatePurchasePageArguments;
       FocusScope.of(context).unfocus();
       final lots = int.parse(lotsValue);
-      final price = getValueOfPrice(priceValue);
-      final commission = getValueOfPrice(commissionValue);
       final date = DateTime(
         dateValue.year,
         dateValue.month,
@@ -46,11 +46,17 @@ class CreatePurchaseForm extends HookWidget {
         timeValue.hour,
         timeValue.minute,
       );
+      final priceStr = removeCurrencyChar(priceValue);
+      final commissionStr = removeCurrencyChar(commissionValue);
+      final price = Money.fromString(priceStr!);
+      final commission = commissionStr != null && commissionStr.trim() != ''
+          ? Money.fromString(commissionStr)
+          : null;
       Get.find<CreatePurchaseCubit>().create(
         accountId: args.account.id,
         instrumentId: instrumentId!,
         lots: lots,
-        price: price!,
+        price: price,
         withdrawFundsFromBalance: withdrawFundsFromBalance,
         date: date,
         commission: commission,
@@ -90,6 +96,7 @@ class CreatePurchaseForm extends HookWidget {
         lotsValue: lotsNumberController.text,
         priceValue: priceController.text,
         withdrawFundsFromBalance: withdrawFundsFromBalance.value,
+        commissionValue: commissionState.value,
       );
     }, [
       dateState.value,
@@ -116,6 +123,7 @@ class CreatePurchaseForm extends HookWidget {
                 ? '${getMoneyValueText(newTotalPrice)} $currencyChar'
                 : '';
       }
+      return null;
     }, [
       priceState.value,
       lotsState.value,

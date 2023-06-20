@@ -1,4 +1,4 @@
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import '../error_cubit_state.dart';
 
 abstract class UserAccountsState {}
@@ -8,7 +8,7 @@ class InitialUserAccountsState extends UserAccountsState {}
 class LoadingUserAccountsState extends UserAccountsState {}
 
 class LoadedUserAccountsState extends UserAccountsState {
-  final List<AccountEntity> accounts;
+  final List<Account> accounts;
 
   LoadedUserAccountsState({required this.accounts});
 }

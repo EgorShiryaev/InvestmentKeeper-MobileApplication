@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import '../../cubits/user_accounts_cubit/user_accounts_state.dart';
 import 'account_card.dart';
 
@@ -11,7 +11,7 @@ class AccountsList extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accountsState = useState(<AccountEntity>[]);
+    final accountsState = useState(<Account>[]);
 
     useEffect(
       () {

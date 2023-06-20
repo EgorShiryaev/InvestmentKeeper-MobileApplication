@@ -18,7 +18,7 @@ class CurrencyDepositView extends StatelessWidget {
         Text(title, style: titleStyle),
         InvestmentAssetPriceView(
           currency: currencyDeposit.currency,
-          price: currencyDeposit.value,
+          price: currencyDeposit.valueNum,
         ),
       ],
     );

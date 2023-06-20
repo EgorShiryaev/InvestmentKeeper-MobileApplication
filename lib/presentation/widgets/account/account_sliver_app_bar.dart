@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import '../../cubits/account_cubit/account_state.dart';
 import '../../pages/arguments/account_page_arguments.dart';
 import '../scroll_under_flexible_space.dart';
@@ -15,7 +15,7 @@ class AccountSliverAppBar extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accountState = useState<AccountEntity?>(null);
+    final accountState = useState<Account?>(null);
 
     useEffect(
       () {
@@ -44,12 +44,11 @@ class AccountSliverAppBar extends HookWidget {
       return const SizedBox();
     }
 
-    final price = account.currentPrice + account.mainCurrencyDeposit.value;
-    
+    final money = account.totalMoneyValue;
 
     return LargeSliverAppBarFlexibleSpace(
-      collapsedTitle: AccountCollapsedTitle(price: price, account: account),
-      expandedTitle: AccountExpandedTitle(price: price, account: account),
+      collapsedTitle: AccountCollapsedTitle(money: money, account: account),
+      expandedTitle: AccountExpandedTitle(price: money, account: account),
     );
   }
 }

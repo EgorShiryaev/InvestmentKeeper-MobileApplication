@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import '../../pages/arguments/create_purchase_page_arguments.dart';
 import '../../pages/arguments/create_refill_page_arguments.dart';
 import '../../pages/arguments/create_sale_page_arguments.dart';
@@ -14,7 +14,7 @@ import '../../themes/app_theme.dart';
 import '../iconed_button.dart';
 
 class CreateOperationsBottomSheet extends StatelessWidget {
-  final AccountEntity account;
+  final Account account;
   const CreateOperationsBottomSheet({super.key, required this.account});
 
   void navigateToCreatePurchasePage() {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import '../../pages/arguments/rename_account_page_arguments.dart';
 import '../../pages/rename_account_page.dart';
 import '../../themes/app_theme.dart';
 import '../iconed_button.dart';
 
 class SettingsAccountBottomSheet extends StatelessWidget {
-  final AccountEntity account;
+  final Account account;
   const SettingsAccountBottomSheet({super.key, required this.account});
 
   void navigateToRenameAccountPage() {

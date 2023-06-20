@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/get_profit_color.dart';
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import '../profit_widget.dart';
 
 class AccountStatus extends StatelessWidget {
-  final AccountEntity account;
+  final Account account;
   const AccountStatus({super.key, required this.account});
 
   @override

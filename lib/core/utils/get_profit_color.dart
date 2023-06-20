@@ -8,7 +8,7 @@ const notProfitTextColor = Color(0xFF767680);
 const lossTextColor = Color(0xFFB20000);
 const profitTextColor = Color(0xFF00B200);
 
-Color getProfitBackgroundColor(double profit) {
+Color getProfitBackgroundColor(num profit) {
   if (profit == 0) {
     return notProfitBackgroundColor;
   } else if (profit < 0) {
@@ -19,7 +19,7 @@ Color getProfitBackgroundColor(double profit) {
   return notProfitBackgroundColor;
 }
 
-Color getProfitTextColor(double profit) {
+Color getProfitTextColor(num profit) {
   if (profit == 0) {
     return notProfitTextColor;
   } else if (profit < 0) {

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/exceptions/exception_impl.dart';
 import '../../../data/datasources/withdrawals_datasource/withdrawals_datasource.dart';
 import '../../../domain/entities/currency.dart';
+import '../../../domain/entities/money.dart';
 import 'create_withdrawal_state.dart';
 
 class CreateWithdrawalCubit extends Cubit<CreateWithdrawalState> {
@@ -13,7 +14,7 @@ class CreateWithdrawalCubit extends Cubit<CreateWithdrawalState> {
 
   Future<void> create({
     required int accountId,
-    required double value,
+    required Money value,
     required Currency currency,
     required DateTime date,
   }) async {

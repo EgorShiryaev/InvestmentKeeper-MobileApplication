@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/entities/account_entity.dart';
+import '../../../domain/entities/account.dart';
 import '../money_widget.dart';
 import '../profit_widget.dart';
 
 class AccountCollapsedTitle extends StatelessWidget {
-  final double price;
-  final AccountEntity account;
+  final num money;
+  final Account account;
   const AccountCollapsedTitle({
     super.key,
     required this.account,
-    required this.price,
+    required this.money,
   });
 
   @override
@@ -23,7 +23,7 @@ class AccountCollapsedTitle extends StatelessWidget {
       children: [
         MoneyWidget(
           currency: account.currency,
-          moneyValue: price,
+          value: money,
           textStyle: titleStyle,
         ),
         ProfitWidget(

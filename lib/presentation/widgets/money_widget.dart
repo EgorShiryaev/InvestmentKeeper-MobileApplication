@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../../core/utils/currency_utils/get_currency_char.dart';
-import '../../core/utils/get_money_value_text.dart';
 import '../../domain/entities/currency.dart';
 
 class MoneyWidget extends StatelessWidget {
-  final double moneyValue;
+  final num value;
   final Currency currency;
   final TextStyle? textStyle;
   const MoneyWidget({
     super.key,
-    required this.moneyValue,
+    required this.value,
     required this.currency,
     required this.textStyle,
   });
@@ -18,9 +17,9 @@ class MoneyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currencyChar = getCurrencyChar(currency);
-    final moneyText = getMoneyValueText(moneyValue);
+
     return Text(
-      '$moneyText $currencyChar',
+      '$value $currencyChar',
       style: textStyle,
     );
   }

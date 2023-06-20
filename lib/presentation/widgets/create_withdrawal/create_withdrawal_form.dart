@@ -4,9 +4,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 import '../../../core/settings/price_formatter.dart';
-import '../../../core/utils/formaters/get_value_of_price.dart';
+import '../../../core/utils/formaters/remove_currency_char.dart';
 import '../../../core/utils/validators/price_validator.dart';
 import '../../../domain/entities/currency.dart';
+import '../../../domain/entities/money.dart';
 import '../../cubits/account_cubit/account_cubit.dart';
 import '../../cubits/create_withdrawal_cubit/create_withdrawal_cubit.dart';
 import '../../cubits/create_withdrawal_cubit/create_withdrawal_state.dart';
@@ -27,7 +28,6 @@ class CreateWithdrawalForm extends HookWidget {
     if (formKey.currentState?.validate() ?? false) {
       final args = Get.arguments as CreateWithdrawalPageArguments;
       FocusScope.of(context).unfocus();
-      final value = getValueOfPrice(refillValue);
       final date = DateTime(
         dateValue.year,
         dateValue.month,
@@ -35,9 +35,11 @@ class CreateWithdrawalForm extends HookWidget {
         timeValue.hour,
         timeValue.minute,
       );
+      final valueWithoutCurrency = removeCurrencyChar(refillValue);
+      final value = Money.fromString(valueWithoutCurrency!);
       Get.find<CreateWithdrawalCubit>().create(
         accountId: args.account.id,
-        value: value!,
+        value: value,
         currency: Currency.rub,
         date: date,
       );
