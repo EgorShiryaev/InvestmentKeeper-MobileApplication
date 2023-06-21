@@ -8,7 +8,7 @@ class LoadingCreateWithdrawalState extends CreateWithdrawalState {}
 
 class SuccessCreateWithdrawalState extends CreateWithdrawalState {}
 
-class FailureCreateWithdrawalState extends ErrorCubitState
+class FailureCreateWithdrawalState extends ErrorState
     implements CreateWithdrawalState {
   FailureCreateWithdrawalState({required super.message});
 }

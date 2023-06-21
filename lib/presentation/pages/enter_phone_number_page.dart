@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
+import '../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../cubits/auth_cubit/auth_cubit.dart';
 import '../cubits/auth_cubit/auth_state.dart';
 import '../cubits/check_is_user_exists_cubit/check_is_user_exists_cubit.dart';
@@ -21,7 +22,7 @@ class EnterPhoneNumberPage extends StatelessWidget {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is ErrorAuthState) {
-          Get.snackbar('Произошла ошибка!', state.message);
+          showErrorSnackbar(state.message);
         } else if (state is UserIsAuthState) {
           Get.offAllNamed(MainPage.routeName);
         }

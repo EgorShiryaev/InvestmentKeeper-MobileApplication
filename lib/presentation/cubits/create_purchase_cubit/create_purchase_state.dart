@@ -8,7 +8,7 @@ class LoadingCreatePurchaseState extends CreatePurchaseState {}
 
 class SuccessCreatePurchaseState extends CreatePurchaseState {}
 
-class FailureCreatePurchaseState extends ErrorCubitState
+class FailureCreatePurchaseState extends ErrorState
     implements CreatePurchaseState {
   FailureCreatePurchaseState({required super.message});
 }

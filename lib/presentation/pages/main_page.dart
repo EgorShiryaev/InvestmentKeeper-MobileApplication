@@ -14,13 +14,17 @@ class MainPage extends StatelessWidget {
   static const routeName = '/main';
 
   void navigateToCreateAccountPage() {
-    Get.toNamed(CreateAccountPage.routeName);
+    Get.find<UserAccountsCubit>().unsubscrubeToPrice();
+    Get.toNamed(CreateAccountPage.routeName)!
+        .then((value) => Get.find<UserAccountsCubit>().subscribeToPrice());
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<UserAccountsCubit>(
-      create: (context) => Get.find<UserAccountsCubit>()..load(),
+      create: (context) => Get.find<UserAccountsCubit>()
+        ..subscribeToPrice()
+        ..load(),
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxScrolled) {

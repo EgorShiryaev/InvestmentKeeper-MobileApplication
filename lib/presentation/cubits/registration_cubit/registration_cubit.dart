@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/exceptions/exception_impl.dart';
+import '../../../core/utils/get_error_message.dart';
 import '../../../data/datasources/registration_datasource/registration_datasource.dart';
 import '../../../domain/entities/auth_data.dart';
 import 'registration_state.dart';
@@ -27,7 +27,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
       final authData = AuthData(phoneNumber: phoneNumber, password: password);
       emit(SuccessRegistrationState(data: authData));
     } catch (error) {
-      final message = error is ExceptionImpl ? error.message : error.toString();
+      final message = getErrorMessage(error);
       if (message == 'User is already exists') {
         emit(UserIsAlreadyExistsRegistrationState());
       } else {

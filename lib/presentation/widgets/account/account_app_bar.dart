@@ -10,7 +10,6 @@ import '../../themes/app_theme.dart';
 import 'account_sliver_app_bar.dart';
 import 'settings_account_bottom_sheet.dart';
 
-
 class AccountAppBar extends StatelessWidget {
   const AccountAppBar({super.key});
 

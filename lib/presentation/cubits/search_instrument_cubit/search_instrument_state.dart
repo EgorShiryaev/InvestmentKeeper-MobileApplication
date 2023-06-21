@@ -15,7 +15,7 @@ class LoadedSearchInstrumentState extends SearchInstrumentState {
 
 class EmptySearchInstrumentState extends SearchInstrumentState {}
 
-class ErrorSearchInstrumentState extends ErrorCubitState
+class ErrorSearchInstrumentState extends ErrorState
     implements SearchInstrumentState {
   ErrorSearchInstrumentState({required super.message});
 }

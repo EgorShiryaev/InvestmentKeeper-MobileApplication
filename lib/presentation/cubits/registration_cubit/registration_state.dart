@@ -15,7 +15,6 @@ class SuccessRegistrationState extends RegistrationState {
 
 class UserIsAlreadyExistsRegistrationState extends RegistrationState {}
 
-class ErrorRegistrationState extends ErrorCubitState
-    implements RegistrationState {
+class ErrorRegistrationState extends ErrorState implements RegistrationState {
   ErrorRegistrationState({required super.message});
 }

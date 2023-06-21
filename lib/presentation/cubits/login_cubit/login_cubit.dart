@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/exceptions/base/failed_auth_exception.dart';
-import '../../../core/exceptions/exception_impl.dart';
+import '../../../core/utils/get_error_message.dart';
 import '../../../data/datasources/login_datasource/login_datasource.dart';
 import '../../../domain/entities/auth_data.dart';
 import 'login_state.dart';
@@ -27,7 +27,7 @@ class LoginCubit extends Cubit<LoginState> {
         emit(FailureLoginState());
         return;
       }
-      final message = error is ExceptionImpl ? error.message : error.toString();
+      final message = getErrorMessage(error);
       emit(ErrorLoginState(message: message));
     }
   }

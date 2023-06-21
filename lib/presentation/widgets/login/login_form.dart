@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../../core/utils/validators/password_validator.dart';
 import '../../cubits/auth_cubit/auth_cubit.dart';
 import '../../cubits/login_cubit/login_cubit.dart';
@@ -58,7 +59,7 @@ class LoginForm extends HookWidget {
         if (state is SuccessLoginState) {
           BlocProvider.of<AuthCubit>(context).login(state.data);
         } else if (state is ErrorLoginState) {
-          Get.snackbar('Произошла ошибка!', state.message);
+          showErrorSnackbar(state.message);
         } else if (state is FailureLoginState) {
           passwordController.text = '';
           Get.snackbar(

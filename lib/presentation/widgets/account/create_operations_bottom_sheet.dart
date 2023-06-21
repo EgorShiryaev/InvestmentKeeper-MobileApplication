@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/entities/account.dart';
+import '../../cubits/account_cubit/account_cubit.dart';
 import '../../pages/arguments/create_purchase_page_arguments.dart';
 import '../../pages/arguments/create_refill_page_arguments.dart';
 import '../../pages/arguments/create_sale_page_arguments.dart';
@@ -17,35 +18,39 @@ class CreateOperationsBottomSheet extends StatelessWidget {
   final Account account;
   const CreateOperationsBottomSheet({super.key, required this.account});
 
-  void navigateToCreatePurchasePage() {
+  // ignore: type_annotate_public_apis
+  void navigateToOperationPage(String route, args) {
     hideBottomSheet();
-    Get.toNamed(
+    Get.find<AccountCubit>().unsubscrubeToPrice();
+    Get.toNamed(route, arguments: args)!
+        .then((value) => Get.find<AccountCubit>().subscribeToPrice());
+  }
+
+  void navigateToCreatePurchasePage() {
+    navigateToOperationPage(
       CreatePurchasePage.routeName,
-      arguments: CreatePurchasePageArguments(account: account),
+      CreatePurchasePageArguments(account: account),
     );
   }
 
   void navigateToCreateSalePage() {
-    hideBottomSheet();
-    Get.toNamed(
+    navigateToOperationPage(
       CreateSalePage.routeName,
-      arguments: CreateSalePageArguments(account: account),
+      CreateSalePageArguments(account: account),
     );
   }
 
   void navigateToCreateRefillPage() {
-    hideBottomSheet();
-    Get.toNamed(
+    navigateToOperationPage(
       CreateRefillPage.routeName,
-      arguments: CreateRefillPageArguments(account: account),
+      CreateRefillPageArguments(account: account),
     );
   }
 
   void navigateToCreateWithdrawalPage() {
-    hideBottomSheet();
-    Get.toNamed(
+    navigateToOperationPage(
       CreateWithdrawalPage.routeName,
-      arguments: CreateWithdrawalPageArguments(account: account),
+      CreateWithdrawalPageArguments(account: account),
     );
   }
 

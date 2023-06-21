@@ -8,7 +8,6 @@ class LoadingCreateSaleState extends CreateSaleState {}
 
 class SuccessCreateSaleState extends CreateSaleState {}
 
-class FailureCreateSaleState extends ErrorCubitState
-    implements CreateSaleState {
+class FailureCreateSaleState extends ErrorState implements CreateSaleState {
   FailureCreateSaleState({required super.message});
 }

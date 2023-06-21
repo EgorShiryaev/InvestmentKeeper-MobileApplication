@@ -1,5 +1,5 @@
-class ErrorCubitState {
+class ErrorState {
   final String message;
 
-  ErrorCubitState({required this.message});
+  ErrorState({required this.message});
 }

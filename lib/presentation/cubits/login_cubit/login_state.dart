@@ -15,6 +15,6 @@ class SuccessLoginState extends LoginState {
 
 class FailureLoginState extends LoginState {}
 
-class ErrorLoginState extends ErrorCubitState implements LoginState {
+class ErrorLoginState extends ErrorState implements LoginState {
   ErrorLoginState({required super.message});
 }

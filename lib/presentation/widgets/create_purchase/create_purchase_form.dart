@@ -9,6 +9,7 @@ import '../../../core/utils/currency_utils/get_currency_char.dart';
 import '../../../core/utils/formaters/get_value_of_price.dart';
 import '../../../core/utils/formaters/remove_currency_char.dart';
 import '../../../core/utils/get_money_value_text.dart';
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../../core/utils/validators/price_validator.dart';
 import '../../../domain/entities/instrument.dart';
 import '../../../domain/entities/money.dart';
@@ -144,7 +145,7 @@ class CreatePurchaseForm extends HookWidget {
           Get.back();
           Get.find<AccountCubit>().load(args.account.id);
         } else if (state is FailureCreatePurchaseState) {
-          Get.snackbar('Произошла ошибка!', state.message);
+          showErrorSnackbar(state.message);
         }
       },
       child: Form(

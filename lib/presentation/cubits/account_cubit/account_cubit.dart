@@ -1,13 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
-import '../../../core/exceptions/exception_impl.dart';
+import '../../../core/utils/get_error_message.dart';
 import '../../../data/datasources/accounts_datasource/accounts_datasource.dart';
 import '../../pages/arguments/account_page_arguments.dart';
 import 'account_state.dart';
 
 class AccountCubit extends Cubit<AccountState> {
   final AccountsDatasource _datasource;
+  late Timer _timer;
 
   AccountCubit({required AccountsDatasource datasource})
       : _datasource = datasource,
@@ -24,8 +27,29 @@ class AccountCubit extends Cubit<AccountState> {
       final account = await _datasource.get(id);
       emit(LoadedAccountState(account: account));
     } catch (error) {
-      final message = error is ExceptionImpl ? error.message : error.toString();
+      final message = getErrorMessage(error);
       emit(ErrorAccountState(message: message));
     }
+  }
+
+  void subscribeToPrice() {
+    final args = Get.arguments as AccountPageArguments;
+    _timer = Timer.periodic(const Duration(seconds: 15), (timer) {
+      if (isClosed) {
+        unsubscrubeToPrice();
+        return;
+      }
+      _datasource
+          .get(args.account.id)
+          .then((value) => emit(LoadedAccountState(account: value)))
+          .catchError((error) {
+        final message = getErrorMessage(error);
+        emit(ErrorAccountState(message: message));
+      });
+    });
+  }
+
+  void unsubscrubeToPrice() {
+    _timer.cancel();
   }
 }

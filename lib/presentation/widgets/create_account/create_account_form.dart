@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../../core/utils/validators/empty_value_validator.dart';
 import '../../cubits/create_account_cubit/create_account_cubit.dart';
 import '../../cubits/create_account_cubit/create_account_state.dart';
@@ -39,7 +40,7 @@ class CreateAccountForm extends HookWidget {
           Get.back();
           Get.find<UserAccountsCubit>().load();
         } else if (state is FailureCreateAccountState) {
-          Get.snackbar('Произошла ошибка!', state.message);
+          showErrorSnackbar(state.message);
         }
       },
       child: Form(
@@ -52,7 +53,7 @@ class CreateAccountForm extends HookWidget {
               controller: titleController,
               keyboardType: TextInputType.name,
               validator: emptyValueValidator,
-                onFieldSubmitted: (_) => submit(),
+              onFieldSubmitted: (_) => submit(),
               decoration: InputDecoration(
                 labelText: 'Название',
                 suffixIcon: IconButton(
@@ -61,7 +62,7 @@ class CreateAccountForm extends HookWidget {
                 ),
               ),
             ),
-           const SpaceBetweenFormItems(),
+            const SpaceBetweenFormItems(),
             FilledButton(
               onPressed: submit,
               child: const Text('Создать'),

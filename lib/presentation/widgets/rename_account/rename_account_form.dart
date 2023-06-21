@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../../core/utils/validators/empty_value_validator.dart';
 import '../../cubits/account_cubit/account_cubit.dart';
 import '../../cubits/edit_account_cubit/edit_account_cubit.dart';
@@ -45,7 +46,7 @@ class RenameAccountForm extends HookWidget {
           Get.back();
           Get.find<AccountCubit>().load(args.account.id);
         } else if (state is FailureEditAccountState) {
-          Get.snackbar('Произошла ошибка!', state.message);
+          showErrorSnackbar(state.message);
         }
       },
       child: Form(

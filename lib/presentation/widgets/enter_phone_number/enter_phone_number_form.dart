@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../core/settings/phone_number_format.dart';
 import '../../../core/settings/phone_number_formatter.dart';
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../../core/utils/validators/phone_number_validator.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_cubit.dart';
 import '../../cubits/check_is_user_exists_cubit/check_is_user_exists_state.dart';
@@ -56,7 +57,7 @@ class EnterPhoneNumberForm extends HookWidget {
     return BlocListener<CheckIsUserExistsCubit, CheckIsUserExistsState>(
       listener: (context, state) {
         if (state is ErrorCheckIsUserExistsState) {
-          Get.snackbar('Произошла ошибка!', state.message);
+          showErrorSnackbar(state.message);
         }
       },
       child: Form(

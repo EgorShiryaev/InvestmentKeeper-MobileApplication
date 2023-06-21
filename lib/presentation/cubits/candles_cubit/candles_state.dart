@@ -13,6 +13,6 @@ class LoadedCandlesState extends CandlesState {
   LoadedCandlesState({required this.candles});
 }
 
-class FailureCandlesState extends ErrorCubitState implements CandlesState {
-  FailureCandlesState({required super.message});
+class ErrorCandlesState extends ErrorState implements CandlesState {
+  ErrorCandlesState({required super.message});
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../domain/entities/investment_asset.dart';
+import '../../cubits/account_cubit/account_cubit.dart';
 import '../../pages/arguments/account_page_arguments.dart';
 import '../../pages/arguments/instrument_page_arguments.dart';
 import '../../pages/instrument_page.dart';
@@ -21,7 +22,13 @@ class StructureItemView extends StatelessWidget {
     final account = (Get.arguments as AccountPageArguments).account;
     final instrumentPageArgs =
         InstrumentPageArguments(asset: asset, account: account);
-    Get.toNamed(InstrumentPage.routeName, arguments: instrumentPageArgs);
+    Get.find<AccountCubit>().unsubscrubeToPrice();
+    Get.toNamed(InstrumentPage.routeName, arguments: instrumentPageArgs)!
+        .then((value) {
+      Get.find<AccountCubit>()
+        ..subscribeToPrice()
+        ..refresh();
+    });
   }
 
   @override

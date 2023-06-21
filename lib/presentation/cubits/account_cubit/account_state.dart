@@ -13,6 +13,6 @@ class LoadedAccountState extends AccountState {
   LoadedAccountState({required this.account});
 }
 
-class ErrorAccountState extends ErrorCubitState implements AccountState {
+class ErrorAccountState extends ErrorState implements AccountState {
   ErrorAccountState({required super.message});
 }

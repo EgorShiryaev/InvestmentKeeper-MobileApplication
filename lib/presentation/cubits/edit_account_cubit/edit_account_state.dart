@@ -8,7 +8,6 @@ class LoadingEditAccountState extends EditAccountState {}
 
 class SuccessEditAccountState extends EditAccountState {}
 
-class FailureEditAccountState extends ErrorCubitState
-    implements EditAccountState {
+class FailureEditAccountState extends ErrorState implements EditAccountState {
   FailureEditAccountState({required super.message});
 }

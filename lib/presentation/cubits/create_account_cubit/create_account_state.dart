@@ -8,7 +8,7 @@ class LoadingCreateAccountState extends CreateAccountState {}
 
 class SuccessCreateAccountState extends CreateAccountState {}
 
-class FailureCreateAccountState extends ErrorCubitState
+class FailureCreateAccountState extends ErrorState
     implements CreateAccountState {
   FailureCreateAccountState({required super.message});
 }
