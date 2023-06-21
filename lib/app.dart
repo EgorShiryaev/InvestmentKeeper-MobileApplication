@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 
 import 'presentation/cubits/auth_cubit/auth_cubit.dart';
 import 'presentation/pages/account_page.dart';
@@ -10,6 +12,7 @@ import 'presentation/pages/create_refill_page.dart';
 import 'presentation/pages/create_sale_page.dart';
 import 'presentation/pages/create_withdrawal_page.dart';
 import 'presentation/pages/enter_phone_number_page.dart';
+import 'presentation/pages/instrument_page.dart';
 import 'presentation/pages/login_page.dart';
 import 'presentation/pages/main_page.dart';
 import 'presentation/pages/registration_page.dart';
@@ -29,6 +32,14 @@ class App extends StatelessWidget {
         themeMode: ThemeMode.light,
         theme: AppTheme.light,
         initialRoute: SplashPage.routeName,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          SfGlobalLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('ru'),
+        ],
         getPages: [
           GetPage(
             name: SplashPage.routeName,
@@ -81,6 +92,10 @@ class App extends StatelessWidget {
           GetPage(
             name: SelectInstrumentPage.routeName,
             page: () => const SelectInstrumentPage(),
+          ),
+          GetPage(
+            name: InstrumentPage.routeName,
+            page: () => const InstrumentPage(),
           ),
         ],
       ),

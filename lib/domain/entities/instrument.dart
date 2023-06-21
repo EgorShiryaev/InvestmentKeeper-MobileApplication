@@ -1,3 +1,4 @@
+import '../../core/utils/remove_priv_stock_suffix.dart';
 import 'currency.dart';
 import 'instrument_type.dart';
 
@@ -21,11 +22,12 @@ class Instrument {
   });
 
   factory Instrument.fromJson(Map<String, dynamic> json) {
+    final title = removePrivStockSuffix(json['title'] as String);
     return Instrument(
       id: json['id'],
       figi: json['figi'],
       ticker: json['ticker'],
-      title: json['title'],
+      title: title,
       lot: json['lot'],
       type: instrumentTypesMap[json['type']]!,
       currency: currenciesMap[json['currency']]!,

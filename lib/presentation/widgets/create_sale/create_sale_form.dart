@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 import '../../../core/settings/price_formatter.dart';
+import '../../../core/utils/check_commision_str.dart';
 import '../../../core/utils/currency_utils/get_currency_char.dart';
 import '../../../core/utils/formaters/get_value_of_price.dart';
 import '../../../core/utils/formaters/remove_currency_char.dart';
@@ -49,8 +50,9 @@ class CreateSaleForm extends HookWidget {
       final priceStr = removeCurrencyChar(priceValue);
       final commissionStr = removeCurrencyChar(commissionValue);
       final price = Money.fromString(priceStr!);
-      final commission =
-          commissionStr != null ? Money.fromString(commissionStr) : null;
+      final commission = checkCommisionStr(commissionStr)
+          ? Money.fromString(commissionStr!)
+          : null;
       Get.find<CreateSaleCubit>().create(
         accountId: args.account.id,
         instrumentId: instrumentId!,

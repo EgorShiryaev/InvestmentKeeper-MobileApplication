@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../domain/entities/investment_asset.dart';
+import '../../pages/arguments/instrument_page_arguments.dart';
+import '../../pages/instrument_page.dart';
+import '../../themes/app_theme.dart';
 import '../main_page/investment_asset_view.dart';
 
 class StructureItemView extends StatelessWidget {
@@ -12,6 +16,11 @@ class StructureItemView extends StatelessWidget {
     required this.items,
   });
 
+  void navigateToInstrumentPage(InvestmentAsset asset) {
+    final args = InstrumentPageArguments(asset: asset);
+    Get.toNamed(InstrumentPage.routeName, arguments: args);
+  }
+
   @override
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.headlineSmall;
@@ -22,7 +31,13 @@ class StructureItemView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(title, style: titleStyle),
+          Padding(
+            padding: EdgeInsets.only(
+              left: AppTheme.pagePadding.left,
+              right: AppTheme.pagePadding.right,
+            ),
+            child: Text(title, style: titleStyle),
+          ),
           const SizedBox(height: 4),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -30,7 +45,15 @@ class StructureItemView extends StatelessWidget {
               final item = items[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4),
-                child: InvestmentAssetView(item: item),
+                child: InkWell(
+                  onTap: () => navigateToInstrumentPage(item),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppTheme.pagePadding.left,
+                    ),
+                    child: InvestmentAssetView(item: item),
+                  ),
+                ),
               );
             }),
           )
