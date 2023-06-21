@@ -28,6 +28,7 @@ class AccountPageBody extends HookWidget {
         child: CustomScrollView(
           slivers: [
             CustomSliverSafeArea(
+              needPagePaddingHorizontal: false,
               child: BlocBuilder<AccountCubit, AccountState>(
                 builder: (context, state) {
                   return AccountStructureList(state: state);

@@ -23,10 +23,17 @@ class AppTheme {
   }
 
   static EdgeInsets get pagePadding {
+    final horizontalPadding = horizontalPagePadding;
     return const EdgeInsets.symmetric(
       vertical: 20,
-      horizontal: 16,
+    ).copyWith(
+      left: horizontalPadding.left,
+      right: horizontalPadding.right,
     );
+  }
+
+  static EdgeInsets get horizontalPagePadding {
+    return const EdgeInsets.symmetric(horizontal: 16);
   }
 
   static const double sliverAppBarScrolledUnderElevation = 0;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/currency_deposit.dart';
+import '../../themes/app_theme.dart';
 import '../main_page/currency_deposit_view.dart';
 
 class StructureCurrencyView extends StatelessWidget {
@@ -22,14 +23,21 @@ class StructureCurrencyView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(title, style: titleStyle),
+          Padding(
+            padding: AppTheme.horizontalPagePadding,
+            child: Text(title, style: titleStyle),
+          ),
           const SizedBox(height: 4),
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: List.generate(items.length, (index) {
               final item = items[index];
+              const verticalPadding = 4.0;
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
+                padding: AppTheme.horizontalPagePadding.copyWith(
+                  top: verticalPadding,
+                  bottom: verticalPadding,
+                ),
                 child: CurrencyDepositView(currencyDeposit: item),
               );
             }),
