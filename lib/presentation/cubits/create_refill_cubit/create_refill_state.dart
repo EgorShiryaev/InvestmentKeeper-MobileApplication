@@ -8,7 +8,6 @@ class LoadingCreateRefillState extends CreateRefillState {}
 
 class SuccessCreateRefillState extends CreateRefillState {}
 
-class FailureCreateRefillState extends ErrorCubitState
-    implements CreateRefillState {
+class FailureCreateRefillState extends ErrorState implements CreateRefillState {
   FailureCreateRefillState({required super.message});
 }

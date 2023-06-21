@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../../domain/entities/candle.dart';
 import '../../../domain/entities/candle_chart_size.dart';
 import '../../cubits/candles_cubit/candles_cubit.dart';
@@ -78,6 +79,8 @@ class InstrumentPageBody extends HookWidget {
         isLoadingState.value = state is LoadingCandlesState;
         if (state is LoadedCandlesState) {
           candlesState.value = state.candles;
+        } else if (state is ErrorCandlesState) {
+          showErrorSnackbar(state.message);
         }
       },
       child: Column(

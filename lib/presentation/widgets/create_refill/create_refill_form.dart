@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../core/settings/price_formatter.dart';
 import '../../../core/utils/formaters/remove_currency_char.dart';
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../../core/utils/validators/price_validator.dart';
 import '../../../domain/entities/currency.dart';
 import '../../../domain/entities/money.dart';
@@ -78,7 +79,7 @@ class CreateRefillForm extends HookWidget {
           Get.back();
           Get.find<AccountCubit>().load(args.account.id);
         } else if (state is FailureCreateRefillState) {
-          Get.snackbar('Произошла ошибка!', state.message);
+          showErrorSnackbar(state.message);
         }
       },
       child: Form(

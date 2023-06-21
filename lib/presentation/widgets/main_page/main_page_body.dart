@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../cubits/user_accounts_cubit/user_accounts_cubit.dart';
 import '../../cubits/user_accounts_cubit/user_accounts_state.dart';
 import '../custom_sliver_safe_area.dart';
@@ -21,7 +22,7 @@ class MainPageBody extends HookWidget {
         if (state is LoadingUserAccountsState) {
           refreshIndicatorKey.currentState?.show();
         } else if (state is ErrorUserAccountsState) {
-          Get.snackbar('Произошла ошибка!', state.message);
+          showErrorSnackbar(state.message);
         }
       },
       child: RefreshIndicator(

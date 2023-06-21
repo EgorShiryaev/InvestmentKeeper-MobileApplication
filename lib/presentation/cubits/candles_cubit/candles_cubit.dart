@@ -24,7 +24,7 @@ class CandlesCubit extends Cubit<CandlesState> {
       emit(LoadedCandlesState(candles: candles));
     } catch (error) {
       final message = getErrorMessage(error);
-      emit(FailureCandlesState(message: message));
+      emit(ErrorCandlesState(message: message));
     }
   }
 }

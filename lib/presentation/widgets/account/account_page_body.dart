@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../cubits/account_cubit/account_cubit.dart';
 import '../../cubits/account_cubit/account_state.dart';
 import '../custom_sliver_safe_area.dart';
@@ -20,6 +21,8 @@ class AccountPageBody extends HookWidget {
       listener: (context, state) {
         if (state is LoadingAccountState) {
           refreshIndicatorKey.currentState?.show();
+        } else if (state is ErrorAccountState) {
+          showErrorSnackbar(state.message);
         }
       },
       child: RefreshIndicator(

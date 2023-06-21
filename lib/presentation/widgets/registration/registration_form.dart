@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/modals_utils/show_error_snackbar.dart';
 import '../../../core/utils/validators/confirm_password_validator.dart';
 import '../../../core/utils/validators/empty_value_validator.dart';
 import '../../../core/utils/validators/password_validator.dart';
@@ -71,7 +72,7 @@ class RegistrationForm extends HookWidget {
         if (state is SuccessRegistrationState) {
           BlocProvider.of<AuthCubit>(context).login(state.data);
         } else if (state is ErrorRegistrationState) {
-          Get.snackbar('Произошла ошибка!', state.message);
+          showErrorSnackbar(state.message);
         } else if (state is UserIsAlreadyExistsRegistrationState) {
           Get.snackbar(
             'Проверьте введенные данные',

@@ -18,6 +18,7 @@ class CreateOperationsBottomSheet extends StatelessWidget {
   final Account account;
   const CreateOperationsBottomSheet({super.key, required this.account});
 
+  // ignore: type_annotate_public_apis
   void navigateToOperationPage(String route, args) {
     hideBottomSheet();
     Get.find<AccountCubit>().unsubscrubeToPrice();
