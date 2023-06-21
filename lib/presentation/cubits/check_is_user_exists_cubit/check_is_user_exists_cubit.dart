@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/route_manager.dart';
 
-import '../../../core/exceptions/exception_impl.dart';
+import '../../../core/utils/get_error_message.dart';
 import '../../../data/datasources/is_user_datasource/is_user_datasource.dart';
 import '../../pages/arguments/login_page_arguments.dart';
 import '../../pages/arguments/registration_page_arguments.dart';
@@ -30,7 +30,7 @@ class CheckIsUserExistsCubit extends Cubit<CheckIsUserExistsState> {
         emit(FailureCheckIsUserExistsState());
       }
     } catch (error) {
-      final message = error is ExceptionImpl ? error.message : error.toString();
+      final message = getErrorMessage(error);
       emit(ErrorCheckIsUserExistsState(message: message));
     }
   }

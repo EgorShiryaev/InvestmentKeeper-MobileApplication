@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/exceptions/exception_impl.dart';
+import '../../../core/utils/get_error_message.dart';
 import '../../../data/datasources/accounts_datasource/accounts_datasource.dart';
 import 'create_account_state.dart';
 
@@ -16,7 +16,7 @@ class CreateAccountCubit extends Cubit<CreateAccountState> {
       await _datasource.create(title: title);
       emit(SuccessCreateAccountState());
     } catch (error) {
-      final message = error is ExceptionImpl ? error.message : error.toString();
+      final message = getErrorMessage(error);
       emit(FailureCreateAccountState(message: message));
     }
   }

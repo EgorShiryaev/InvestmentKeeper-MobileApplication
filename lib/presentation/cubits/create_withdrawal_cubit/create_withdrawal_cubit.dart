@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/exceptions/exception_impl.dart';
+import '../../../core/utils/get_error_message.dart';
 import '../../../data/datasources/withdrawals_datasource/withdrawals_datasource.dart';
 import '../../../domain/entities/currency.dart';
 import '../../../domain/entities/money.dart';
@@ -28,7 +28,7 @@ class CreateWithdrawalCubit extends Cubit<CreateWithdrawalState> {
       );
       emit(SuccessCreateWithdrawalState());
     } catch (error) {
-      final message = error is ExceptionImpl ? error.message : error.toString();
+      final message = getErrorMessage(error);
       emit(FailureCreateWithdrawalState(message: message));
     }
   }
