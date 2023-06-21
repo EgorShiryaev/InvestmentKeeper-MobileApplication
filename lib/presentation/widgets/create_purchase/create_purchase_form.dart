@@ -69,7 +69,11 @@ class CreatePurchaseForm extends HookWidget {
   Widget build(BuildContext context) {
     final dateState = useState(DateTime.now());
     final timeState = useState(TimeOfDay.now());
-    final selectedInstrument = useState<Instrument?>(null);
+    final selectedInstrument = useState<Instrument?>(
+      (Get.arguments is CreatePurchasePageArguments)
+          ? (Get.arguments as CreatePurchasePageArguments).instrument
+          : null,
+    );
     final withdrawFundsFromBalance = useState(true);
     final priceState = useState('');
     final lotsState = useState('');

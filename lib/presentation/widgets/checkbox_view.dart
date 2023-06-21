@@ -23,6 +23,7 @@ class CheckBoxView extends StatelessWidget {
         children: [
           Checkbox(
             value: value,
+            // ignore: use_if_null_to_convert_nulls_to_bools
             onChanged: (value) => onPress(value == true),
           ),
           Text(
