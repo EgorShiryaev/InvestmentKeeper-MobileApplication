@@ -1,4 +1,4 @@
-import 'exception_impl.dart';
+import '../exception_impl.dart';
 
 class ForbiddenException extends ExceptionImpl {
   ForbiddenException()

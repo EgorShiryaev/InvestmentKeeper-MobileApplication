@@ -1,4 +1,3 @@
-import '../../../domain/entities/instrument.dart';
 import '../../../domain/entities/investment_asset.dart';
 
 class InstrumentPageArguments {

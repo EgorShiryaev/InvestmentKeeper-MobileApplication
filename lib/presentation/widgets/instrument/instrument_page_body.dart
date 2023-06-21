@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -48,22 +47,34 @@ class InstrumentPageBody extends HookWidget {
     final selectedCharSize = useState(CandleChartSize.day);
     final dateFormatState = useState(DateFormat.Hm(locale));
 
-    useEffect(() {
-      initializeDateFormatting();
-    }, []);
+    useEffect(
+      () {
+        initializeDateFormatting();
+        return null;
+      },
+      [],
+    );
 
-    useEffect(() {
-      dateFormatState.value = getDateFormatOfCharSize(selectedCharSize.value);
-    }, [selectedCharSize.value]);
+    useEffect(
+      () {
+        dateFormatState.value = getDateFormatOfCharSize(selectedCharSize.value);
+        return null;
+      },
+      [selectedCharSize.value],
+    );
 
-    useEffect(() {
-      final args = Get.arguments as InstrumentPageArguments;
-      final instrument = args.asset.instrument;
-      BlocProvider.of<CandlesCubit>(context).load(
-        instrumentId: instrument.id,
-        size: selectedCharSize.value,
-      );
-    }, [selectedCharSize.value]);
+    useEffect(
+      () {
+        final args = Get.arguments as InstrumentPageArguments;
+        final instrument = args.asset.instrument;
+        BlocProvider.of<CandlesCubit>(context).load(
+          instrumentId: instrument.id,
+          size: selectedCharSize.value,
+        );
+        return null;
+      },
+      [selectedCharSize.value],
+    );
 
     final currencyChar = getCurrencyChar(instrument.currency);
     return BlocListener<CandlesCubit, CandlesState>(
@@ -164,14 +175,14 @@ class InstrumentPageBody extends HookWidget {
                 Expanded(
                   child: FilledButton(
                     onPressed: () => {},
-                    child: Text('Продать'),
+                    child: const Text('Продать'),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: FilledButton.tonal(
                     onPressed: () => {},
-                    child: Text('Купить'),
+                    child: const Text('Купить'),
                   ),
                 ),
               ],
