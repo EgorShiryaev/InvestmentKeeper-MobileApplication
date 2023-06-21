@@ -69,7 +69,11 @@ class CreateSaleForm extends HookWidget {
   Widget build(BuildContext context) {
     final dateState = useState(DateTime.now());
     final timeState = useState(TimeOfDay.now());
-    final selectedInstrument = useState<Instrument?>(null);
+    final selectedInstrument = useState<Instrument?>(
+      (Get.arguments is CreateSalePageArguments)
+          ? (Get.arguments as CreateSalePageArguments).instrument
+          : null,
+    );
     final depositFundsToAccount = useState(true);
     final priceState = useState('');
     final lotsState = useState('');

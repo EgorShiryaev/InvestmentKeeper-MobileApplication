@@ -11,9 +11,14 @@ import '../../../domain/entities/candle.dart';
 import '../../../domain/entities/candle_chart_size.dart';
 import '../../cubits/candles_cubit/candles_cubit.dart';
 import '../../cubits/candles_cubit/candles_state.dart';
+import '../../pages/arguments/create_purchase_page_arguments.dart';
+import '../../pages/arguments/create_sale_page_arguments.dart';
 import '../../pages/arguments/instrument_page_arguments.dart';
+import '../../pages/create_purchase_page.dart';
+import '../../pages/create_sale_page.dart';
 import '../../themes/app_theme.dart';
 import '../loading_mask.dart';
+import 'candle_chart_legend_view.dart';
 import 'chart_size_selector.dart';
 
 const locale = 'ru';
@@ -36,6 +41,28 @@ class InstrumentPageBody extends HookWidget {
       case CandleChartSize.year:
         return DateFormat.yM(locale);
     }
+  }
+
+  void navigateToCreateSalePage() {
+    final args = Get.arguments as InstrumentPageArguments;
+    Get.toNamed(
+      CreateSalePage.routeName,
+      arguments: CreateSalePageArguments(
+        account: args.account,
+        instrument: args.asset.instrument,
+      ),
+    );
+  }
+
+  void navigateToCreatePurchasePage() {
+    final args = Get.arguments as InstrumentPageArguments;
+    Get.toNamed(
+      CreatePurchasePage.routeName,
+      arguments: CreatePurchasePageArguments(
+        account: args.account,
+        instrument: args.asset.instrument,
+      ),
+    );
   }
 
   @override
@@ -89,58 +116,15 @@ class InstrumentPageBody extends HookWidget {
           Stack(
             children: [
               SfCartesianChart(
-                enableAxisAnimation: true,
+                enableAxisAnimation: false,
                 trackballBehavior: TrackballBehavior(
                   activationMode: ActivationMode.singleTap,
                   tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-                  builder: (context, trackballDetails) {
-                    final info =
-                        trackballDetails.groupingModeInfo!.points.first;
-                    final x = info.x as DateTime;
-
-                    final time = DateFormat.Hm(locale).format(x);
-                    final date = DateFormat.yMd(locale).format(x);
-
-                    const style = TextStyle(fontSize: 12);
-                    return DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceVariant,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: SizedBox(
-                        height: 120,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '$date $time',
-                                style: style,
-                              ),
-                              Text(
-                                'Открытие: ${info.open}',
-                                style: style,
-                              ),
-                              Text(
-                                'Закрытие: ${info.close}',
-                                style: style,
-                              ),
-                              Text(
-                                'Мин: ${info.low}',
-                                style: style,
-                              ),
-                              Text(
-                                'Макс: ${info.high}',
-                                style: style,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
                   enable: true,
+                  builder: (context, trackballDetails) {
+                    final info = trackballDetails.groupingModeInfo!.points[0];
+                    return CandleChartLegendView(info: info);
+                  },
                 ),
                 series: [
                   CandleSeries<Candle, DateTime>(
@@ -174,14 +158,14 @@ class InstrumentPageBody extends HookWidget {
               children: [
                 Expanded(
                   child: FilledButton(
-                    onPressed: () => {},
+                    onPressed: navigateToCreateSalePage,
                     child: const Text('Продать'),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: FilledButton.tonal(
-                    onPressed: () => {},
+                    onPressed: navigateToCreatePurchasePage,
                     child: const Text('Купить'),
                   ),
                 ),
