@@ -25,7 +25,9 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AccountCubit>(
-      create: (context) => Get.find()..refresh(),
+      create: (context) => Get.find()
+        ..subscribeToPrice()
+        ..refresh(),
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxScrolled) {
