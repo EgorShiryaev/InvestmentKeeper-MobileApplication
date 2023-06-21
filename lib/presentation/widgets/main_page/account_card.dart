@@ -15,12 +15,14 @@ class AccountCard extends StatelessWidget {
   const AccountCard({super.key, required this.account});
 
   void navigateToAccountPage() {
+    Get.find<UserAccountsCubit>().unsubscrubeToPrice();
     Get.toNamed(
       AccountPage.routeName,
       arguments: AccountPageArguments(account: account),
     )!
         .then((_) {
       Get.find<UserAccountsCubit>().load();
+      Get.find<UserAccountsCubit>().subscribeToPrice();
     });
   }
 
@@ -45,7 +47,7 @@ class AccountCard extends StatelessWidget {
                     children: [
                       InvestmentAssetPriceView(
                         currency: account.currency,
-                        price:  account.totalMoneyValue,
+                        price: account.totalMoneyValue,
                       ),
                       const SizedBox(height: 4),
                       Text(account.title, style: bodyMeduimStyle),

@@ -35,6 +35,10 @@ class AccountCubit extends Cubit<AccountState> {
   void subscribeToPrice() {
     final args = Get.arguments as AccountPageArguments;
     _timer = Timer.periodic(const Duration(seconds: 15), (timer) {
+      if (isClosed) {
+        unsubscrubeToPrice();
+        return;
+      }
       _datasource
           .get(args.account.id)
           .then((value) => emit(LoadedAccountState(account: value)))
