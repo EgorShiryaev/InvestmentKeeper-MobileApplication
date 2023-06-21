@@ -12,6 +12,7 @@ import 'create_refill_cubit_di.dart';
 import 'create_sale_cubit_di.dart';
 import 'create_withdrawal_cubit_di.dart';
 import 'edit_account_cubit_di.dart';
+import 'instrument_price_cubit_di.dart';
 import 'login_di.dart';
 import 'registration_di.dart';
 import 'search_instrument_cubit_di.dart';
@@ -33,4 +34,5 @@ void dependencyInjection() {
   createWithdrawalCubitDependencyInjection();
   searchInstrumentCubitDependencyInjection();
   candlesCubitDependencyInjection();
+  instrumentPriceCubitDependencyInjection();
 }
