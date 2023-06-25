@@ -1,9 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
+import '../../../core/settings/app_settings.dart';
 import '../../../core/utils/get_error_message.dart';
 import '../../../data/datasources/auth_datasource/auth_datasource.dart';
 import '../../../data/datasources/login_datasource/login_datasource.dart';
 import '../../../domain/entities/auth_data.dart';
+import '../../pages/enter_phone_number_page.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -49,6 +52,8 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await _authDatasource.removeAuthData();
       emit(UserIsUnauthState());
+      AppSettings.currentUser = null;
+      await Get.offNamed(EnterPhoneNumberPage.routeName);
     } catch (error) {
       final message = getErrorMessage(error);
       emit(ErrorAuthState(message: message));

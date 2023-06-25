@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 // ignore: constant_identifier_names
 const int NANO_VALUE = 1000000000;
 
@@ -19,10 +21,13 @@ class Money {
 
   factory Money.fromString(String str) {
     final items = str.split('.');
+    final nano = items.length == 1
+        ? 0
+        : int.parse(items.last) * NANO_VALUE ~/ math.pow(10, items.last.length);
 
     return Money(
       units: int.parse(items.first),
-      nano: items.length == 1 ? 0 : int.parse(items.last),
+      nano: nano,
     );
   }
 
